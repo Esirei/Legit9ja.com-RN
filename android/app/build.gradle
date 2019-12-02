@@ -128,7 +128,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.legit.legit"
+        applicationId "com.legit9ja"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

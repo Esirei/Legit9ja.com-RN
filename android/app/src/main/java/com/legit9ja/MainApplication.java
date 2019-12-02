@@ -1,4 +1,4 @@
-package com.legit.legit;
+package com.legit9ja;
 
 import android.app.Application;
 import android.content.Context;

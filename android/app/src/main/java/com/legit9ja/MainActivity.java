@@ -1,4 +1,4 @@
-package com.legit.legit;
+package com.legit9ja;
 
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
