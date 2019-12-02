@@ -1,4 +1,4 @@
-package com.rntemplate;
+package com.legit.legit;
 
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
@@ -15,7 +15,7 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "rnTemplate";
+        return "Legit9ja";
     }
 
     @Override
