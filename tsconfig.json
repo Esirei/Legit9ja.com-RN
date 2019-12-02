@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "noImplicitAny": false,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "jsx": "react-native",
+    "lib": ["es2017", "dom"],
+    "moduleResolution": "node",
+    "noEmit": true,
+    "strict": true,
+    "target": "esnext",
+    "baseUrl": "./src/",
+    "paths": {
+      "@actions": ["actions"],
+      "@actions/*": ["actions/*"],
+      "@api": ["api"],
+      "@api/*": ["api/*"],
+      "@assets": ["assets"],
+      "@assets/*": ["assets/*"],
+      "@components": ["components"],
+      "@components/*": ["components/*"],
+      "@helpers": ["helpers"],
+      "@helpers/*": ["helpers/*"],
+      "@hooks": ["hooks"],
+      "@hooks/*": ["hooks/*"],
+      "@navigation": ["navigation"],
+      "@navigation/*": ["navigation/*"],
+      "@reducers": ["reducers"],
+      "@reducers/*": ["reducers/*"],
+      "@screens": ["screens"],
+      "@screens/*": ["screens/*"],
+      "@selectors": ["selectors"],
+      "@selectors/*": ["selectors/*"],
+      "@types": ["types"],
+      "@types/*": ["types/*"]
+    }
+  },
+  "exclude": ["node_modules", "babel.config.js", "metro.config.js", "jest.config.js"],
+  "include": ["src"]
+}
