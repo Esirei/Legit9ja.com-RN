@@ -1,14 +1,12 @@
 import React, { memo } from 'react';
 import { Image, StyleSheet } from 'react-native';
 
-const PostImage = ({ post, style }) => {
+const key = 'wp:featuredmedia';
+const PostImage = ({ post, style = {} }) => {
   let uri = '';
-  if (
-    post._embedded &&
-    post._embedded['wp:featuredmedia'] &&
-    post._embedded['wp:featuredmedia'].length > 0
-  ) {
-    uri = post._embedded['wp:featuredmedia'][0].source_url || '';
+  const { _embedded } = post;
+  if (_embedded && _embedded[key] && _embedded[key].length > 0) {
+    uri = _embedded[key][0].source_url || '';
   }
   return <Image source={{ uri }} style={[styles.image, style]} />;
 };

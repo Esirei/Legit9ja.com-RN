@@ -5,6 +5,7 @@ import Touchable from '@components/Touchable';
 import PostImage from './PostImage';
 import PostDateMenu from './PostDateMenu';
 import PostTitle from './PostTitle';
+import PostCategories from './PostCategories';
 import { Html5Entities } from 'html-entities';
 
 const entities = new Html5Entities();
@@ -21,9 +22,7 @@ const PostItem = ({ post }) => (
       <View style={styles.postDateTitleCategoryContainer}>
         <PostDateMenu post={post} />
         <PostTitle post={post} style={styles.postTitle} />
-        <Text style={styles.postCategories} numberOfLines={1}>
-          {post._embedded['wp:term'][0].map(c => c.name).join(', ')}
-        </Text>
+        <PostCategories post={post} />
       </View>
     </View>
     <Text style={styles.postDetails} ellipsizeMode={'tail'} numberOfLines={3}>
@@ -63,10 +62,6 @@ const styles = StyleSheet.create({
   postTitle: {
     marginTop: 5,
     marginBottom: 7,
-  },
-  postCategories: {
-    color: '#008000',
-    fontSize: 13,
   },
   postDetails: {
     marginHorizontal: 10,
