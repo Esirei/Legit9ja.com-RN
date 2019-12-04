@@ -10,7 +10,7 @@ export interface Error {
 }
 
 const clientConfig: AxiosRequestConfig = {
-  baseURL: 'https://reqres.in/api/',
+  baseURL: 'https://legit9ja.com/wp-json/wp/v2/',
   headers: { 'User-Agent': Platform.OS === 'ios' ? 'iOS' : 'Android' },
 };
 
