@@ -8,6 +8,7 @@ import apiClient from '@api';
 import images from '@assets/images';
 import { NavigationService, RouteNames } from '@navigation';
 import FeaturedPostItem from '@components/PostItem/FeaturedPostItem';
+import LoadingMore from '@components/LoadingMore';
 
 const { navigate } = NavigationService;
 
@@ -126,6 +127,7 @@ const HomeScreen = () => {
       onEndReachedThreshold={0.2}
       ListHeaderComponent={renderHeader}
       showsVerticalScrollIndicator={false}
+      ListFooterComponent={() => (state.loadingMore ? <LoadingMore /> : null)}
     />
   );
 

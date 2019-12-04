@@ -4,6 +4,7 @@ import { NavigationInjectedProps } from 'react-navigation';
 import { NavigationStackScreenComponent } from 'react-navigation-stack';
 import apiClient from '@api';
 import { CategoryPostItem } from '@components/PostItem';
+import LoadingMore from '@components/LoadingMore';
 
 type NavigationParams = { category?: any };
 interface Props extends NavigationInjectedProps<NavigationParams> {}
@@ -54,6 +55,7 @@ const CategoryPostsScreen: NavigationStackScreenComponent<NavigationParams> = ({
       refreshing={state.loading}
       onEndReached={loadMorePosts}
       onEndReachedThreshold={0.2}
+      ListFooterComponent={() => (state.loadingMore ? <LoadingMore /> : null)}
     />
   );
 
