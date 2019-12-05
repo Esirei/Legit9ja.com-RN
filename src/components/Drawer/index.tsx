@@ -108,7 +108,7 @@ const Drawer = () => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.drawerHeader}>
-        <Image source={images.splash} style={styles.drawerHeaderImage} resizeMode={'center'} />
+        <Image source={images.logo} style={styles.drawerHeaderImage} resizeMode={'center'} />
       </View>
       <DrawerItemsContainer>{renderAppNavItems()}</DrawerItemsContainer>
       <DrawerItemsContainer name={'Social'}>{renderSocialNavItems()}</DrawerItemsContainer>
