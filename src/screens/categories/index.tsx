@@ -1,5 +1,6 @@
 import React, { useEffect, useState, memo } from 'react';
 import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
+import { Placeholder, PlaceholderLine, PlaceholderMedia, Fade } from 'rn-placeholder';
 import randMC from 'random-material-color';
 import apiClient from '@api';
 import Touchable from '@components/Touchable';
@@ -12,6 +13,26 @@ const onCategoryItemPress = category => {
 
 const code = () => Math.floor(Math.random() * 256);
 const getColor = () => `rgb(${code()}, ${code()}, ${code()})`;
+
+const PlaceHolder = () => {
+  const renderPlaceHolders = () => {
+    return Array.from({ length: 15 }).map(_ => (
+      <View style={{ padding: 10, flexDirection: 'row', alignItems: 'center' }}>
+        <PlaceholderMedia style={{ width: 50, height: 50, borderRadius: 25, marginLeft: 10 }} />
+        <View style={{ flex: 1, marginLeft: 15, justifyContent: 'center' }}>
+          <PlaceholderLine width={35} />
+          <PlaceholderLine height={10} width={20} />
+        </View>
+      </View>
+    ));
+  };
+
+  return (
+    <Placeholder Animation={Fade}>
+      {renderPlaceHolders()}
+    </Placeholder>
+  );
+};
 
 // @ts-ignore
 const CategoryItem = memo(({ category }) => {
@@ -46,15 +67,17 @@ const CategoriesScreen = () => {
     const query = { _embed: true, hide_empty: true, per_page: 99 };
     apiClient
       .get('categories', query)
-      .then(categories => setState(prevState => ({ ...prevState, categories })));
+      .then(categories => setState(prevState => ({ ...prevState, categories, loading: false })));
   };
 
   // @ts-ignore
   const renderCategories = ({ item }) => <CategoryItem category={item} />;
 
+  const renderFlatList = () => <FlatList data={state.categories} renderItem={renderCategories} />;
+
   useEffect(getCategories, []);
 
-  return <FlatList data={state.categories} renderItem={renderCategories} />;
+  return <View>{state.loading ? <PlaceHolder /> : renderFlatList()}</View>;
 };
 
 CategoriesScreen.navigationOptions = {
