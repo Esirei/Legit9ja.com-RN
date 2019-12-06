@@ -27,11 +27,7 @@ const PlaceHolder = () => {
     ));
   };
 
-  return (
-    <Placeholder Animation={Fade}>
-      {renderPlaceHolders()}
-    </Placeholder>
-  );
+  return <Placeholder Animation={Fade}>{renderPlaceHolders()}</Placeholder>;
 };
 
 // @ts-ignore

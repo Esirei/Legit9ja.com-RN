@@ -157,7 +157,6 @@ const styles = StyleSheet.create({
   drawerHeader: {
     width: '100%',
     height: 150,
-    padding: 30,
     backgroundColor: '#FFF',
   },
   drawerHeaderImage: {
