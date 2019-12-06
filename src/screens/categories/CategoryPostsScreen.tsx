@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
+import { Placeholder, PlaceholderLine, PlaceholderMedia, Fade } from 'rn-placeholder';
 import { NavigationInjectedProps } from 'react-navigation';
 import { NavigationStackScreenComponent } from 'react-navigation-stack';
 import apiClient from '@api';
@@ -59,9 +60,25 @@ const CategoryPostsScreen: NavigationStackScreenComponent<NavigationParams> = ({
     />
   );
 
+  const renderPlaceHolders = () => {
+    return Array.from({ length: 10 }).map(_ => (
+      <Placeholder Animation={Fade}>
+        <View style={{ margin: 10, flexDirection: 'row' }}>
+          <PlaceholderMedia style={{ width: 140, height: 100 }} />
+          <View style={{ flex: 1, marginLeft: 5 }}>
+            <PlaceholderLine />
+            <PlaceholderLine width={80} style={{ marginBottom: 16 }} />
+            <PlaceholderLine width={45} height={10} />
+            <PlaceholderLine height={10} />
+          </View>
+        </View>
+      </Placeholder>
+    ));
+  };
+
   useEffect(loadPosts, []);
 
-  return <View>{renderPostList()}</View>;
+  return <View>{state.loading ? renderPlaceHolders() : renderPostList()}</View>;
 };
 
 CategoryPostsScreen.navigationOptions = ({ navigation }) => {

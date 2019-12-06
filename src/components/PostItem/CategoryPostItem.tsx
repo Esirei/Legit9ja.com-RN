@@ -40,10 +40,8 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     elevation: 2,
     backgroundColor: '#FFF',
-    flexDirection: 'row',
   },
   postItems: {
-    flex: 1,
     flexDirection: 'row',
     margin: 5,
   },
