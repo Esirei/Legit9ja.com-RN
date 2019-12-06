@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { Dimensions, FlatList, Image, StyleSheet, Text, View } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
+import { Placeholder, PlaceholderLine, PlaceholderMedia, Fade } from 'rn-placeholder';
 import axios from 'axios';
 import Touchable from '@components/Touchable';
 import PostItem from '@components/PostItem';
@@ -13,6 +14,46 @@ import LoadingMore from '@components/LoadingMore';
 const { navigate } = NavigationService;
 
 const { width } = Dimensions.get('window');
+
+const PlaceHolder = () => {
+  const renderSliderPlaceHolder = () => (
+    <View style={styles.sliderContainer}>
+      <PlaceholderMedia style={{ width: width - 32, alignSelf: 'center', margin: 4, flex: 1 }} />
+    </View>
+  );
+
+  const renderCategoryButtons = () => {
+    const style = { height: 40, minWidth: 88, marginHorizontal: 4, marginVertical: 7 };
+    return Array.from({ length: 5 }).map(_ => <PlaceholderMedia style={style} />);
+  };
+
+  const renderPostPlaceHolder = () => {
+    return Array.from({ length: 5 }).map(_ => (
+      <View style={{ margin: 10 }}>
+        <View style={{ flexDirection: 'row' }}>
+          <PlaceholderMedia style={{ height: 80, width: 100 }} />
+          <View style={{ flex: 1, marginLeft: 5 }}>
+            <PlaceholderLine height={10} />
+            <PlaceholderLine />
+            <PlaceholderLine width={30} />
+            <PlaceholderLine height={10} width={40} />
+          </View>
+        </View>
+        <PlaceholderLine />
+        <PlaceholderLine />
+        <PlaceholderLine width={75} />
+      </View>
+    ));
+  };
+
+  return (
+    <Placeholder Animation={Fade}>
+      {renderSliderPlaceHolder()}
+      <View style={{ flexDirection: 'row' }}>{renderCategoryButtons()}</View>
+      {renderPostPlaceHolder()}
+    </Placeholder>
+  );
+};
 
 const FeaturedPosts = ({ data }) => {
   const renderPostItem = ({ item }) => <FeaturedPostItem post={item} />;
@@ -133,7 +174,7 @@ const HomeScreen = () => {
 
   useEffect(loadItems, []);
 
-  return <View style={styles.container}>{renderFlatList()}</View>;
+  return <View style={styles.container}>{state.loading ? <PlaceHolder /> : renderFlatList()}</View>;
 };
 
 const HeaderTitle = () => (
@@ -209,8 +250,10 @@ const styles = StyleSheet.create({
   },
   categoryItem: {
     height: 40,
+    minWidth: 88,
     paddingHorizontal: 16,
     justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#008000',
     borderRadius: 5,
     marginHorizontal: 4,
