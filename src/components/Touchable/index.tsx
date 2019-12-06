@@ -25,7 +25,7 @@ const Touchable = ({ style, children, borderlessBackground, ...props }: Props) =
   );
 
   const others = () => (
-    <TouchableHighlight {...{ style, ...props }}>
+    <TouchableHighlight {...props}>
       <View {...{ style }}>{children}</View>
     </TouchableHighlight>
   );
