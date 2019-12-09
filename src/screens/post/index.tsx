@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback, useMemo } from 'react';
 import {
   Dimensions,
   Image,
@@ -67,6 +67,7 @@ const PostScreen = ({ navigation }: Props) => {
     loading: false,
     isBookmarked: false,
     bookmarking: false,
+    fullscreen: false,
   }));
 
   const getPost = () => {
@@ -149,10 +150,6 @@ const PostScreen = ({ navigation }: Props) => {
 
   const renderCommentButton = () => <CommentModal post={post} />;
 
-  const renderContent = () => <View />;
-
-  const postString = JSON.stringify(post.content.rendered);
-
   const appBar = () => (
     <Animated.View
       style={{
@@ -168,9 +165,36 @@ const PostScreen = ({ navigation }: Props) => {
   const onScroll = ({ y, x }: ContentOffsetMap) => {
     // Animated.call();
     // Animated.block();
+    console.log('onScroll');
     const mapping = [{ nativeEvent: { contentOffset: { y, x } } }];
     return Animated.event(mapping, { useNativeDriver: true });
   };
+
+  const onYouTubeChangeState = event => {
+    if (event.state === 'playing') {
+      setState(prevState => ({ ...prevState, fullscreen: true }));
+    } else if (event.state === 'paused' || event.state === 'ended') {
+      setState(prevState => ({ ...prevState, fullscreen: false }));
+    } else {
+      console.log('nothing');
+    }
+  };
+
+  const YouTube = useMemo(() => {
+    console.log('YouTube memoised', videoId);
+    const style = { width: '100%', aspectRatio: 16 / 9, marginBottom: 100 };
+    return () => (
+      <View style={style}>
+        <Youtube
+          videoId={videoId}
+          apiKey={youtubeAPiKey}
+          // fullscreen={state.fullscreen}
+          // onChangeState={onYouTubeChangeState}
+          style={{ flex: 1, margin: 4 }}
+        />
+      </View>
+    );
+  }, [state.fullscreen, videoId]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -178,7 +202,7 @@ const PostScreen = ({ navigation }: Props) => {
         {info()}
         <Separator />
         {renderAutoHeightWebView()}
-        {!!videoId && <Youtube videoId={videoId} apiKey={youtubeAPiKey} style={{ width: '100%', aspectRatio: 16 / 9, marginBottom: 100 }} />}
+        {!!videoId && <YouTube />}
         <Separator style={{ marginVertical: 16 }} />
       </Animated.ScrollView>
       {appBar()}
