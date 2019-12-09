@@ -50,8 +50,6 @@ const entities = new Html5Entities();
 export const postTitle = post => entities.decode(post.title.rendered);
 
 export const sharePost = post => {
-  Share.share(
-    { title: postTitle(post), url: 'http://esirei.com' },
-    { dialogTitle: 'Sharing Post...', subject: 'unknown post', tintColor: 'red' },
-  );
+  const url = post.link;
+  Share.share({ title: postTitle(post), url, message: url }, { dialogTitle: 'Sharing Post...' });
 };
