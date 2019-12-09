@@ -12,6 +12,7 @@ import PostDate from '@components/PostItem/PostDate';
 import images from '@assets/images';
 import CommentModal from './components/CommentModal';
 import Content from './components/Content';
+import LoadingMore from '@components/LoadingMore';
 import { bookmarkPost, postIsBookmarked, sharePost } from '@helpers/post';
 
 const { width } = Dimensions.get('window');
@@ -22,14 +23,18 @@ const { Value, interpolate, Extrapolate } = Animated;
 const StatusBarHeight = StatusBar.currentHeight || 0;
 const AppBarHeight = Header.HEIGHT + StatusBarHeight;
 
-type NavigationParams = { post?: any };
+type NavigationParams = {
+  post?: any;
+  post_slug?: string;
+  post_id?: number;
+  source: 'object' | 'slug' | 'id';
+};
 
 interface Props extends NavigationInjectedProps<NavigationParams> {}
 
 const PostScreen = ({ navigation }: Props) => {
   console.log('HeaderHeight', Header.HEIGHT);
   console.log('StatusBarHeight', StatusBar.currentHeight);
-  const post = navigation.getParam('post');
   const scrollY = useRef(new Animated.Value(0));
   const opacity = scrollY.current.interpolate({
     inputRange: [0, ImageHeight - AppBarHeight, ImageHeight - AppBarHeight],
@@ -49,29 +54,65 @@ const PostScreen = ({ navigation }: Props) => {
   }, []);
 
   const [state, setState] = useState(() => ({
+    post: undefined,
     relatedPosts: [],
     comments: [],
-    loading: false,
+    loading: true,
     isBookmarked: false,
-    bookmarking: false,
-    fullscreen: false,
   }));
 
-  const getPost = () => {
-    const query = { _embed: true };
-    apiClient.get('posts/', query);
+  const getPostByObject = () => {
+    return new Promise(resolve => {
+      const post = navigation.getParam('post', undefined);
+      resolve(post);
+    });
   };
+
+  const getPostById = () => {
+    const id = navigation.getParam('post_id', 0);
+    const query = { _embed: true };
+    return apiClient.get<any>(`posts/${id}`, query);
+  };
+
+  const getPostBySlug = () => {
+    const slug = navigation.getParam('post_slug', '');
+    const query = { slug, _embed: true };
+    return apiClient.get<any[]>('posts', query).then<any | undefined>(posts => posts[0]);
+  };
+
+  const loadPost = () => {
+    const getPost = () => {
+      const source = navigation.getParam('source');
+      console.log('Loading post by', source);
+      switch (source) {
+        case 'id':
+          return getPostById();
+        case 'slug':
+          return getPostBySlug();
+        case 'object':
+        default:
+          return getPostByObject();
+      }
+    };
+
+    getPost().then(post => {
+      if (post) {
+        postIsBookmarked(post).then(isBookmarked => {
+          // @ts-ignore
+          setState(prevState => ({ ...prevState, post, isBookmarked, loading: false }));
+        });
+      }
+    });
+  };
+
+  const { post } = state;
 
   const getComments = () => {
     const query = { post: 1, page: 1 };
     apiClient.get('comments/', query);
   };
 
-  useEffect(() => {
-    postIsBookmarked(post).then(isBookmarked => {
-      setState(prevState => ({ ...prevState, isBookmarked }));
-    });
-  }, []);
+  useEffect(loadPost, []);
 
   const bookmarking = useRef(false);
 
@@ -141,20 +182,26 @@ const PostScreen = ({ navigation }: Props) => {
     return Animated.event(mapping, { useNativeDriver: true });
   };
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <Animated.ScrollView
-        onScroll={onScroll({ y: scrollY.current })}
-        contentContainerStyle={styles.contentContainer}>
-        {info()}
-        <Separator />
-        <Content post={post} />
-        <Separator style={{ marginVertical: 16 }} />
-      </Animated.ScrollView>
-      {appBar()}
-      {renderCommentButton()}
-    </SafeAreaView>
-  );
+  const render = () => {
+    return state.loading ? (
+      <LoadingMore />
+    ) : (
+      <>
+        <Animated.ScrollView
+          onScroll={onScroll({ y: scrollY.current })}
+          contentContainerStyle={styles.contentContainer}>
+          {info()}
+          <Separator />
+          <Content post={post} />
+          <Separator style={{ marginVertical: 16 }} />
+        </Animated.ScrollView>
+        {appBar()}
+        {renderCommentButton()}
+      </>
+    );
+  };
+
+  return <SafeAreaView style={styles.container}>{render()}</SafeAreaView>;
 };
 
 PostScreen.navigationOptions = {
