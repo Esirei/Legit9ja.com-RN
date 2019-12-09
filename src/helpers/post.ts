@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage';
+import { Share } from 'react-native';
 
 const BOOKMARKED_POSTS = 'bookmarked_posts';
 export const getBookmarkedPosts = async () => {
@@ -42,4 +43,11 @@ export const youtubeId = post => {
 const youtubeIframeRegex = /<iframe.*(?:youtu(?:\.be\/|be\.com\/(?:watch\?(?:feature=youtu.be&)?v=|v\/|embed\/|user\/(?:[\w#]+\/)+)))([a-zA-Z0-9_-]{11}).*<\/iframe>/;
 export const postContentWithoutYT = post => {
   return postContent(post).replace(youtubeIframeRegex, '');
+};
+
+export const sharePost = post => {
+  Share.share(
+    { title: 'Hello', url: 'http://esirei.com' },
+    { dialogTitle: 'Sharing via', subject: 'unknown post', tintColor: 'red' },
+  );
 };

@@ -1,9 +1,10 @@
 import React, { memo, useRef } from 'react';
-import { Image, Share, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import Menu, { MenuItem } from 'react-native-material-menu';
 import Touchable from '@components/Touchable';
 import images from '@assets/images';
 import PostDate from './PostDate';
+import { bookmarkPost, sharePost } from '@helpers/post';
 
 const MenuOptionIcon = ({ source }) => <Image source={source} style={styles.menuOptionIcon} />;
 
@@ -24,12 +25,10 @@ const PostMenu = ({ post }) => {
     !!menu.current && menu.current.hide();
     switch (item) {
       case 'Share':
-        Share.share(
-          { title: 'Hello', url: 'http://esirei.com' },
-          { dialogTitle: 'Sharing via', subject: 'unknown post', tintColor: 'red' },
-        );
+        sharePost(post);
         break;
       case 'Save':
+        bookmarkPost(post, true);
         break;
       default:
         break;

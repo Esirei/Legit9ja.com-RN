@@ -12,7 +12,7 @@ import PostDate from '@components/PostItem/PostDate';
 import images from '@assets/images';
 import CommentModal from './components/CommentModal';
 import Content from './components/Content';
-import { bookmarkPost, postIsBookmarked } from '@helpers/post';
+import { bookmarkPost, postIsBookmarked, sharePost } from '@helpers/post';
 
 const { width } = Dimensions.get('window');
 const ImageHeight = width / 1.25;
@@ -101,7 +101,10 @@ const PostScreen = ({ navigation }: Props) => {
             <Touchable borderlessBackground style={{ marginRight: 8 }} onPress={onPressBookmark}>
               <Image source={bookmarkImage()} style={{ height: 24, width: 24, margin: 6 }} />
             </Touchable>
-            <Touchable borderlessBackground style={{ marginRight: 8 }}>
+            <Touchable
+              borderlessBackground
+              style={{ marginRight: 8 }}
+              onPress={() => sharePost(post)}>
               <Image source={images.ic_share_128} style={{ height: 24, width: 24, margin: 6 }} />
             </Touchable>
           </View>
