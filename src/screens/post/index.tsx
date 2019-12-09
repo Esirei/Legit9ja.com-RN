@@ -12,7 +12,6 @@ import {
 import { NavigationInjectedProps } from 'react-navigation';
 import { Header } from 'react-navigation-stack';
 import Animated from 'react-native-reanimated';
-import Youtube from 'react-native-youtube';
 import apiClient from '@api';
 
 import { WebViewNavigation } from 'react-native-webview';
@@ -24,9 +23,9 @@ import PostCategories from '@components/PostItem/PostCategories';
 import PostDate from '@components/PostItem/PostDate';
 import images from '@assets/images';
 import CommentModal from './components/CommentModal';
-import { postContentWithoutYT, youtubeId, bookmarkPost, postIsBookmarked } from '@helpers/post';
+import YouTube from './components/YouTube';
+import { postContentWithoutYT, bookmarkPost, postIsBookmarked } from '@helpers/post';
 
-const youtubeAPiKey = 'AIzaSyAu1oJCoKvtGwFgldG_RjjvvMEC-Zx2yS8';
 const { width } = Dimensions.get('window');
 const ImageHeight = width / 1.25;
 
@@ -43,7 +42,6 @@ const PostScreen = ({ navigation }: Props) => {
   console.log('HeaderHeight', Header.HEIGHT);
   console.log('StatusBarHeight', StatusBar.currentHeight);
   const post = navigation.getParam('post');
-  const videoId = youtubeId(post);
   const scrollY = useRef(new Animated.Value(0));
   const opacity = scrollY.current.interpolate({
     inputRange: [0, ImageHeight - AppBarHeight, ImageHeight - AppBarHeight],
@@ -171,55 +169,13 @@ const PostScreen = ({ navigation }: Props) => {
     return Animated.event(mapping, { useNativeDriver: true });
   };
 
-  const youtubeRef = useRef<Youtube>(null);
-
-  const onChangeFullscreen = event => {
-    console.log('onChangeFullscreen', event);
-    if (Platform.OS === 'android') {
-      if (!event.isFullscreen) {
-        setState(prevState => ({ ...prevState, fullscreen: event.isFullscreen }));
-      }
-    }
-  };
-
-  const onYouTubeChangeState = event => {
-    console.log(event);
-    if (Platform.OS === 'android') {
-      if (event.state === 'playing') {
-        setState(prevState => ({ ...prevState, fullscreen: true }));
-      } else if (event.state === 'paused' || event.state === 'ended') {
-        // setState(prevState => ({ ...prevState, fullscreen: false }));
-      } else {
-        console.log('nothing');
-      }
-    }
-  };
-
-  const YouTube = useMemo(() => {
-    console.log('YouTube memoised', videoId);
-    const style = { width: '100%', aspectRatio: 16 / 9, marginBottom: 100 };
-    return () => (
-      <View style={style}>
-        <Youtube
-          ref={youtubeRef}
-          videoId={videoId}
-          apiKey={youtubeAPiKey}
-          fullscreen={state.fullscreen}
-          onChangeState={onYouTubeChangeState}
-          onChangeFullscreen={onChangeFullscreen}
-          style={{ flex: 1, margin: 4 }}
-        />
-      </View>
-    );
-  }, [state.fullscreen, videoId]);
-
   return (
     <SafeAreaView style={styles.container}>
       <Animated.ScrollView onScroll={onScroll({ y: scrollY.current })}>
         {info()}
         <Separator />
         {renderAutoHeightWebView()}
-        {!!videoId && <YouTube />}
+        <YouTube post={post} />
         <Separator style={{ marginVertical: 16 }} />
       </Animated.ScrollView>
       {appBar()}
