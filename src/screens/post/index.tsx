@@ -43,8 +43,8 @@ const PostScreen = ({ navigation }: Props) => {
   console.log('StatusBarHeight', StatusBar.currentHeight);
   const post = navigation.getParam('post');
   const videoId = youtubeId(post);
-  const scrollY = new Animated.Value(0);
-  const opacity = scrollY.interpolate({
+  const scrollY = useRef(new Animated.Value(0));
+  const opacity = scrollY.current.interpolate({
     inputRange: [0, ImageHeight - AppBarHeight, ImageHeight - AppBarHeight],
     outputRange: [0, 0, 1],
     extrapolate: Extrapolate.CLAMP,
@@ -198,7 +198,7 @@ const PostScreen = ({ navigation }: Props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Animated.ScrollView onScroll={onScroll({ y: scrollY })}>
+      <Animated.ScrollView onScroll={onScroll({ y: scrollY.current })}>
         {info()}
         <Separator />
         {renderAutoHeightWebView()}
