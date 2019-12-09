@@ -99,13 +99,19 @@ const PostScreen = ({ navigation }: Props) => {
           <PostDate post={post} />
           <View style={{ flexDirection: 'row' }}>
             <Touchable borderlessBackground style={{ marginRight: 8 }} onPress={onPressBookmark}>
-              <Image source={bookmarkImage()} style={{ height: 24, width: 24, margin: 6 }} />
+              <Image
+                source={bookmarkImage()}
+                style={{ height: 24, width: 24, margin: 6, tintColor: '#008000' }}
+              />
             </Touchable>
             <Touchable
               borderlessBackground
               style={{ marginRight: 8 }}
               onPress={() => sharePost(post)}>
-              <Image source={images.ic_share_128} style={{ height: 24, width: 24, margin: 6 }} />
+              <Image
+                source={images.ic_share_128}
+                style={{ height: 24, width: 24, margin: 6, tintColor: '#008000' }}
+              />
             </Touchable>
           </View>
         </View>
