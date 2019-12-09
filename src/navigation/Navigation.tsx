@@ -9,6 +9,7 @@ import ReactNativeScreen from '@screens/ReactNativeScreen';
 import HomeScreen from '@screens/home';
 import CategoriesScreen, { CategoryPostsScreen } from '@screens/categories';
 import PostScreen from '@screens/post';
+import SearchScreen from '@screens/search';
 import Drawer from '@components/Drawer';
 
 // createAppContainer(
@@ -26,6 +27,7 @@ const StackNav = createStackNavigator({
   [RouteNames.CATEGORIES]: CategoriesScreen,
   [RouteNames.CATEGORY_POSTS]: CategoryPostsScreen,
   [RouteNames.POSTS]: PostScreen,
+  [RouteNames.SEARCH]: SearchScreen,
 });
 
 const DrawerNav = createDrawerNavigator(
