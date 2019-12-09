@@ -1,30 +1,10 @@
-import React, { useState, memo } from 'react';
-import {
-  Image,
-  KeyboardAvoidingView,
-  Text,
-  TextInput,
-  View,
-  StyleSheet,
-  TextInputProps,
-} from 'react-native';
+import React, { memo, useState } from 'react';
+import { Image, KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native';
 import Modal from 'react-native-modal';
 import Touchable from '@components/Touchable';
+import Input from '@components/TextInput';
 import images from '@assets/images';
 import apiClient from '@api';
-
-interface InputProps extends TextInputProps {
-  image: any;
-  error?: boolean;
-}
-
-const Input = ({ image, error, ...props }: InputProps) => (
-  <View style={[styles.input, error && styles.inputError]}>
-    <Image source={image} style={styles.inputImage} />
-    <TextInput style={styles.inputTextInput} placeholder={'Email'} {...props} />
-    {error}
-  </View>
-);
 
 const CommentModal = ({ post }) => {
   const [isVisible, setVisibility] = useState(false);
@@ -139,23 +119,6 @@ const styles = StyleSheet.create({
   commentContainer: { backgroundColor: '#FFF', borderRadius: 2 },
   title: { color: '#FFF', backgroundColor: '#455A64', padding: 15, fontWeight: 'bold' },
   inputsContainer: { marginVertical: 5, marginHorizontal: 10 },
-  input: {
-    margin: 5,
-    borderRadius: 4,
-    // padding: 12,
-    alignItems: 'center',
-    minHeight: 48,
-    flexDirection: 'row',
-    backgroundColor: 'rgba(0,0,0,0.075)',
-    borderColor: 'rgba(0,0,0,0.075)',
-    borderWidth: StyleSheet.hairlineWidth,
-  },
-  inputError: {
-    borderColor: 'red',
-    borderWidth: StyleSheet.hairlineWidth,
-  },
-  inputImage: { marginRight: 0, margin: 12, width: 24, height: 24, tintColor: '#818181' },
-  inputTextInput: { margin: 12, padding: 0, flex: 1, textAlignVertical: 'auto', paddingBottom: 0 },
   buttonsContainer: { marginTop: 10, marginBottom: 5, flexDirection: 'row' },
   button: { padding: 10, alignItems: 'center', flex: 1 },
   buttonText: { color: '#008000', fontWeight: 'bold' },
