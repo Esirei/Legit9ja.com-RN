@@ -12,6 +12,7 @@ const YouTube = ({ post }) => {
   });
 
   const youtubeRef = useRef<Youtube>(null);
+  const youtubeStateRef = useRef('');
 
   const onChangeFullscreen = event => {
     console.log('onChangeFullscreen', event);
@@ -25,12 +26,13 @@ const YouTube = ({ post }) => {
   const onYouTubeChangeState = event => {
     console.log(event);
     if (Platform.OS === 'android') {
-      if (event.state === 'playing') {
-        setState(prevState => ({ ...prevState, fullscreen: true }));
-      } else if (event.state === 'paused' || event.state === 'ended') {
-        // setState(prevState => ({ ...prevState, fullscreen: false }));
-      } else {
-        console.log('nothing');
+      if (event.state === 'playing' && !state.fullscreen) {
+        if (youtubeStateRef.current !== 'playing') {
+          setState(prevState => ({ ...prevState, fullscreen: true }));
+          youtubeStateRef.current = event.state;
+        } else {
+          youtubeStateRef.current = 'stopped';
+        }
       }
     }
   };
