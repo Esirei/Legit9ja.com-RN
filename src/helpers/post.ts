@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import { Share } from 'react-native';
+import { Html5Entities } from 'html-entities';
 
 const BOOKMARKED_POSTS = 'bookmarked_posts';
 export const getBookmarkedPosts = async () => {
@@ -45,9 +46,12 @@ export const postContentWithoutYT = post => {
   return postContent(post).replace(youtubeIframeRegex, '');
 };
 
+const entities = new Html5Entities();
+export const postTitle = post => entities.decode(post.title.rendered);
+
 export const sharePost = post => {
   Share.share(
-    { title: 'Hello', url: 'http://esirei.com' },
-    { dialogTitle: 'Sharing via', subject: 'unknown post', tintColor: 'red' },
+    { title: postTitle(post), url: 'http://esirei.com' },
+    { dialogTitle: 'Sharing Post...', subject: 'unknown post', tintColor: 'red' },
   );
 };

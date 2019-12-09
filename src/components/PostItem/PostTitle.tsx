@@ -1,12 +1,10 @@
 import React, { memo } from 'react';
 import { StyleSheet, Text } from 'react-native';
-import { Html5Entities } from 'html-entities';
-
-const entities = new Html5Entities();
+import { postTitle } from '@helpers/post';
 
 const PostTitle = ({ post, style = {} }) => (
   <Text style={[styles.text, style]} numberOfLines={2}>
-    {entities.decode(post.title.rendered)}
+    {postTitle(post)}
   </Text>
 );
 

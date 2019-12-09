@@ -42,6 +42,7 @@ const YouTube = ({ post }) => {
       return (
         <View style={styles.container}>
           <Youtube
+            play={false}
             ref={youtubeRef}
             videoId={videoId}
             apiKey={youtubeAPiKey}
