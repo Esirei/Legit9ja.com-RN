@@ -63,6 +63,6 @@ const YouTube = ({ post }) => {
 export default memo(YouTube);
 
 const styles = StyleSheet.create({
-  container: { width: '100%', aspectRatio: 16 / 9, marginBottom: 100 },
+  container: { width: '100%', aspectRatio: 16 / 9 },
   youtube: { flex: 1, margin: 4 },
 });

@@ -137,7 +137,9 @@ const PostScreen = ({ navigation }: Props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Animated.ScrollView onScroll={onScroll({ y: scrollY.current })}>
+      <Animated.ScrollView
+        onScroll={onScroll({ y: scrollY.current })}
+        contentContainerStyle={styles.contentContainer}>
         {info()}
         <Separator />
         <Content post={post} />
@@ -170,4 +172,5 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
     backgroundColor: 'rgba(0,0,0,0.54)',
   },
+  contentContainer: { paddingBottom: 72 },
 });
