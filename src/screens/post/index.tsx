@@ -1,21 +1,9 @@
-import React, { useEffect, useState, useRef, useCallback, useMemo } from 'react';
-import {
-  Dimensions,
-  Image,
-  Linking,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  View,
-  Platform,
-} from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Dimensions, Image, SafeAreaView, StatusBar, StyleSheet, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 import { Header } from 'react-navigation-stack';
 import Animated from 'react-native-reanimated';
 import apiClient from '@api';
-
-import { WebViewNavigation } from 'react-native-webview';
-import AutoHeightWebView from 'react-native-autoheight-webview';
 import Touchable from '@components/Touchable';
 import PostImage from '@components/PostItem/PostImage';
 import PostTitle from '@components/PostItem/PostTitle';
@@ -24,7 +12,8 @@ import PostDate from '@components/PostItem/PostDate';
 import images from '@assets/images';
 import CommentModal from './components/CommentModal';
 import YouTube from './components/YouTube';
-import { postContentWithoutYT, bookmarkPost, postIsBookmarked } from '@helpers/post';
+import Content from './components/Content';
+import { bookmarkPost, postIsBookmarked } from '@helpers/post';
 
 const { width } = Dimensions.get('window');
 const ImageHeight = width / 1.25;
@@ -78,31 +67,6 @@ const PostScreen = ({ navigation }: Props) => {
     const query = { post: 1, page: 1 };
     apiClient.get('comments/', query);
   };
-
-  const getHtml = () => {
-    const css =
-      '<style>body{width:100%;margin:0;text-align:start;}img {max-width:100%;height:auto;} iframe{width:100%;height:auto;}</style>';
-    return css + postContentWithoutYT(post);
-  };
-
-  const openExternalUrl = (webEvent: WebViewNavigation) => {
-    if (webEvent.url) {
-      Linking.openURL(webEvent.url);
-      return false;
-    }
-    return true;
-  };
-
-  const renderAutoHeightWebView = () => (
-    <AutoHeightWebView
-      source={{ html: getHtml() }}
-      style={{ width: Dimensions.get('window').width - 16, marginTop: 16 }}
-      containerStyle={{ alignItems: 'center' }}
-      onShouldStartLoadWithRequest={openExternalUrl}
-      scalesPageToFit={false}
-      zoomable={false}
-    />
-  );
 
   useEffect(() => {
     postIsBookmarked(post).then(isBookmarked => {
@@ -174,7 +138,7 @@ const PostScreen = ({ navigation }: Props) => {
       <Animated.ScrollView onScroll={onScroll({ y: scrollY.current })}>
         {info()}
         <Separator />
-        {renderAutoHeightWebView()}
+        <Content post={post} />
         <YouTube post={post} />
         <Separator style={{ marginVertical: 16 }} />
       </Animated.ScrollView>
