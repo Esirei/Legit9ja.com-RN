@@ -7,6 +7,7 @@ import {
   StatusBar,
   StyleSheet,
   View,
+  Platform,
 } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 import { Header } from 'react-navigation-stack';
@@ -170,13 +171,27 @@ const PostScreen = ({ navigation }: Props) => {
     return Animated.event(mapping, { useNativeDriver: true });
   };
 
+  const youtubeRef = useRef<Youtube>(null);
+
+  const onChangeFullscreen = event => {
+    console.log('onChangeFullscreen', event);
+    if (Platform.OS === 'android') {
+      if (!event.isFullscreen) {
+        setState(prevState => ({ ...prevState, fullscreen: event.isFullscreen }));
+      }
+    }
+  };
+
   const onYouTubeChangeState = event => {
-    if (event.state === 'playing') {
-      setState(prevState => ({ ...prevState, fullscreen: true }));
-    } else if (event.state === 'paused' || event.state === 'ended') {
-      setState(prevState => ({ ...prevState, fullscreen: false }));
-    } else {
-      console.log('nothing');
+    console.log(event);
+    if (Platform.OS === 'android') {
+      if (event.state === 'playing') {
+        setState(prevState => ({ ...prevState, fullscreen: true }));
+      } else if (event.state === 'paused' || event.state === 'ended') {
+        // setState(prevState => ({ ...prevState, fullscreen: false }));
+      } else {
+        console.log('nothing');
+      }
     }
   };
 
@@ -186,10 +201,12 @@ const PostScreen = ({ navigation }: Props) => {
     return () => (
       <View style={style}>
         <Youtube
+          ref={youtubeRef}
           videoId={videoId}
           apiKey={youtubeAPiKey}
-          // fullscreen={state.fullscreen}
-          // onChangeState={onYouTubeChangeState}
+          fullscreen={state.fullscreen}
+          onChangeState={onYouTubeChangeState}
+          onChangeFullscreen={onChangeFullscreen}
           style={{ flex: 1, margin: 4 }}
         />
       </View>
