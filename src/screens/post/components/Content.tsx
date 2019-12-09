@@ -19,14 +19,17 @@ const Content = ({ post }) => {
   };
 
   return (
-    <AutoHeightWebView
-      source={{ html }}
-      style={styles.webview}
-      containerStyle={styles.webviewContainer}
-      onShouldStartLoadWithRequest={openExternalUrl}
-      scalesPageToFit={false}
-      zoomable={false}
-    />
+    <>
+      <AutoHeightWebView
+        source={{ html }}
+        style={styles.webview}
+        containerStyle={styles.webviewContainer}
+        onShouldStartLoadWithRequest={openExternalUrl}
+        scalesPageToFit={false}
+        zoomable={false}
+      />
+      <YouTube post={post} />
+    </>
   );
 };
 

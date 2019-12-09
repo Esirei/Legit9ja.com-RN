@@ -11,7 +11,6 @@ import PostCategories from '@components/PostItem/PostCategories';
 import PostDate from '@components/PostItem/PostDate';
 import images from '@assets/images';
 import CommentModal from './components/CommentModal';
-import YouTube from './components/YouTube';
 import Content from './components/Content';
 import { bookmarkPost, postIsBookmarked } from '@helpers/post';
 
@@ -139,7 +138,6 @@ const PostScreen = ({ navigation }: Props) => {
         {info()}
         <Separator />
         <Content post={post} />
-        <YouTube post={post} />
         <Separator style={{ marginVertical: 16 }} />
       </Animated.ScrollView>
       {appBar()}
