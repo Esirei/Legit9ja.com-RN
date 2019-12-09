@@ -1,16 +1,38 @@
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { createDrawerNavigator } from 'react-navigation-drawer';
+import { createStackNavigator } from 'react-navigation-stack';
 import RouteNames from './RouteNames';
 import InitialScreenSwitcher from '@components/InitialScreenSwitcher';
 import ExtraScreen from '@screens/ExtraScreen';
 import ReactNativeScreen from '@screens/ReactNativeScreen';
+import HomeScreen from '@screens/home';
+import CategoriesScreen, { CategoryPostsScreen } from '@screens/categories';
+import PostScreen from '@screens/post';
+import Drawer from '@components/Drawer';
 
-export default createAppContainer(
-  createSwitchNavigator({
-    InitialScreenSwitcher,
-    BottomTabs: createBottomTabNavigator({
-      [RouteNames.HOME]: ReactNativeScreen,
-      [RouteNames.EXTRA]: ExtraScreen,
-    }),
-  }),
+// createAppContainer(
+//   createSwitchNavigator({
+//     InitialScreenSwitcher,
+//     BottomTabs: createBottomTabNavigator({
+//       [RouteNames.HOME]: ReactNativeScreen,
+//       [RouteNames.EXTRA]: ExtraScreen,
+//     }),
+//   }),
+// );
+
+const StackNav = createStackNavigator({
+  [RouteNames.HOME]: HomeScreen,
+  [RouteNames.CATEGORIES]: CategoriesScreen,
+  [RouteNames.CATEGORY_POSTS]: CategoryPostsScreen,
+  [RouteNames.POSTS]: PostScreen,
+});
+
+const DrawerNav = createDrawerNavigator(
+  { StackNav },
+  {
+    contentComponent: Drawer,
+  },
 );
+
+export default createAppContainer(DrawerNav);

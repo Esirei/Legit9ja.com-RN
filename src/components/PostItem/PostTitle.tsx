@@ -4,7 +4,7 @@ import { Html5Entities } from 'html-entities';
 
 const entities = new Html5Entities();
 
-const PostTitle = ({ post, style }) => (
+const PostTitle = ({ post, style = {} }) => (
   <Text style={[styles.text, style]} numberOfLines={2}>
     {entities.decode(post.title.rendered)}
   </Text>

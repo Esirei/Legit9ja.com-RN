@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     color: 'rgba(0,0,0,0.54)',
   },
   drawerItemsContainerSeparator: {
-    height: 0.3,
+    height: 0.6,
     marginTop: 8,
     backgroundColor: 'rgba(0,0,0,0.54)',
   },

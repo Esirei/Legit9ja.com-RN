@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     tintColor: '#008000',
   },
   categoryItemSeparator: {
-    height: 0.3,
+    height: 0.6,
     backgroundColor: '#818181',
     marginHorizontal: 8,
   },

@@ -1,0 +1,8 @@
+ - Share Post
+ - Bookmark Post
+ - Post Screen
+ - Comments Screen
+ - Search Screen
+ - Ads
+ - Notifications
+ - Screens for others in Drawer
