@@ -198,6 +198,8 @@ PODS:
   - react-native-onesignal (3.6.0):
     - OneSignal (= 2.12.2)
     - React (< 1.0.0, >= 0.13.0)
+  - react-native-safe-area-context (0.6.1):
+    - React
   - react-native-splash-screen (3.2.0):
     - React
   - react-native-webview (7.5.2):
@@ -275,6 +277,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-onesignal (from `../node_modules/react-native-onesignal`)
+  - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -336,6 +339,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-onesignal:
     :path: "../node_modules/react-native-onesignal"
+  react-native-safe-area-context:
+    :path: "../node_modules/react-native-safe-area-context"
   react-native-splash-screen:
     :path: "../node_modules/react-native-splash-screen"
   react-native-webview:
@@ -391,6 +396,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: d5525f9ed5f782fdbacb64b9b01a43a9323d2386
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
   react-native-onesignal: 39d79554037ec5842a810efe1bb0343e332c757d
+  react-native-safe-area-context: 1f8a52fb0ab1321eef9a7099bd2c360d4e38264b
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-webview: d1b30cc9128256ec1a9c6d10fb572231bd371337
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76

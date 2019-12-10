@@ -4,6 +4,7 @@ import { View } from 'react-native';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import SplashScreen from 'react-native-splash-screen';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { store, persistor } from './store';
 import Navigation from '@navigation/Navigation';
 import { NavigationService } from '@navigation';
@@ -15,12 +16,14 @@ const App = () => {
   useAuthNavigation();
   useEffect(() => SplashScreen.hide(), []);
   return (
-    <Provider store={store}>
-      <ApiInterceptors />
-      <PersistGate loading={<View />} persistor={persistor}>
-        <Navigation ref={setNavigator} />
-      </PersistGate>
-    </Provider>
+    <SafeAreaProvider>
+      <Provider store={store}>
+        <ApiInterceptors />
+        <PersistGate loading={<View />} persistor={persistor}>
+          <Navigation ref={setNavigator} />
+        </PersistGate>
+      </Provider>
+    </SafeAreaProvider>
   );
 };
 

@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Dimensions, Image, SafeAreaView, StatusBar, StyleSheet, View } from 'react-native';
-import { NavigationInjectedProps } from 'react-navigation';
+import { Dimensions, Image, StatusBar, StyleSheet, View, Platform } from 'react-native';
+import { SafeAreaView, NavigationInjectedProps } from 'react-navigation';
 import { Header } from 'react-navigation-stack';
 import Animated from 'react-native-reanimated';
+import { useSafeArea } from 'react-native-safe-area-context';
 import apiClient from '@api';
 import Touchable from '@components/Touchable';
 import PostImage from '@components/PostItem/PostImage';
@@ -21,7 +22,8 @@ const ImageHeight = width / 1.25;
 const { Value, interpolate, Extrapolate } = Animated;
 
 const StatusBarHeight = StatusBar.currentHeight || 0;
-const AppBarHeight = Header.HEIGHT + StatusBarHeight;
+// We hidding statusBar in android, so need to add the height to emulate.
+const DefaultAppBarHeight = Header.HEIGHT + StatusBarHeight;
 
 type NavigationParams = {
   post?: any;
@@ -33,11 +35,25 @@ type NavigationParams = {
 interface Props extends NavigationInjectedProps<NavigationParams> {}
 
 const PostScreen = ({ navigation }: Props) => {
-  console.log('HeaderHeight', Header.HEIGHT);
-  console.log('StatusBarHeight', StatusBar.currentHeight);
+  const insets = useSafeArea();
+
+  // If Device has SafeAreaInsets at the top, statusbar is most likely within it.
+  const AppBarHeight = DefaultAppBarHeight + (insets.top ? Platform.select({ 
+    android: insets.top - (StatusBar.currentHeight || 0),
+    ios: insets.top - 20, // Removing ios statusBar height from react-navigation's Header.Height getter
+    default: insets.top,
+   }) : 0);
+
+   console.log('HeaderHeight', Header.HEIGHT);
+   console.log('StatusBarHeight', StatusBar.currentHeight);
+   console.log('SafeAreaInsets', insets);
+   console.log('AppBarHeight', AppBarHeight);
+
+  const SCROLL_RANGE = ImageHeight - AppBarHeight;
+
   const scrollY = useRef(new Animated.Value(0));
   const opacity = scrollY.current.interpolate({
-    inputRange: [0, ImageHeight - AppBarHeight, ImageHeight - AppBarHeight],
+    inputRange: [0, SCROLL_RANGE, SCROLL_RANGE],
     outputRange: [0, 0, 1],
     extrapolate: Extrapolate.CLAMP,
   });
@@ -201,12 +217,12 @@ const PostScreen = ({ navigation }: Props) => {
     );
   };
 
-  return <SafeAreaView style={styles.container}>{render()}</SafeAreaView>;
+  return <SafeAreaView forceInset={{ top: 'never' }} style={styles.container}>{render()}</SafeAreaView>;
 };
 
 PostScreen.navigationOptions = {
   headerStyle: {
-    marginTop: StatusBarHeight, // ios is 0
+    // marginTop: StatusBarHeight, // ios is 0
   },
   headerTransparent: true,
   headerTintColor: '#FFF',
