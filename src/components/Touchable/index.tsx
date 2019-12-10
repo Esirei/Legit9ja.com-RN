@@ -1,18 +1,19 @@
 import {
   GestureResponderEvent,
   Platform,
-  TouchableHighlight,
-  TouchableHighlightProps,
+  TouchableOpacity,
+  TouchableOpacityProps,
   TouchableNativeFeedback,
   TouchableNativeFeedbackProps,
   View,
 } from 'react-native';
 import React from 'react';
 
-export interface Props extends TouchableNativeFeedbackProps, TouchableHighlightProps {
+export interface Props extends TouchableNativeFeedbackProps, TouchableOpacityProps {
   children: React.ReactNode;
   onPress?: (event: GestureResponderEvent) => void;
   borderlessBackground?: boolean;
+  underlayColor?: string;
 }
 
 const Touchable = ({ style, children, borderlessBackground, ...props }: Props) => {
@@ -25,9 +26,9 @@ const Touchable = ({ style, children, borderlessBackground, ...props }: Props) =
   );
 
   const others = () => (
-    <TouchableHighlight {...{ style, ...props }}>
+    <TouchableOpacity {...{ style, ...props }}>
       <>{children}</>
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 
   return Platform.OS === 'android' ? android() : others();
