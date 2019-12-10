@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, View, Platform } from 'react-native';
 import { NavigationStackScreenComponent } from 'react-navigation-stack';
 import TextInput from '@components/TextInput';
 import PostItem from '@components/PostItem';
@@ -91,7 +91,7 @@ export default SearchScreen;
 const styles = StyleSheet.create({
   searchContainer: {
     minHeight: 30,
-    marginRight: 16,
+    marginRight: Platform.OS === 'android' ? 16 : 0,
   },
   searchText: {
     marginVertical: 0,
