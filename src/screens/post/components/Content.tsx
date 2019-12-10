@@ -12,14 +12,17 @@ const css =
 const Content = ({ post }) => {
   const html = css + postContentWithoutYT(post);
 
-  const openExternalUrl = (webEvent: WebViewNavigation) => {
-    if (webEvent.url) {
-      const matches = postSlugRegex.exec(webEvent.url);
+  const openExternalUrl = (event: WebViewNavigation) => {
+    console.log('openExternalUrl', event);
+    const { url } = event;
+    // iOS calls method on 1st load, continue loading if url is about:blank.
+    if (url && url !== 'about:blank') {
+      const matches = postSlugRegex.exec(url);
       if (matches) {
         const post_slug = matches[1];
         NavigationService.push(RouteNames.POSTS, { post_slug, source: 'slug' }, undefined);
       } else {
-        Linking.openURL(webEvent.url);
+        Linking.openURL(url);
       }
       return false;
     }
