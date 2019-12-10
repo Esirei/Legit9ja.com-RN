@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import { Image, StyleSheet } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 const key = 'wp:featuredmedia';
 const PostImage = ({ post, style = {} }) => {
@@ -8,7 +9,7 @@ const PostImage = ({ post, style = {} }) => {
   if (_embedded && _embedded[key] && _embedded[key].length > 0) {
     uri = _embedded[key][0].source_url || '';
   }
-  return <Image source={{ uri }} style={[styles.image, style]} />;
+  return <FastImage source={{ uri }} style={[styles.image, style]} />;
 };
 
 export default memo(PostImage);
