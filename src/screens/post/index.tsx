@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Dimensions, Image, StatusBar, StyleSheet, View, Platform } from 'react-native';
-import { SafeAreaView, NavigationInjectedProps } from 'react-navigation';
+import { Dimensions, Image, Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { NavigationInjectedProps, SafeAreaView } from 'react-navigation';
 import { Header } from 'react-navigation-stack';
 import Animated from 'react-native-reanimated';
 import { useSafeArea } from 'react-native-safe-area-context';
@@ -143,7 +143,7 @@ const PostScreen = ({ navigation }: Props) => {
 
   const info = () => (
     <View>
-      <PostImage post={post} style={{ width: '100%', height: undefined, aspectRatio: 1.25 }} />
+      {/*<PostImage post={post} style={{ width: '100%', height: undefined, aspectRatio: 1.25 }} />*/}
       <View style={{ padding: 8 }}>
         <PostTitle post={post} />
         <PostCategories post={post} />
@@ -173,10 +173,53 @@ const PostScreen = ({ navigation }: Props) => {
 
   const renderCommentButton = () => <CommentModal post={post} />;
 
-  // Not sure if the image is better... hmm...
-  const appBar = () => (
-    <Animated.View style={[styles.appBar, { height: AppBarHeight, opacity }]}>
-      {/*<PostImage post={post} style={{ width: '100%', height: '100%' }} />*/}
+  const translateY = scrollY.current.interpolate({
+    inputRange: [0, SCROLL_RANGE],
+    outputRange: [0, -SCROLL_RANGE],
+    extrapolateRight: Extrapolate.CLAMP,
+  });
+
+  const elevation = scrollY.current.interpolate({
+    inputRange: [0, SCROLL_RANGE, SCROLL_RANGE],
+    outputRange: [0, 0, Platform.OS === 'android' ? 4 : 1],
+    extrapolate: Extrapolate.CLAMP,
+  });
+
+  const appBarStyle = Platform.select({
+    android: {
+      elevation,
+    },
+    default: {
+      borderBottomColor: '#3a3a3a',
+      borderBottomWidth: elevation,
+    },
+  });
+
+  const ImageAppBar = () => (
+    <Animated.View
+      style={{
+        backgroundColor: 'blue',
+        height: ImageHeight,
+        translateY,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        ...appBarStyle,
+      }}>
+      <PostImage post={post} style={{ flex: 1, width: '100%' }} />
+      <Animated.View
+        style={{
+          opacity,
+          backgroundColor: 'rgba(0,0,0,0.25)',
+          // flex: 1,
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+        }}
+      />
     </Animated.View>
   );
 
@@ -196,13 +239,13 @@ const PostScreen = ({ navigation }: Props) => {
       <>
         <Animated.ScrollView
           onScroll={onScroll({ y: scrollY.current })}
-          contentContainerStyle={styles.contentContainer}>
+          contentContainerStyle={[styles.contentContainer, { paddingTop: ImageHeight }]}>
           {info()}
           <Separator />
           <Content post={post} />
           <Separator style={{ marginVertical: 16 }} />
         </Animated.ScrollView>
-        {appBar()}
+        <ImageAppBar />
         {renderCommentButton()}
       </>
     );
