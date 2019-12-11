@@ -21,9 +21,18 @@ const ImageHeight = width / 1.25;
 
 const { Value, interpolate, Extrapolate } = Animated;
 
-const StatusBarHeight = StatusBar.currentHeight || 0;
-// We hidding statusBar in android, so need to add the height to emulate.
-const DefaultAppBarHeight = Header.HEIGHT + StatusBarHeight;
+// ios doesn't render a view for it's statusBar, so it's 0
+const RenderedStatusBarHeight = StatusBar.currentHeight || 0;
+
+// StatusBar height to be deducted if device has inset(notch) at the top, statusBar is most likely rendered in the inset.
+const RealStatusBarHeight = Platform.select({
+  android: RenderedStatusBarHeight,
+  ios: 20, // Removing ios statusBar height from react-navigation's Header.Height getter
+  default: 0,
+});
+
+// We hiding system rendered statusBar view in android, so need to add the height to rendered AppBar to emulate it.
+const DefaultAppBarHeight = Header.HEIGHT + RenderedStatusBarHeight;
 
 type NavigationParams = {
   post?: any;
@@ -38,16 +47,13 @@ const PostScreen = ({ navigation }: Props) => {
   const insets = useSafeArea();
 
   // If Device has SafeAreaInsets at the top, statusbar is most likely within it.
-  const AppBarHeight = DefaultAppBarHeight + (insets.top ? Platform.select({ 
-    android: insets.top - (StatusBar.currentHeight || 0),
-    ios: insets.top - 20, // Removing ios statusBar height from react-navigation's Header.Height getter
-    default: insets.top,
-   }) : 0);
+  const appBarModifier = insets.top ? insets.top - RealStatusBarHeight : 0;
+  const AppBarHeight = DefaultAppBarHeight + appBarModifier;
 
-   console.log('HeaderHeight', Header.HEIGHT);
-   console.log('StatusBarHeight', StatusBar.currentHeight);
-   console.log('SafeAreaInsets', insets);
-   console.log('AppBarHeight', AppBarHeight);
+  console.log('HeaderHeight', Header.HEIGHT);
+  console.log('RenderedStatusBarHeight', StatusBar.currentHeight);
+  console.log('SafeAreaInsets', insets);
+  console.log('AppBarHeight', AppBarHeight);
 
   const SCROLL_RANGE = ImageHeight - AppBarHeight;
 
@@ -57,17 +63,6 @@ const PostScreen = ({ navigation }: Props) => {
     outputRange: [0, 0, 1],
     extrapolate: Extrapolate.CLAMP,
   });
-
-  useEffect(() => {
-    StatusBar.setTranslucent(true); // android
-    StatusBar.setBackgroundColor('rgba(0,0,0,0.1)'); // android
-    StatusBar.setBarStyle('light-content', true);
-    return () => {
-      StatusBar.setTranslucent(false);
-      StatusBar.setBackgroundColor('#008000');
-      StatusBar.setBarStyle('light-content', true);
-    };
-  }, []);
 
   const [state, setState] = useState(() => ({
     post: undefined,
@@ -178,15 +173,11 @@ const PostScreen = ({ navigation }: Props) => {
 
   const renderCommentButton = () => <CommentModal post={post} />;
 
+  // Not sure if the image is better... hmm...
   const appBar = () => (
-    <Animated.View
-      style={{
-        height: AppBarHeight,
-        backgroundColor: '#008000',
-        ...StyleSheet.absoluteFillObject,
-        opacity,
-      }}
-    />
+    <Animated.View style={[styles.appBar, { height: AppBarHeight, opacity }]}>
+      {/*<PostImage post={post} style={{ width: '100%', height: '100%' }} />*/}
+    </Animated.View>
   );
 
   type ContentOffsetMap = { x?: Animated.Value<number>; y?: Animated.Value<number> };
@@ -217,12 +208,17 @@ const PostScreen = ({ navigation }: Props) => {
     );
   };
 
-  return <SafeAreaView forceInset={{ top: 'never' }} style={styles.container}>{render()}</SafeAreaView>;
+  return (
+    <SafeAreaView forceInset={{ top: 'never' }} style={styles.container}>
+      <StatusBar translucent barStyle={'light-content'} backgroundColor={'rgba(0,0,0,0.1)'} />
+      {render()}
+    </SafeAreaView>
+  );
 };
 
 PostScreen.navigationOptions = {
   headerStyle: {
-    // marginTop: StatusBarHeight, // ios is 0
+    marginTop: RenderedStatusBarHeight, // ios is 0
   },
   headerTransparent: true,
   headerTintColor: '#FFF',
@@ -235,6 +231,11 @@ const Separator = ({ style = {} }) => <View style={[styles.separator, style]} />
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  appBar: {
+    backgroundColor: '#008000',
+    ...StyleSheet.absoluteFillObject,
+    elevation: 4,
   },
   separator: {
     height: 0.6,
