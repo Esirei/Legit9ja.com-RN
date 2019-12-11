@@ -19,7 +19,7 @@ import { bookmarkPost, postIsBookmarked, sharePost } from '@helpers/post';
 const { width } = Dimensions.get('window');
 const ImageHeight = width / 1.25;
 
-const { Value, interpolate, Extrapolate } = Animated;
+const { Extrapolate } = Animated;
 
 // ios doesn't render a view for it's statusBar, so it's 0
 const RenderedStatusBarHeight = StatusBar.currentHeight || 0;
@@ -199,7 +199,6 @@ const PostScreen = ({ navigation }: Props) => {
     <Animated.View
       style={{
         backgroundColor: 'blue',
-        height: ImageHeight,
         translateY,
         position: 'absolute',
         top: 0,
@@ -207,7 +206,7 @@ const PostScreen = ({ navigation }: Props) => {
         right: 0,
         ...appBarStyle,
       }}>
-      <PostImage post={post} style={{ flex: 1, width: '100%' }} />
+      <PostImage post={post} style={{ width: '100%', height: ImageHeight }} />
       <Animated.View
         style={{
           opacity,
