@@ -110,6 +110,8 @@ const PostScreen = ({ navigation }: Props) => {
       if (post) {
         postIsBookmarked(post).then(isBookmarked => {
           // @ts-ignore
+          console.log('Post ID', post.id);
+          // @ts-ignore
           setState(prevState => ({ ...prevState, post, isBookmarked, loading: false }));
         });
       }

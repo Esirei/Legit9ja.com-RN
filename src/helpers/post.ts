@@ -31,19 +31,30 @@ export const postContent = post => {
   return post.content.rendered || '';
 };
 
-const youtubeIdRegex = /(?:youtu(?:\.be\/|be\.com\/(?:watch\?(?:feature=youtu.be&)?v=|v\/|embed\/|user\/(?:[\w#]+\/)+)))([a-zA-Z0-9_-]{11})/;
+const youtubeIdRegex = /(?:youtu(?:\.be\/|be\.com\/(?:watch\?(?:feature=youtu.be&)?v=|v\/|embed\/|user\/(?:[\w#]+\/)+)))([a-zA-Z0-9_-]{11})/g;
+const noOfYoutubeVideos = (post): number => {
+  return postContent(post).match(youtubeIdRegex).length;
+};
+
 export const youtubeId = post => {
-  const matches = youtubeIdRegex.exec(postContent(post));
-  console.log('YouTube ID', matches);
-  if (matches) {
-    return matches[1];
+  const noOfVideos = noOfYoutubeVideos(post);
+  if (noOfVideos === 1) {
+    const matches = youtubeIdRegex.exec(postContent(post));
+    console.log('YouTube ID', matches);
+    if (matches) {
+      return matches[1];
+    }
   }
   return '';
 };
 
 const youtubeIframeRegex = /<iframe.*(?:youtu(?:\.be\/|be\.com\/(?:watch\?(?:feature=youtu.be&)?v=|v\/|embed\/|user\/(?:[\w#]+\/)+)))([a-zA-Z0-9_-]{11}).*<\/iframe>/;
 export const postContentWithoutYT = post => {
-  return postContent(post).replace(youtubeIframeRegex, '');
+  const noOfVideos = noOfYoutubeVideos(post);
+  if (noOfVideos === 1) {
+    return postContent(post).replace(youtubeIframeRegex, '');
+  }
+  return postContent(post);
 };
 
 const entities = new Html5Entities();
