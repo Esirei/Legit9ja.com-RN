@@ -176,12 +176,12 @@ const PostScreen = ({ navigation }: Props) => {
   const translateY = scrollY.current.interpolate({
     inputRange: [0, SCROLL_RANGE],
     outputRange: [0, -SCROLL_RANGE],
-    extrapolateRight: Extrapolate.CLAMP,
+    extrapolate: Extrapolate.CLAMP,
   });
 
   const elevation = scrollY.current.interpolate({
     inputRange: [0, SCROLL_RANGE, SCROLL_RANGE],
-    outputRange: [0, 0, Platform.OS === 'android' ? 4 : 1],
+    outputRange: [0, 0, Platform.OS === 'android' ? 4 : StyleSheet.hairlineWidth],
     extrapolate: Extrapolate.CLAMP,
   });
 
