@@ -33,7 +33,8 @@ export const postContent = post => {
 
 const youtubeIdRegex = /(?:youtu(?:\.be\/|be\.com\/(?:watch\?(?:feature=youtu.be&)?v=|v\/|embed\/|user\/(?:[\w#]+\/)+)))([a-zA-Z0-9_-]{11})/g;
 const noOfYoutubeVideos = (post): number => {
-  return postContent(post).match(youtubeIdRegex).length;
+  const matched = postContent(post).match(youtubeIdRegex);
+  return matched ? matched.length : 0;
 };
 
 export const youtubeId = post => {
