@@ -4,6 +4,7 @@ import { NavigationInjectedProps, SafeAreaView } from 'react-navigation';
 import { Header } from 'react-navigation-stack';
 import Animated from 'react-native-reanimated';
 import { useSafeArea } from 'react-native-safe-area-context';
+import { Fade, Placeholder, PlaceholderLine, PlaceholderMedia } from 'rn-placeholder';
 import apiClient from '@api';
 import Touchable from '@components/Touchable';
 import PostImage from '@components/PostItem/PostImage';
@@ -13,11 +14,48 @@ import PostDate from '@components/PostItem/PostDate';
 import images from '@assets/images';
 import CommentModal from './components/CommentModal';
 import Content from './components/Content';
-import LoadingMore from '@components/LoadingMore';
 import { bookmarkPost, postIsBookmarked, sharePost } from '@helpers/post';
 
 const { width } = Dimensions.get('window');
 const ImageHeight = width / 1.25;
+
+const PlaceHolder = () => {
+  const renderInfoPlaceholder = () => {
+    return (
+      <View style={{ margin: 8 }}>
+        <PlaceholderLine width={66} />
+        <PlaceholderLine width={45} height={10} />
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+          <PlaceholderLine width={20} height={10} />
+          <View style={{ flexDirection: 'row' }}>
+            <PlaceholderMedia style={{ height: 24, width: 24, margin: 6, marginRight: 14 }} />
+            <PlaceholderMedia style={{ height: 24, width: 24, margin: 6, marginRight: 14 }} />
+          </View>
+        </View>
+      </View>
+    );
+  };
+
+  const renderContentPlaceholder = () => {
+    const array = Array.from({ length: 10 });
+    return (
+      <View style={{ margin: 16 }}>
+        {array.map(_ => (
+          <PlaceholderLine />
+        ))}
+        <PlaceholderLine width={75} />
+      </View>
+    );
+  };
+
+  return (
+    <Placeholder Animation={Fade}>
+      <PlaceholderMedia style={{ height: ImageHeight, width }} />
+      {renderInfoPlaceholder()}
+      {renderContentPlaceholder()}
+    </Placeholder>
+  );
+};
 
 const { Extrapolate } = Animated;
 
@@ -235,7 +273,7 @@ const PostScreen = ({ navigation }: Props) => {
 
   const render = () => {
     return state.loading ? (
-      <LoadingMore />
+      <PlaceHolder />
     ) : (
       <>
         <Animated.ScrollView
