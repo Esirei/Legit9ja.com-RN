@@ -5,6 +5,7 @@ import Touchable from '@components/Touchable';
 import Input from '@components/TextInput';
 import images from '@assets/images';
 import apiClient from '@api';
+import fonts from '@assets/fonts';
 
 const CommentModal = ({ post }) => {
   const [isVisible, setVisibility] = useState(false);
@@ -118,11 +119,11 @@ export default memo(CommentModal);
 
 const styles = StyleSheet.create({
   commentContainer: { backgroundColor: '#FFF', borderRadius: 2 },
-  title: { color: '#FFF', backgroundColor: '#455A64', padding: 15, fontWeight: 'bold' },
+  title: { color: '#FFF', backgroundColor: '#455A64', padding: 15, fontFamily: fonts.roboto_bold },
   inputsContainer: { marginVertical: 5, marginHorizontal: 10 },
   buttonsContainer: { marginTop: 10, marginBottom: 5, flexDirection: 'row' },
   button: { padding: 10, alignItems: 'center', flex: 1 },
-  buttonText: { color: '#008000', fontWeight: 'bold' },
+  buttonText: { color: '#008000', fontFamily: fonts.roboto_bold },
   fab: {
     position: 'absolute',
     height: 56,

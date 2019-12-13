@@ -16,6 +16,7 @@ import PlaceHolder from './components/PlaceHolder';
 import { bookmarkPost, postIsBookmarked, sharePost } from '@helpers/post';
 import { Post } from '@types';
 import { PostScreenParams } from './types';
+import fonts from '@assets/fonts';
 
 const { width } = Dimensions.get('window');
 const ImageHeight = width / 1.25;
@@ -178,7 +179,9 @@ const PostScreen = ({ navigation }: Props) => {
     if (relatedPosts.length > 0) {
       return (
         <View style={{ marginHorizontal: 8 }}>
-          <Text style={{ marginBottom: 8 }}>Related Posts</Text>
+          <Text style={{ marginBottom: 8, fontFamily: fonts.neo_sans_pro_regular }}>
+            Related Posts
+          </Text>
           {relatedPosts.map(p => (
             <RelatedPostItem post={p} key={p.url} />
           ))}

@@ -8,6 +8,7 @@ import {
   ImageStyle,
   ViewStyle,
 } from 'react-native';
+import fonts from '@assets/fonts';
 
 interface InputProps extends TextInputProps {
   image?: any;
@@ -20,7 +21,6 @@ const TextInput = ({ image, error, style, imageStyle, containerStyle, ...props }
   <View style={[styles.input, containerStyle, error && styles.inputError]}>
     {!!image && <Image source={image} style={[styles.inputImage, imageStyle]} />}
     <RNInput style={[styles.inputTextInput, style]} {...props} />
-    {error}
   </View>
 );
 
@@ -43,5 +43,12 @@ const styles = StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth,
   },
   inputImage: { marginRight: 0, margin: 12, width: 24, height: 24, tintColor: '#818181' },
-  inputTextInput: { margin: 12, padding: 0, flex: 1, textAlignVertical: 'auto', paddingBottom: 0 },
+  inputTextInput: {
+    margin: 12,
+    padding: 0,
+    flex: 1,
+    textAlignVertical: 'auto',
+    paddingBottom: 0,
+    fontFamily: fonts.roboto_regular,
+  },
 });
