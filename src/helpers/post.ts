@@ -20,7 +20,7 @@ export const postIsBookmarked = async post => {
 export const bookmarkPost = async (post, boolean) => {
   let posts = await getBookmarkedPosts();
   if (boolean) {
-    posts = { ...posts, [post.id]: posts };
+    posts = { ...posts, [post.id]: { ...post, bookmarkDate: Date.now() } };
   } else {
     delete posts[post.id];
   }
