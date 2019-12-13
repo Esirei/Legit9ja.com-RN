@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import images from '@assets/images';
 import moment from 'moment';
+import fonts from '@assets/fonts';
 
 const PostDate = ({ post }) => (
   <View style={styles.container}>
@@ -26,5 +27,6 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     color: 'rgba(0,0,0,0.54)',
     fontSize: 12,
+    fontFamily: fonts.roboto_regular,
   },
 });

@@ -7,6 +7,7 @@ import SeparatorHorizontal from '@components/SeparatorHorizontal';
 import PostCommentsCount from '@components/PostItem/PostCommentsCount';
 import { RelatedPost } from '@types';
 import { relatedPostTitle } from '@helpers/post';
+import fonts from '@assets/fonts';
 
 interface Props {
   post: RelatedPost;
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
   title: {
     color: '#37474F',
     fontSize: 15,
-    fontWeight: 'bold',
+    fontFamily: fonts.neo_sans_pro_regular,
   },
   postDetails: {
     flex: 1,

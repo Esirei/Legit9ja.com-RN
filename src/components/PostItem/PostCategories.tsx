@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import { StyleSheet, Text } from 'react-native';
+import fonts from '@assets/fonts';
 
 const key = 'wp:term';
 const PostCategories = ({ post, style = {} }) => {
@@ -21,5 +22,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#008000',
     fontSize: 13,
+    fontFamily: fonts.roboto_regular,
   },
 });

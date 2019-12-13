@@ -4,6 +4,7 @@ import Touchable from '@components/Touchable';
 import SeparatorHorizontal from '@components/SeparatorHorizontal';
 import images from '@assets/images';
 import { NavigationService, RouteNames } from '@navigation';
+import fonts from '@assets/fonts';
 
 const { navigate, closeDrawer, currentRouteName } = NavigationService;
 
@@ -139,6 +140,7 @@ const styles = StyleSheet.create({
   drawerItemText: {
     fontSize: 13,
     color: 'rgba(0,0,0,0.54)',
+    fontFamily: fonts.roboto_bold,
   },
   drawerItemsContainer: {
     paddingTop: 8,
@@ -149,6 +151,7 @@ const styles = StyleSheet.create({
     margin: 16,
     marginTop: 8,
     color: 'rgba(0,0,0,0.54)',
+    fontFamily: fonts.neo_sans_pro_medium,
   },
   drawerItemsContainerSeparator: {
     marginTop: 8,

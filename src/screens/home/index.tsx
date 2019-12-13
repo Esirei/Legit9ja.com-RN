@@ -9,6 +9,7 @@ import apiClient from '@api';
 import images from '@assets/images';
 import { NavigationService, RouteNames } from '@navigation';
 import LoadingMore from '@components/LoadingMore';
+import fonts from '@assets/fonts';
 
 const { navigate } = NavigationService;
 
@@ -261,5 +262,6 @@ const styles = StyleSheet.create({
   categoryText: {
     color: '#FFF',
     fontSize: 13,
+    fontFamily: fonts.neo_sans_pro_regular,
   },
 });

@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import { StyleSheet, Text, TextProps } from 'react-native';
 import { postTitle } from '@helpers/post';
 import { Post } from '@types';
+import fonts from '@assets/fonts';
 
 interface Props extends TextProps {
   post: Post;
@@ -19,6 +20,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#37474F',
     fontSize: 15,
-    fontWeight: 'bold',
+    fontFamily: fonts.neo_sans_pro_medium,
   },
 });

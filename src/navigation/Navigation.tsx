@@ -7,11 +7,13 @@ import InitialScreenSwitcher from '@components/InitialScreenSwitcher';
 import ExtraScreen from '@screens/ExtraScreen';
 import ReactNativeScreen from '@screens/ReactNativeScreen';
 import HomeScreen from '@screens/home';
-import CategoriesScreen, { CategoryPostsScreen } from '@screens/categories';
+import CategoriesScreen from '@screens/categories';
+import CategoryPostsScreen from '@screens/categories/CategoryPostsScreen';
 import PostScreen from '@screens/post';
 import SearchScreen from '@screens/search';
 import BookmarksScreen from '@screens/bookmarks';
 import Drawer from '@components/Drawer';
+import fonts from '@assets/fonts';
 
 // createAppContainer(
 //   createSwitchNavigator({
@@ -23,14 +25,24 @@ import Drawer from '@components/Drawer';
 //   }),
 // );
 
-const StackNav = createStackNavigator({
-  [RouteNames.HOME]: HomeScreen,
-  [RouteNames.CATEGORIES]: CategoriesScreen,
-  [RouteNames.CATEGORY_POSTS]: CategoryPostsScreen,
-  [RouteNames.POSTS]: PostScreen,
-  [RouteNames.SEARCH]: SearchScreen,
-  [RouteNames.BOOKMARKS]: BookmarksScreen,
-});
+const StackNav = createStackNavigator(
+  {
+    [RouteNames.HOME]: HomeScreen,
+    [RouteNames.CATEGORIES]: CategoriesScreen,
+    [RouteNames.CATEGORY_POSTS]: CategoryPostsScreen,
+    [RouteNames.POSTS]: PostScreen,
+    [RouteNames.SEARCH]: SearchScreen,
+    [RouteNames.BOOKMARKS]: BookmarksScreen,
+  },
+  {
+    defaultNavigationOptions: {
+      headerTitleStyle: {
+        fontFamily: fonts.neo_sans_pro_medium,
+        fontSize: 16,
+      },
+    },
+  },
+);
 
 const DrawerNav = createDrawerNavigator(
   { StackNav },

@@ -4,6 +4,7 @@ import Touchable from '@components/Touchable';
 import PostImage from './PostImage';
 import PostTitle from './PostTitle';
 import { NavigationService } from '@navigation';
+import fonts from '@assets/fonts';
 
 const onPostItemPress = post => {
   NavigationService.navToPost({ post, source: 'object' });
@@ -41,5 +42,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.25)',
     borderBottomLeftRadius: borderRadius,
     borderBottomRightRadius: borderRadius,
+    fontFamily: fonts.neo_sans_pro_regular,
   },
 });

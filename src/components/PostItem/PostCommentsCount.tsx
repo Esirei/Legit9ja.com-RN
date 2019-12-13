@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { Image, Text, View, StyleSheet } from 'react-native';
 import images from '@assets/images';
+import fonts from '@assets/fonts';
 
 const PostCommentsCount = ({ post }) => (
   <View style={styles.container}>
@@ -26,5 +27,6 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     color: 'rgba(0,0,0,0.54)',
     fontSize: 12,
+    fontFamily: fonts.roboto_regular,
   },
 });
