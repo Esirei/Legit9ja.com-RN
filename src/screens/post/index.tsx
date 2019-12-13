@@ -4,7 +4,6 @@ import { NavigationInjectedProps, SafeAreaView } from 'react-navigation';
 import { Header } from 'react-navigation-stack';
 import Animated from 'react-native-reanimated';
 import { useSafeArea } from 'react-native-safe-area-context';
-import { Fade, Placeholder, PlaceholderLine, PlaceholderMedia } from 'rn-placeholder';
 import apiClient from '@api';
 import Touchable from '@components/Touchable';
 import PostImage from '@components/PostItem/PostImage';
@@ -252,6 +251,7 @@ const PostScreen = ({ navigation }: Props) => {
       <PlaceHolder imageHeight={ImageHeight} imageWidth={width} />
     ) : (
       <>
+        <ImageAppBar />
         <Animated.ScrollView
           onScroll={onScroll({ y: scrollY.current })}
           contentContainerStyle={[styles.contentContainer, { paddingTop: ImageHeight }]}>
@@ -261,7 +261,6 @@ const PostScreen = ({ navigation }: Props) => {
           <Separator style={{ marginTop: 16, marginBottom: 8 }} />
           {renderRelatedPost()}
         </Animated.ScrollView>
-        <ImageAppBar />
         {renderCommentButton()}
       </>
     );
