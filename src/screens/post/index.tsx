@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Dimensions, Image, Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Dimensions, Image, Platform, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { NavigationInjectedProps, SafeAreaView } from 'react-navigation';
 import { Header } from 'react-navigation-stack';
 import Animated from 'react-native-reanimated';
@@ -11,10 +11,14 @@ import PostImage from '@components/PostItem/PostImage';
 import PostTitle from '@components/PostItem/PostTitle';
 import PostCategories from '@components/PostItem/PostCategories';
 import PostDate from '@components/PostItem/PostDate';
+import Separator from '@components/SeparatorHorizontal';
 import images from '@assets/images';
+import RelatedPostItem from './components/RelatedPostItem';
 import CommentModal from './components/CommentModal';
 import Content from './components/Content';
 import { bookmarkPost, postIsBookmarked, sharePost } from '@helpers/post';
+import { Post } from '@types';
+import { PostScreenParams } from './types';
 
 const { width } = Dimensions.get('window');
 const ImageHeight = width / 1.25;
@@ -25,7 +29,8 @@ const PlaceHolder = () => {
       <View style={{ margin: 8 }}>
         <PlaceholderLine width={66} />
         <PlaceholderLine width={45} height={10} />
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+        <View
+          style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <PlaceholderLine width={20} height={10} />
           <View style={{ flexDirection: 'row' }}>
             <PlaceholderMedia style={{ height: 24, width: 24, margin: 6, marginRight: 14 }} />
@@ -72,14 +77,14 @@ const RealStatusBarHeight = Platform.select({
 // We hiding system rendered statusBar view in android, so need to add the height to rendered AppBar to emulate it.
 const DefaultAppBarHeight = Header.HEIGHT + RenderedStatusBarHeight;
 
-type NavigationParams = {
-  post?: any;
-  post_slug?: string;
-  post_id?: number;
-  source: 'object' | 'slug' | 'id';
-};
+interface Props extends NavigationInjectedProps<PostScreenParams> {}
 
-interface Props extends NavigationInjectedProps<NavigationParams> {}
+interface State {
+  post: Post | undefined;
+  comments: any[];
+  loading: boolean;
+  isBookmarked: boolean;
+}
 
 const PostScreen = ({ navigation }: Props) => {
   const insets = useSafeArea();
@@ -102,31 +107,30 @@ const PostScreen = ({ navigation }: Props) => {
     extrapolate: Extrapolate.CLAMP,
   });
 
-  const [state, setState] = useState(() => ({
+  const [state, setState] = useState<State>(() => ({
     post: undefined,
-    relatedPosts: [],
     comments: [],
     loading: true,
     isBookmarked: false,
   }));
 
   const getPostByObject = () => {
-    return new Promise(resolve => {
+    return new Promise<Post>(resolve => {
       const post = navigation.getParam('post', undefined);
       resolve(post);
     });
   };
 
   const getPostById = () => {
-    const id = navigation.getParam('post_id', 0);
+    const id = navigation.getParam('post', 0);
     const query = { _embed: true };
-    return apiClient.get<any>(`posts/${id}`, query);
+    return apiClient.get<Post>(`posts/${id}`, query);
   };
 
   const getPostBySlug = () => {
-    const slug = navigation.getParam('post_slug', '');
+    const slug = navigation.getParam('post', '');
     const query = { slug, _embed: true };
-    return apiClient.get<any[]>('posts', query).then<any | undefined>(posts => posts[0]);
+    return apiClient.get<Post[]>('posts', query).then<Post | undefined>(posts => posts[0]);
   };
 
   const loadPost = () => {
@@ -147,9 +151,7 @@ const PostScreen = ({ navigation }: Props) => {
     getPost().then(post => {
       if (post) {
         postIsBookmarked(post).then(isBookmarked => {
-          // @ts-ignore
           console.log('Post ID', post.id);
-          // @ts-ignore
           setState(prevState => ({ ...prevState, post, isBookmarked, loading: false }));
         });
       }
@@ -213,6 +215,21 @@ const PostScreen = ({ navigation }: Props) => {
 
   const renderCommentButton = () => <CommentModal post={post} />;
 
+  const renderRelatedPost = () => {
+    const relatedPosts = state.post!['jetpack-related-posts'];
+    if (relatedPosts.length > 0) {
+      return (
+        <View style={{ marginHorizontal: 8 }}>
+          <Text style={{ marginBottom: 8 }}>Related Posts</Text>
+          {relatedPosts.map(p => (
+            <RelatedPostItem post={p} key={p.url} />
+          ))}
+        </View>
+      );
+    }
+    return null;
+  };
+
   const translateY = scrollY.current.interpolate({
     inputRange: [0, SCROLL_RANGE],
     outputRange: [0, -SCROLL_RANGE],
@@ -251,7 +268,6 @@ const PostScreen = ({ navigation }: Props) => {
         style={{
           opacity,
           backgroundColor: 'rgba(0,0,0,0.25)',
-          // flex: 1,
           position: 'absolute',
           top: 0,
           left: 0,
@@ -264,10 +280,8 @@ const PostScreen = ({ navigation }: Props) => {
 
   type ContentOffsetMap = { x?: Animated.Value<number>; y?: Animated.Value<number> };
   const onScroll = ({ y, x }: ContentOffsetMap) => {
-    // Animated.call();
-    // Animated.block();
-    console.log('onScroll');
     const mapping = [{ nativeEvent: { contentOffset: { y, x } } }];
+    // @ts-ignore
     return Animated.event(mapping, { useNativeDriver: true });
   };
 
@@ -282,7 +296,8 @@ const PostScreen = ({ navigation }: Props) => {
           {info()}
           <Separator />
           <Content post={post} />
-          <Separator style={{ marginVertical: 16 }} />
+          <Separator style={{ marginTop: 16, marginBottom: 8 }} />
+          {renderRelatedPost()}
         </Animated.ScrollView>
         <ImageAppBar />
         {renderCommentButton()}
@@ -308,8 +323,6 @@ PostScreen.navigationOptions = {
 
 export default PostScreen;
 
-const Separator = ({ style = {} }) => <View style={[styles.separator, style]} />;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -319,10 +332,5 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     elevation: 4,
   },
-  separator: {
-    height: 0.6,
-    marginHorizontal: 8,
-    backgroundColor: 'rgba(0,0,0,0.54)',
-  },
-  contentContainer: { paddingBottom: 72 },
+  contentContainer: { paddingBottom: 88 },
 });

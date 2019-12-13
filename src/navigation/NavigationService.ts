@@ -7,6 +7,8 @@ import {
   NavigationPopActionPayload,
 } from 'react-navigation';
 import { DrawerActions } from 'react-navigation-drawer';
+import RouteNames from './RouteNames';
+import { PostScreenParams } from '@screens/post/types';
 
 let _navigator: NavigationContainer & { dispatch: NavigationDispatch };
 
@@ -82,6 +84,8 @@ const currentRouteName = (): string => {
   return getRef() ? getCurrentRouteName(getRef().state.nav!) : '';
 };
 
+const navToPost = (params: PostScreenParams) => push(RouteNames.POSTS, params, undefined);
+
 export default {
   setRef,
   getRef,
@@ -95,4 +99,5 @@ export default {
   closeDrawer,
   toggleDrawer,
   currentRouteName,
+  navToPost,
 };

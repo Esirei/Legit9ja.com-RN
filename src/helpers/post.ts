@@ -60,6 +60,7 @@ export const postContentWithoutYT = post => {
 
 const entities = new Html5Entities();
 export const postTitle = post => entities.decode(post.title.rendered);
+export const relatedPostTitle = post => entities.decode(post.title);
 
 export const sharePost = post => {
   const url = post.link;

@@ -4,7 +4,7 @@ import { WebViewNavigation } from 'react-native-webview';
 import AutoHeightWebView from 'react-native-autoheight-webview';
 import YouTube from '@screens/post/components/YouTube';
 import { postContentWithoutYT } from '@helpers/post';
-import { NavigationService, RouteNames } from '@navigation';
+import { NavigationService } from '@navigation';
 
 const postSlugRegex = /legit9ja.com\/[0-9]{4}\/[0-9]{2}\/(.*)\.html/;
 const css =
@@ -20,7 +20,7 @@ const Content = ({ post }) => {
       const matches = postSlugRegex.exec(url);
       if (matches) {
         const post_slug = matches[1];
-        NavigationService.push(RouteNames.POSTS, { post_slug, source: 'slug' }, undefined);
+        NavigationService.navToPost({ post: post_slug, source: 'slug' });
       } else {
         Linking.openURL(url);
       }

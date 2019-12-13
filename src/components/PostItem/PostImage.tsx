@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Image, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 const key = 'wp:featuredmedia';

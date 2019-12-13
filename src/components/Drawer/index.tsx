@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { Image, Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Touchable from '@components/Touchable';
+import SeparatorHorizontal from '@components/SeparatorHorizontal';
 import images from '@assets/images';
 import { NavigationService, RouteNames } from '@navigation';
 
@@ -24,7 +25,7 @@ const DrawerItemsContainer = ({ name = '', children }) => (
   <View style={styles.drawerItemsContainer}>
     {!!name && <Text style={styles.drawerItemsContainerText}>{name}</Text>}
     {children}
-    <View style={styles.drawerItemsContainerSeparator} />
+    <SeparatorHorizontal style={styles.drawerItemsContainerSeparator} />
   </View>
 );
 
@@ -150,9 +151,8 @@ const styles = StyleSheet.create({
     color: 'rgba(0,0,0,0.54)',
   },
   drawerItemsContainerSeparator: {
-    height: 0.6,
     marginTop: 8,
-    backgroundColor: 'rgba(0,0,0,0.54)',
+    marginHorizontal: 0,
   },
   drawerHeader: {
     width: '100%',

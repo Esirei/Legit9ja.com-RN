@@ -1,22 +1,15 @@
 import React, { memo } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
-import { NavigationService, RouteNames } from '@navigation/index';
+import { StyleSheet, View } from 'react-native';
+import { NavigationService } from '@navigation';
 import Touchable from '@components/Touchable';
-import images from '@assets/images';
 import PostImage from './PostImage';
 import PostTitle from './PostTitle';
 import PostDateMenu from './PostDateMenu';
+import PostCommentsCount from './PostCommentsCount';
 
 const onPostItemPress = post => {
-  NavigationService.navigate(RouteNames.POSTS, { post });
+  NavigationService.navToPost({ post, source: 'object' });
 };
-
-const PostCommentsCount = ({ post }) => (
-  <View style={styles.postCommentsCountContainer}>
-    <Image source={images.ic_comment_128} style={styles.commentCountIcon} />
-    <Text style={styles.commentCountText}>0 Comments</Text>
-  </View>
-);
 
 const CategoryPostItem = ({ post }) => (
   <Touchable onPress={() => onPostItemPress(post)} style={styles.container}>
@@ -56,20 +49,5 @@ const styles = StyleSheet.create({
   },
   postTitle: {
     marginBottom: 12,
-  },
-  postCommentsCountContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 5,
-  },
-  commentCountIcon: {
-    height: 12,
-    width: 12,
-    tintColor: 'rgba(0,0,0,0.54)',
-  },
-  commentCountText: {
-    marginLeft: 5,
-    color: 'rgba(0,0,0,0.54)',
-    fontSize: 12,
   },
 });

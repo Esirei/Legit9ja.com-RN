@@ -3,10 +3,10 @@ import { StyleSheet } from 'react-native';
 import Touchable from '@components/Touchable';
 import PostImage from './PostImage';
 import PostTitle from './PostTitle';
-import { NavigationService, RouteNames } from '@navigation';
+import { NavigationService } from '@navigation';
 
 const onPostItemPress = post => {
-  NavigationService.navigate(RouteNames.POSTS, { post });
+  NavigationService.navToPost({ post, source: 'object' });
 };
 
 const FeaturedPostItem = ({ post }) => (

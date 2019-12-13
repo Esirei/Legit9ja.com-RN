@@ -4,6 +4,7 @@ import { Placeholder, PlaceholderLine, PlaceholderMedia, Fade } from 'rn-placeho
 import randMC from 'random-material-color';
 import apiClient from '@api';
 import Touchable from '@components/Touchable';
+import SeparatorHorizontal from '@components/SeparatorHorizontal';
 import images from '@assets/images';
 import { NavigationService, RouteNames } from '@navigation';
 
@@ -47,7 +48,7 @@ const CategoryItem = memo(({ category }) => {
           <Image source={images.ic_arrow_right_128} style={styles.subCategoriesIndicator} />
         )}
       </View>
-      <View style={styles.categoryItemSeparator} />
+      <SeparatorHorizontal />
     </Touchable>
   );
 });
@@ -118,10 +119,5 @@ const styles = StyleSheet.create({
     height: 18,
     width: 18,
     tintColor: '#008000',
-  },
-  categoryItemSeparator: {
-    height: 0.6,
-    backgroundColor: '#818181',
-    marginHorizontal: 8,
   },
 });
