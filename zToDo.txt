@@ -1,5 +1,6 @@
  - Share Post ✔
  - Bookmark Post ✔
+ - Bookmark Screen ✔
  - Complete Post Screen
  - Comments Screen
  - Search Screen ✔

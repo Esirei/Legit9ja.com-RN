@@ -4,11 +4,10 @@ import Carousel from 'react-native-snap-carousel';
 import { Placeholder, PlaceholderLine, PlaceholderMedia, Fade } from 'rn-placeholder';
 import axios from 'axios';
 import Touchable from '@components/Touchable';
-import PostItem from '@components/PostItem';
+import PostItem, { FeaturedPostItem } from '@components/PostItem';
 import apiClient from '@api';
 import images from '@assets/images';
 import { NavigationService, RouteNames } from '@navigation';
-import FeaturedPostItem from '@components/PostItem/FeaturedPostItem';
 import LoadingMore from '@components/LoadingMore';
 
 const { navigate } = NavigationService;

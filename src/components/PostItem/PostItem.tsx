@@ -35,7 +35,6 @@ const PostItem = ({ post }) => (
 );
 
 export default memo(PostItem);
-export { default as CategoryPostItem } from './CategoryPostItem';
 
 const styles = StyleSheet.create({
   postItem: {

@@ -10,6 +10,7 @@ import HomeScreen from '@screens/home';
 import CategoriesScreen, { CategoryPostsScreen } from '@screens/categories';
 import PostScreen from '@screens/post';
 import SearchScreen from '@screens/search';
+import BookmarksScreen from '@screens/bookmarks';
 import Drawer from '@components/Drawer';
 
 // createAppContainer(
@@ -28,6 +29,7 @@ const StackNav = createStackNavigator({
   [RouteNames.CATEGORY_POSTS]: CategoryPostsScreen,
   [RouteNames.POSTS]: PostScreen,
   [RouteNames.SEARCH]: SearchScreen,
+  [RouteNames.BOOKMARKS]: BookmarksScreen,
 });
 
 const DrawerNav = createDrawerNavigator(

@@ -1,9 +1,10 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import { Share } from 'react-native';
 import { Html5Entities } from 'html-entities';
+import { BookmarkedPost } from '@screens/bookmarks/types';
 
 const BOOKMARKED_POSTS = 'bookmarked_posts';
-export const getBookmarkedPosts = async () => {
+export const getBookmarkedPosts = async (): Promise<Record<number, BookmarkedPost>> => {
   const posts = await AsyncStorage.getItem(BOOKMARKED_POSTS);
   return JSON.parse(posts || '{}');
 };
@@ -20,7 +21,7 @@ export const postIsBookmarked = async post => {
 export const bookmarkPost = async (post, boolean) => {
   let posts = await getBookmarkedPosts();
   if (boolean) {
-    posts = { ...posts, [post.id]: { ...post, bookmarkDate: Date.now() } };
+    posts = { ...posts, [post.id]: { ...post, bookmarkedDate: Date.now() } };
   } else {
     delete posts[post.id];
   }

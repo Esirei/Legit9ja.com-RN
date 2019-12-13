@@ -1,9 +1,14 @@
 import React, { memo } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, TextProps } from 'react-native';
 import { postTitle } from '@helpers/post';
+import { Post } from '@types';
 
-const PostTitle = ({ post, style = {} }) => (
-  <Text style={[styles.text, style]} numberOfLines={2}>
+interface Props extends TextProps {
+  post: Post;
+}
+
+const PostTitle = ({ post, style, ...props }: Props) => (
+  <Text style={[styles.text, style]} numberOfLines={2} {...props}>
     {postTitle(post)}
   </Text>
 );
