@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Image, KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native';
+import { Image, KeyboardAvoidingView, StyleSheet, Text, View, StatusBar } from 'react-native';
 import Modal from 'react-native-modal';
 import Touchable from '@components/Touchable';
 import Input from '@components/TextInput';
@@ -66,6 +66,7 @@ const CommentModal = ({ post }) => {
           animationOut={'fadeOut'}
           hideModalContentWhileAnimating
           avoidKeyboard={false}>
+          <StatusBar backgroundColor={'rgba(0,0,0,0.75)'} />
           <View style={styles.commentContainer}>
             <Text style={styles.title}>Write a Comment</Text>
             <View style={styles.inputsContainer}>
