@@ -18,6 +18,7 @@ import { Post } from '@types';
 import { PostScreenParams } from './types';
 import fonts from '@assets/fonts';
 import Author from '@screens/post/components/Author';
+import { data, totalItems } from '@helpers/api';
 
 const { width } = Dimensions.get('window');
 const ImageHeight = width / 1.25;
@@ -44,7 +45,7 @@ interface Props extends NavigationInjectedProps<PostScreenParams> {}
 
 interface State {
   post: Post | undefined;
-  comments: any[];
+  comments: number;
   loading: boolean;
   isBookmarked: boolean;
 }
@@ -77,7 +78,7 @@ const PostScreen = ({ navigation }: Props) => {
 
   const [state, setState] = useState<State>(() => ({
     post: undefined,
-    comments: [],
+    comments: 0,
     loading: true,
     isBookmarked: false,
   }));
@@ -92,13 +93,26 @@ const PostScreen = ({ navigation }: Props) => {
   const getPostById = () => {
     const id = navigation.getParam('post', 0);
     const query = { _embed: true };
-    return apiClient.get<Post>(`posts/${id}`, query);
+    return apiClient.get<Post>(`posts/${id}`, query).then(data);
   };
 
   const getPostBySlug = () => {
     const slug = navigation.getParam('post', '');
     const query = { slug, _embed: true };
-    return apiClient.get<Post[]>('posts', query).then<Post | undefined>(posts => posts[0]);
+    return apiClient
+      .get<Post[]>('posts', query)
+      .then(data)
+      .then<Post | undefined>(posts => posts[0]);
+  };
+
+  const loadComments = postId => {
+    const query = { post: postId, per_page: 1 };
+    apiClient
+      .get('comments', query)
+      .then(totalItems)
+      .then(comments => {
+        setState(prevState => ({ ...prevState, comments }));
+      });
   };
 
   const loadPost = () => {
@@ -120,6 +134,7 @@ const PostScreen = ({ navigation }: Props) => {
       if (post) {
         postIsBookmarked(post).then(isBookmarked => {
           console.log('Post ID', post.id);
+          loadComments(post.id);
           setState(prevState => ({ ...prevState, post, isBookmarked, loading: false }));
         });
       }
@@ -127,11 +142,6 @@ const PostScreen = ({ navigation }: Props) => {
   };
 
   const { post } = state;
-
-  const getComments = () => {
-    const query = { post: 1, page: 1 };
-    apiClient.get<[]>('comments', query);
-  };
 
   useEffect(loadPost, []);
 

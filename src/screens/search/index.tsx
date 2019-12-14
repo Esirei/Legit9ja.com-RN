@@ -6,6 +6,7 @@ import TextInput from '@components/TextInput';
 import PostItem from '@components/PostItem';
 import LoadingMore from '@components/LoadingMore';
 import api from '@api';
+import { data, totalPages } from '@helpers/api';
 
 type NavigationParams = { searchQuery?: string };
 
@@ -13,6 +14,7 @@ const SearchScreen: NavigationStackScreenComponent<NavigationParams> = ({ naviga
   const [state, setState] = useState(() => ({
     posts: [],
     page: 1,
+    maxPage: 1,
     loading: false,
     loadingMore: false,
   }));
@@ -39,23 +41,32 @@ const SearchScreen: NavigationStackScreenComponent<NavigationParams> = ({ naviga
   const loadPosts = () => {
     if (search) {
       setState(prevState => ({ ...prevState, loading: true }));
-      getPosts().then(posts => {
-        setState(prevState => ({ ...prevState, posts, loading: false, page: 1 }));
+      getPosts().then(response => {
+        console.log('Search results', response);
+        setState(prevState => ({
+          ...prevState,
+          posts: data(response),
+          loading: false,
+          page: 1,
+          maxPage: totalPages(response),
+        }));
       });
     }
   };
 
   const loadMorePost = () => {
-    if (!state.loadingMore) {
+    if (!state.loadingMore && state.page < state.maxPage) {
       setState(prevState => ({ ...prevState, loadingMore: true }));
-      getPosts(++state.page).then(posts => {
-        setState(prevState => ({
-          ...prevState,
-          loadingMore: false,
-          posts: [...prevState.posts, ...posts],
-          page: prevState.page + 1,
-        }));
-      });
+      getPosts(++state.page)
+        .then(data)
+        .then(posts => {
+          setState(prevState => ({
+            ...prevState,
+            loadingMore: false,
+            posts: [...prevState.posts, ...posts],
+            page: prevState.page + 1,
+          }));
+        });
     }
   };
 

@@ -8,6 +8,7 @@ import SeparatorHorizontal from '@components/SeparatorHorizontal';
 import images from '@assets/images';
 import { NavigationService, RouteNames } from '@navigation';
 import fonts from '@assets/fonts';
+import { data } from '@helpers/api';
 
 const onCategoryItemPress = category => {
   NavigationService.navigate(RouteNames.CATEGORY_POSTS, { category });
@@ -65,6 +66,7 @@ const CategoriesScreen = () => {
     const query = { _embed: true, hide_empty: true, per_page: 99 };
     apiClient
       .get('categories', query)
+      .then(data)
       .then(categories => setState(prevState => ({ ...prevState, categories, loading: false })));
   };
 

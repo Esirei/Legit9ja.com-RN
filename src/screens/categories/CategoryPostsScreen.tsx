@@ -6,6 +6,7 @@ import { NavigationStackScreenComponent } from 'react-navigation-stack';
 import apiClient from '@api';
 import { CategoryPostItem } from '@components/PostItem';
 import LoadingMore from '@components/LoadingMore';
+import { data, totalPages } from '@helpers/api';
 
 type NavigationParams = { category?: any };
 interface Props extends NavigationInjectedProps<NavigationParams> {}
@@ -15,6 +16,7 @@ const CategoryPostsScreen: NavigationStackScreenComponent<NavigationParams> = ({
   const [state, setState] = useState(() => ({
     posts: [],
     page: 1,
+    maxPage: 1,
     loading: false,
     loadingMore: false,
   }));
@@ -26,22 +28,29 @@ const CategoryPostsScreen: NavigationStackScreenComponent<NavigationParams> = ({
 
   const loadPosts = () => {
     setState(prevState => ({ ...prevState, loading: true }));
-    getPosts().then(posts => {
-      setState(prevState => ({ ...prevState, posts, loading: false }));
+    getPosts().then(response => {
+      setState(prevState => ({
+        ...prevState,
+        posts: data(response),
+        loading: false,
+        maxPage: totalPages(response),
+      }));
     });
   };
 
   const loadMorePosts = () => {
-    if (!state.loadingMore) {
+    if (!state.loadingMore && state.page < state.maxPage) {
       setState(prevState => ({ ...prevState, loadingMore: true }));
-      getPosts(++state.page).then(posts => {
-        setState(prevState => ({
-          ...prevState,
-          posts: [...prevState.posts, ...posts],
-          loadingMore: false,
-          page: ++prevState.page,
-        }));
-      });
+      getPosts(++state.page)
+        .then(data)
+        .then(posts => {
+          setState(prevState => ({
+            ...prevState,
+            posts: [...prevState.posts, ...posts],
+            loadingMore: false,
+            page: ++prevState.page,
+          }));
+        });
     }
   };
 

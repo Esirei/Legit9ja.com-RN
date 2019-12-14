@@ -41,7 +41,7 @@ const ApiInterceptors = () => {
       error => {
         if (axios.isCancel(error)) {
           console.log('Request cancelled', error);
-          return;
+          return Promise.reject(error);
         }
         const { config, data, status } = error.response || {}; // Network error will make response undefined
         let message = data ? data.message || data.error : error.message;

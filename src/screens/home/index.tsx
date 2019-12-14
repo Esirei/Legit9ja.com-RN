@@ -10,6 +10,7 @@ import images from '@assets/images';
 import { NavigationService, RouteNames } from '@navigation';
 import LoadingMore from '@components/LoadingMore';
 import fonts from '@assets/fonts';
+import { data, totalPages } from '@helpers/api';
 
 const { navigate } = NavigationService;
 
@@ -76,6 +77,7 @@ const HomeScreen = () => {
     featuredPosts: [],
     posts: [],
     page: 1,
+    maxPage: 1,
     loading: false,
     loadingMore: false,
   }));
@@ -101,27 +103,30 @@ const HomeScreen = () => {
       axios.spread((featuredPosts, categories, posts) => {
         setState(prevState => ({
           ...prevState,
-          featuredPosts,
-          categories,
-          posts,
+          featuredPosts: data(featuredPosts),
+          categories: data(categories),
+          posts: data(posts),
           loading: false,
           page: 1,
+          maxPage: totalPages(posts),
         }));
       }),
     );
   };
 
   const loadMorePost = () => {
-    if (!state.loadingMore) {
+    if (!state.loadingMore && state.page < state.maxPage) {
       setState(prevState => ({ ...prevState, loadingMore: true }));
-      getPosts(++state.page).then(posts => {
-        setState(prevState => ({
-          ...prevState,
-          loadingMore: false,
-          posts: [...prevState.posts, ...posts],
-          page: prevState.page + 1,
-        }));
-      });
+      getPosts(++state.page)
+        .then(data)
+        .then(posts => {
+          setState(prevState => ({
+            ...prevState,
+            loadingMore: false,
+            posts: [...prevState.posts, ...posts],
+            page: prevState.page + 1,
+          }));
+        });
     }
   };
 

@@ -8,7 +8,7 @@ export default class Client {
     // Returns the data object of responses
     this.interceptors().response.use(response => {
       console.log('Api response', response);
-      return response.data;
+      return response;
     });
     console.log('Http client created!');
   }
@@ -26,15 +26,15 @@ export default class Client {
   interceptors = () => this.httpClient.interceptors;
 
   // AxiosResponse data is returned using the interceptor in the constructor, hence <R, R> is used to override AxiosResponse type here.
-  request = <R = any>(config: AxiosRequestConfig) => this.httpClient.request<R, R>(config);
+  request = <R = any>(config: AxiosRequestConfig) => this.httpClient.request<R>(config);
 
-  delete = <R = any>(url: string, params?: any) => this.httpClient.delete<R, R>(url, { params });
+  delete = <R = any>(url: string, params?: any) => this.httpClient.delete<R>(url, { params });
 
-  get = <R = any>(url: string, params?: any) => this.httpClient.get<R, R>(url, { params });
+  get = <R = any>(url: string, params?: any) => this.httpClient.get<R>(url, { params });
 
-  patch = <R = any>(url: string, data?: any) => this.httpClient.patch<R, R>(url, data);
+  patch = <R = any>(url: string, data?: any) => this.httpClient.patch<R>(url, data);
 
-  post = <R = any>(url: string, data?: any) => this.httpClient.post<R, R>(url, data);
+  post = <R = any>(url: string, data?: any) => this.httpClient.post<R>(url, data);
 
-  put = <R = any>(url: string, data?: any) => this.httpClient.put<R, R>(url, data);
+  put = <R = any>(url: string, data?: any) => this.httpClient.put<R>(url, data);
 }
