@@ -1,5 +1,14 @@
 import React, { memo, useState } from 'react';
-import { Image, KeyboardAvoidingView, StyleSheet, Text, View, StatusBar } from 'react-native';
+import {
+  ActivityIndicator,
+  Image,
+  Keyboard,
+  KeyboardAvoidingView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import Modal from 'react-native-modal';
 import Touchable from '@components/Touchable';
 import Input from '@components/TextInput';
@@ -47,6 +56,8 @@ const CommentModal = ({ post }) => {
       return;
     }
 
+    Keyboard.dismiss();
+
     const { id } = post;
     const query = { post: id, ...data };
 
@@ -55,14 +66,26 @@ const CommentModal = ({ post }) => {
       .post('comments', query)
       .then(value => {
         console.log('Comment sent!', value);
+        close();
         setData({ author_name: '', author_email: '', content: '' });
         setPosting(false);
-        close();
       })
       .catch(_ => {
         setPosting(false);
       });
   };
+
+  const renderPostingIndicator = () => (
+    <View style={styles.button}>
+      <ActivityIndicator size={'small'} color={'#008000'} />
+    </View>
+  );
+
+  const renderSubmitButton = () => (
+    <Touchable style={styles.button} onPress={postComment}>
+      <Text style={styles.buttonText}>SUBMIT</Text>
+    </Touchable>
+  );
 
   return (
     <>
@@ -86,34 +109,33 @@ const CommentModal = ({ post }) => {
                 onChangeText={text => onChange('author_name', text)}
                 editable={!posting}
                 error={errors.author_name}
+                autoFocus
               />
               <Input
                 image={images.ic_email_128}
                 placeholder={'Email'}
-                keyboardType={'email-address'}
                 value={data.author_email}
                 onChangeText={text => onChange('author_email', text)}
                 editable={!posting}
                 error={errors.author_email}
+                keyboardType={'email-address'}
               />
               <Input
                 image={images.ic_chat_128}
                 placeholder={'Comment'}
-                multiline
-                style={styles.commentInput}
                 value={data.content}
                 onChangeText={text => onChange('content', text)}
                 editable={!posting}
                 error={errors.content}
+                multiline
+                style={styles.commentInput}
               />
             </View>
             <View style={styles.buttonsContainer}>
               <Touchable style={styles.button} onPress={close}>
                 <Text style={styles.buttonText}>CANCEL</Text>
               </Touchable>
-              <Touchable style={styles.button} onPress={postComment} disabled={posting}>
-                <Text style={styles.buttonText}>{posting ? 'POSTING...' : 'SUBMIT'}</Text>
-              </Touchable>
+              {posting ? renderPostingIndicator() : renderSubmitButton()}
             </View>
           </View>
         </Modal>
