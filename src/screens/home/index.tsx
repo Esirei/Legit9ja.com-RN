@@ -262,6 +262,6 @@ const styles = StyleSheet.create({
   categoryText: {
     color: '#FFF',
     fontSize: 13,
-    fontFamily: fonts.neo_sans_pro_regular,
+    fontFamily: fonts.neo_sans_pro_medium,
   },
 });

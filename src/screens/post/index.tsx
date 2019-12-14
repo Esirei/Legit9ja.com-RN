@@ -36,6 +36,9 @@ const RealStatusBarHeight = Platform.select({
 // We hiding system rendered statusBar view in android, so need to add the height to rendered AppBar to emulate it.
 const DefaultAppBarHeight = Header.HEIGHT + RenderedStatusBarHeight;
 
+// AppBar height without status bar.
+const RealAppBarHeight = DefaultAppBarHeight - RealStatusBarHeight;
+
 interface Props extends NavigationInjectedProps<PostScreenParams> {}
 
 interface State {
@@ -230,12 +233,21 @@ const PostScreen = ({ navigation }: Props) => {
           opacity,
           backgroundColor: 'rgba(0,0,0,0.25)',
           position: 'absolute',
-          top: 0,
+          height: AppBarHeight,
+          justifyContent: 'flex-end',
           left: 0,
           right: 0,
           bottom: 0,
-        }}
-      />
+        }}>
+        <View
+          style={{
+            height: RealAppBarHeight,
+            marginHorizontal: RealAppBarHeight,
+            justifyContent: 'center',
+          }}>
+          <PostTitle post={post} style={{ color: '#FFF', textAlign: 'center' }} numberOfLines={1} />
+        </View>
+      </Animated.View>
     </Animated.View>
   );
 

@@ -6,10 +6,8 @@ import PostImage from './PostImage';
 import PostDateMenu from './PostDateMenu';
 import PostTitle from './PostTitle';
 import PostCategories from './PostCategories';
-import { Html5Entities } from 'html-entities';
-
-const entities = new Html5Entities();
-const regex = /(<([^>]+)>)/gi;
+import fonts from '@assets/fonts';
+import { postContentPlain } from '@helpers/post';
 
 const onPostItemPress = post => {
   NavigationService.navigate(RouteNames.POSTS, { post });
@@ -26,10 +24,7 @@ const PostItem = ({ post }) => (
       </View>
     </View>
     <Text style={styles.postDetails} ellipsizeMode={'tail'} numberOfLines={3}>
-      {entities
-        .decode(post.content.rendered)
-        .replace(regex, '')
-        .replace('\n', '')}
+      {postContentPlain(post)}
     </Text>
   </Touchable>
 );
@@ -68,5 +63,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontSize: 16,
     color: 'rgba(0,0,0,0.54)',
+    fontFamily: fonts.roboto_regular,
   },
 });

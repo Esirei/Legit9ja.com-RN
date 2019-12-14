@@ -63,6 +63,14 @@ const entities = new Html5Entities();
 export const postTitle = post => entities.decode(post.title.rendered);
 export const relatedPostTitle = post => entities.decode(post.title);
 
+const plainPostContentRegex = /(<([^>]+)>)/gi;
+export const postContentPlain = post => {
+  return entities
+    .decode(postContent(post))
+    .replace(plainPostContentRegex, '')
+    .replace('\n', '');
+};
+
 export const sharePost = post => {
   const url = post.link;
   Share.share({ title: postTitle(post), url, message: url }, { dialogTitle: 'Sharing Post...' });
