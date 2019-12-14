@@ -10,6 +10,7 @@ import HomeScreen from '@screens/home';
 import CategoriesScreen from '@screens/categories';
 import CategoryPostsScreen from '@screens/categories/CategoryPostsScreen';
 import PostScreen from '@screens/post';
+import PostCommentsScreen from '@screens/post/PostCommentsScreen';
 import SearchScreen from '@screens/search';
 import BookmarksScreen from '@screens/bookmarks';
 import Drawer from '@components/Drawer';
@@ -31,6 +32,7 @@ const StackNav = createStackNavigator(
     [RouteNames.CATEGORIES]: CategoriesScreen,
     [RouteNames.CATEGORY_POSTS]: CategoryPostsScreen,
     [RouteNames.POSTS]: PostScreen,
+    [RouteNames.COMMENTS]: PostCommentsScreen,
     [RouteNames.SEARCH]: SearchScreen,
     [RouteNames.BOOKMARKS]: BookmarksScreen,
   },

@@ -15,8 +15,14 @@ import Input from '@components/TextInput';
 import images from '@assets/images';
 import apiClient from '@api';
 import fonts from '@assets/fonts';
+import { Post } from '@types';
 
-const CommentModal = ({ post }) => {
+interface Props {
+  post: Post;
+  onSubmit?: () => void;
+}
+
+const CommentModal = ({ post, onSubmit }: Props) => {
   const [isVisible, setVisibility] = useState(false);
   const [posting, setPosting] = useState(false);
   const [data, setData] = useState(() => ({
@@ -69,6 +75,7 @@ const CommentModal = ({ post }) => {
         close();
         setData({ author_name: '', author_email: '', content: '' });
         setPosting(false);
+        !!onSubmit && onSubmit();
       })
       .catch(_ => {
         setPosting(false);

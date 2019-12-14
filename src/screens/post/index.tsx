@@ -19,6 +19,7 @@ import { PostScreenParams } from './types';
 import fonts from '@assets/fonts';
 import Author from '@screens/post/components/Author';
 import { data, totalItems } from '@helpers/api';
+import { NavigationService, RouteNames } from '@navigation';
 
 const { width } = Dimensions.get('window');
 const ImageHeight = width / 1.25;
@@ -191,7 +192,9 @@ const PostScreen = ({ navigation }: Props) => {
     </View>
   );
 
-  const renderCommentButton = () => <CommentModal post={post} />;
+  const renderCommentButton = () => (
+    <CommentModal post={post!} onSubmit={() => loadComments(post!.id)} />
+  );
 
   const renderRelatedPost = () => {
     const relatedPosts = state.post!['jetpack-related-posts'];
@@ -261,7 +264,11 @@ const PostScreen = ({ navigation }: Props) => {
             marginHorizontal: RealAppBarHeight,
             justifyContent: 'center',
           }}>
-          <PostTitle post={post!} style={{ color: '#FFF', textAlign: 'center' }} numberOfLines={1} />
+          <PostTitle
+            post={post!}
+            style={{ color: '#FFF', textAlign: 'center' }}
+            numberOfLines={1}
+          />
         </View>
       </Animated.View>
       <Animated.View
@@ -277,6 +284,19 @@ const PostScreen = ({ navigation }: Props) => {
       </Animated.View>
     </Animated.View>
   );
+
+  const renderViewComments = () => {
+    const { comments } = state;
+    if (comments === 0) {
+      return null;
+    }
+    const onPress = () => NavigationService.navigate(RouteNames.COMMENTS, { post });
+    return (
+      <Touchable onPress={onPress} style={styles.viewCommentsButton}>
+        <Text style={styles.viewCommentsText}>VIEW COMMENTS ({comments})</Text>
+      </Touchable>
+    );
+  };
 
   type ContentOffsetMap = { x?: Animated.Value<number>; y?: Animated.Value<number> };
   const onScroll = ({ y, x }: ContentOffsetMap) => {
@@ -297,6 +317,7 @@ const PostScreen = ({ navigation }: Props) => {
           {info()}
           <Separator />
           <Content post={post} />
+          {renderViewComments()}
           <Separator style={{ marginTop: 16, marginBottom: 8 }} />
           {renderRelatedPost()}
         </Animated.ScrollView>
@@ -333,4 +354,18 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   contentContainer: { paddingBottom: 88 },
+  viewCommentsButton: {
+    backgroundColor: '#008000',
+    marginHorizontal: 16,
+    marginTop: 16,
+    marginBottom: -8,
+    minHeight: 40,
+    borderRadius: 4,
+    justifyContent: 'center',
+  },
+  viewCommentsText: {
+    color: '#FFF',
+    fontFamily: fonts.roboto_bold,
+    textAlign: 'center',
+  },
 });

@@ -1,8 +1,8 @@
  - Share Post ✔
  - Bookmark Post ✔
  - Bookmark Screen ✔
- - Complete Post Screen
- - Comments Screen
+ - Complete Post Screen ✔
+ - Comments Screen ✔
  - Search Screen ✔
  - Empty items
  - Ads
