@@ -17,6 +17,7 @@ import { bookmarkPost, postIsBookmarked, sharePost } from '@helpers/post';
 import { Post } from '@types';
 import { PostScreenParams } from './types';
 import fonts from '@assets/fonts';
+import Author from '@screens/post/components/Author';
 
 const { width } = Dimensions.get('window');
 const ImageHeight = width / 1.25;
@@ -66,6 +67,11 @@ const PostScreen = ({ navigation }: Props) => {
   const opacity = scrollY.current.interpolate({
     inputRange: [0, SCROLL_RANGE, SCROLL_RANGE],
     outputRange: [0, 0, 1],
+    extrapolate: Extrapolate.CLAMP,
+  });
+  const authorOpacity = scrollY.current.interpolate({
+    inputRange: [0, SCROLL_RANGE],
+    outputRange: [1, 0],
     extrapolate: Extrapolate.CLAMP,
   });
 
@@ -124,7 +130,7 @@ const PostScreen = ({ navigation }: Props) => {
 
   const getComments = () => {
     const query = { post: 1, page: 1 };
-    apiClient.get('comments/', query);
+    apiClient.get<[]>('comments', query);
   };
 
   useEffect(loadPost, []);
@@ -149,7 +155,7 @@ const PostScreen = ({ navigation }: Props) => {
     <View>
       {/*<PostImage post={post} style={{ width: '100%', height: undefined, aspectRatio: 1.25 }} />*/}
       <View style={{ padding: 8 }}>
-        <PostTitle post={post} />
+        <PostTitle post={post!} />
         <PostCategories post={post} />
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <PostDate post={post} />
@@ -245,8 +251,19 @@ const PostScreen = ({ navigation }: Props) => {
             marginHorizontal: RealAppBarHeight,
             justifyContent: 'center',
           }}>
-          <PostTitle post={post} style={{ color: '#FFF', textAlign: 'center' }} numberOfLines={1} />
+          <PostTitle post={post!} style={{ color: '#FFF', textAlign: 'center' }} numberOfLines={1} />
         </View>
+      </Animated.View>
+      <Animated.View
+        style={{
+          opacity: authorOpacity,
+          position: 'absolute',
+          justifyContent: 'flex-end',
+          left: 0,
+          right: 0,
+          bottom: 0,
+        }}>
+        <Author post={post!} />
       </Animated.View>
     </Animated.View>
   );
