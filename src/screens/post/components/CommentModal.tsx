@@ -81,6 +81,7 @@ const CommentModal = ({ post }) => {
               <Input
                 image={images.ic_email_128}
                 placeholder={'Email'}
+                keyboardType={'email-address'}
                 value={data.author_email}
                 onChangeText={text => onChange('author_email', text)}
                 error={errors.author_email}
