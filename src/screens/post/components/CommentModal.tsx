@@ -9,6 +9,7 @@ import fonts from '@assets/fonts';
 
 const CommentModal = ({ post }) => {
   const [isVisible, setVisibility] = useState(false);
+  const [posting, setPosting] = useState(false);
   const [data, setData] = useState(() => ({
     author_name: '',
     author_email: '',
@@ -49,11 +50,18 @@ const CommentModal = ({ post }) => {
     const { id } = post;
     const query = { post: id, ...data };
 
-    apiClient.post('comments', query).then(value => {
-      console.log('Comment sent!', value);
-      setData({ author_name: '', author_email: '', content: '' });
-      close();
-    });
+    setPosting(true);
+    apiClient
+      .post('comments', query)
+      .then(value => {
+        console.log('Comment sent!', value);
+        setData({ author_name: '', author_email: '', content: '' });
+        setPosting(false);
+        close();
+      })
+      .catch(_ => {
+        setPosting(false);
+      });
   };
 
   return (
@@ -76,6 +84,7 @@ const CommentModal = ({ post }) => {
                 placeholder={'Name'}
                 value={data.author_name}
                 onChangeText={text => onChange('author_name', text)}
+                editable={!posting}
                 error={errors.author_name}
               />
               <Input
@@ -84,15 +93,17 @@ const CommentModal = ({ post }) => {
                 keyboardType={'email-address'}
                 value={data.author_email}
                 onChangeText={text => onChange('author_email', text)}
+                editable={!posting}
                 error={errors.author_email}
               />
               <Input
                 image={images.ic_chat_128}
                 placeholder={'Comment'}
                 multiline
-                // numberOfLines={3}
+                style={styles.commentInput}
                 value={data.content}
                 onChangeText={text => onChange('content', text)}
+                editable={!posting}
                 error={errors.content}
               />
             </View>
@@ -100,8 +111,8 @@ const CommentModal = ({ post }) => {
               <Touchable style={styles.button} onPress={close}>
                 <Text style={styles.buttonText}>CANCEL</Text>
               </Touchable>
-              <Touchable style={styles.button} onPress={postComment}>
-                <Text style={styles.buttonText}>SUBMIT</Text>
+              <Touchable style={styles.button} onPress={postComment} disabled={posting}>
+                <Text style={styles.buttonText}>{posting ? 'POSTING...' : 'SUBMIT'}</Text>
               </Touchable>
             </View>
           </View>
@@ -122,6 +133,7 @@ const styles = StyleSheet.create({
   commentContainer: { backgroundColor: '#FFF', borderRadius: 2 },
   title: { color: '#FFF', backgroundColor: '#455A64', padding: 15, fontFamily: fonts.roboto_bold },
   inputsContainer: { marginVertical: 5, marginHorizontal: 10 },
+  commentInput: { maxHeight: 60 },
   buttonsContainer: { marginTop: 10, marginBottom: 5, flexDirection: 'row' },
   button: { padding: 10, alignItems: 'center', flex: 1 },
   buttonText: { color: '#008000', fontFamily: fonts.roboto_bold },
