@@ -1,6 +1,7 @@
 import { memo, useEffect } from 'react';
 import { Platform, ToastAndroid } from 'react-native';
 import { useStore } from 'react-redux';
+import axios from 'axios';
 import api from '@api';
 import { AppState } from '@types';
 import { tokenSelector } from '@selectors/sessionSelector';
@@ -38,6 +39,10 @@ const ApiInterceptors = () => {
     const id = interceptors().response.use(
       value => value,
       error => {
+        if (axios.isCancel(error)) {
+          console.log('Request cancelled', error);
+          return;
+        }
         const { config, data, status } = error.response || {}; // Network error will make response undefined
         let message = data ? data.message || data.error : error.message;
         console.warn(`Api status ${status} error!: ${message}`, data, error.toJSON());

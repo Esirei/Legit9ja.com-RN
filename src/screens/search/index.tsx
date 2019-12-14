@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { FlatList, StyleSheet, View, Platform } from 'react-native';
 import { NavigationStackScreenComponent } from 'react-navigation-stack';
+import axios, { CancelTokenSource } from 'axios';
 import TextInput from '@components/TextInput';
 import PostItem from '@components/PostItem';
 import LoadingMore from '@components/LoadingMore';
@@ -16,12 +17,23 @@ const SearchScreen: NavigationStackScreenComponent<NavigationParams> = ({ naviga
     loadingMore: false,
   }));
 
+  const tokenSource = useRef<CancelTokenSource | undefined>(undefined);
+
   const search = navigation.getParam('searchQuery', '');
   console.log('SearchQuery', search);
 
   const getPosts = (page = 1) => {
-    const query = { search, _embed: true, page, per_page: 10 };
-    return api.get<[]>('posts', query);
+    if (tokenSource.current) {
+      tokenSource.current.cancel();
+    }
+    tokenSource.current = axios.CancelToken.source();
+    const params = { search, _embed: true, page, per_page: 10 };
+    return api.request<[]>({
+      url: 'posts',
+      method: 'GET',
+      params,
+      cancelToken: tokenSource.current!.token,
+    });
   };
 
   const loadPosts = () => {
