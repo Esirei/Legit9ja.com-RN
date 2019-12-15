@@ -19,11 +19,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* Legit9jaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* Legit9jaTests.m */; };
 		907EC8F59E8E8C87449C0401 /* libPods-Legit9ja.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 085E27B223A88D46A207E7E9 /* libPods-Legit9ja.a */; };
 		A19CCF5C9AE8C942A769ECEB /* libPods-Legit9ja-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F3DA8E23D5100EA8400F18BA /* libPods-Legit9ja-tvOSTests.a */; };
-		B9CC960D5C6A4B61B99C691D /* Roboto Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A4DB55C80C884E20BB9037AE /* Roboto Regular.ttf */; };
 		C2C86EBFE5FCDED7A5E81153 /* libPods-Legit9ja-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 393294FEA0441A31717D4A58 /* libPods-Legit9ja-tvOS.a */; };
-		E62C86874FE84ABE86BFCB5B /* Roboto Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 236CA10E4ACA4EA592CB19D3 /* Roboto Bold.ttf */; };
-		E8E21D66D2C84DA8B7B0C4E4 /* Neo Sans Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 729CC685A45E4E36B82C628D /* Neo Sans Pro.ttf */; };
-		FE2746E3754F40219EAFE705 /* Neo Sans Pro Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4EAF1231408E4139AA29174C /* Neo Sans Pro Medium.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,16 +53,12 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Legit9ja/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Legit9ja/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Legit9ja/main.m; sourceTree = "<group>"; };
-		236CA10E4ACA4EA592CB19D3 /* Roboto Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto Bold.ttf"; path = "../src/assets/fonts/Roboto Bold.ttf"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* Legit9ja-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Legit9ja-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* Legit9ja-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Legit9ja-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		393294FEA0441A31717D4A58 /* libPods-Legit9ja-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Legit9ja-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		43EA89A65BDE7B001D6DA59C /* libPods-Legit9jaTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Legit9jaTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		453650198FDF9878EC347FFF /* Pods-Legit9ja-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Legit9ja-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Legit9ja-tvOSTests/Pods-Legit9ja-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		4EAF1231408E4139AA29174C /* Neo Sans Pro Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Neo Sans Pro Medium.ttf"; path = "../src/assets/fonts/Neo Sans Pro Medium.ttf"; sourceTree = "<group>"; };
-		729CC685A45E4E36B82C628D /* Neo Sans Pro.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Neo Sans Pro.ttf"; path = "../src/assets/fonts/Neo Sans Pro.ttf"; sourceTree = "<group>"; };
 		84BE15A7D96235D6C0DE7E00 /* Pods-Legit9ja-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Legit9ja-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-Legit9ja-tvOSTests/Pods-Legit9ja-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
-		A4DB55C80C884E20BB9037AE /* Roboto Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto Regular.ttf"; path = "../src/assets/fonts/Roboto Regular.ttf"; sourceTree = "<group>"; };
 		AC9C88392F3ECEB898B818E4 /* Pods-Legit9ja-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Legit9ja-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Legit9ja-tvOS/Pods-Legit9ja-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		D049C01092A3EFB0D5C40FA8 /* Pods-Legit9ja.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Legit9ja.release.xcconfig"; path = "Target Support Files/Pods-Legit9ja/Pods-Legit9ja.release.xcconfig"; sourceTree = "<group>"; };
 		E6AE922A46C9F9B5E29795DB /* Pods-Legit9ja.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Legit9ja.debug.xcconfig"; path = "Target Support Files/Pods-Legit9ja/Pods-Legit9ja.debug.xcconfig"; sourceTree = "<group>"; };
@@ -160,10 +152,6 @@
 		2EE813C45D86443CAF1E1E7A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				4EAF1231408E4139AA29174C /* Neo Sans Pro Medium.ttf */,
-				729CC685A45E4E36B82C628D /* Neo Sans Pro.ttf */,
-				236CA10E4ACA4EA592CB19D3 /* Roboto Bold.ttf */,
-				A4DB55C80C884E20BB9037AE /* Roboto Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -359,10 +347,6 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				FE2746E3754F40219EAFE705 /* Neo Sans Pro Medium.ttf in Resources */,
-				E8E21D66D2C84DA8B7B0C4E4 /* Neo Sans Pro.ttf in Resources */,
-				E62C86874FE84ABE86BFCB5B /* Roboto Bold.ttf in Resources */,
-				B9CC960D5C6A4B61B99C691D /* Roboto Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
