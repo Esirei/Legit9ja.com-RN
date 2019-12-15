@@ -110,7 +110,7 @@ const Drawer = () => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.drawerHeader}>
-        <Image source={images.logo} style={styles.drawerHeaderImage} resizeMode={'center'} />
+        <Image source={images.logo} style={styles.drawerHeaderImage} resizeMode={'cover'} />
       </View>
       <DrawerItemsContainer>{renderAppNavItems()}</DrawerItemsContainer>
       <DrawerItemsContainer name={'Social'}>{renderSocialNavItems()}</DrawerItemsContainer>
@@ -161,10 +161,12 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 150,
     backgroundColor: '#FFF',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   drawerHeaderImage: {
     flex: 1,
-    width: undefined,
+    width: '66%',
     height: undefined,
   },
 });

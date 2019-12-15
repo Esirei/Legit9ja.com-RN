@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Dimensions, Linking, StyleSheet } from 'react-native';
+import { Dimensions, Linking, StyleSheet, Platform } from 'react-native';
 import { WebViewNavigation } from 'react-native-webview';
 import AutoHeightWebView from 'react-native-autoheight-webview';
 import YouTube from '@screens/post/components/YouTube';
@@ -14,9 +14,14 @@ const Content = ({ post }) => {
 
   const openExternalUrl = (event: WebViewNavigation) => {
     console.log('openExternalUrl', event);
-    const { url } = event;
-    // iOS calls method on 1st load, continue loading if url is about:blank.
-    if (url && url !== 'about:blank') {
+    const { url, navigationType } = event;
+    if (url) {
+      // iOS calls method on 1st load, continue loading if url is about:blank.
+      if (Platform.OS === 'ios') {
+        if (navigationType !== 'click' || url === 'about:blank') {
+          return true;
+        }
+      }
       console.log('openExternalUrl - custom', event);
       const matches = postSlugRegex.exec(url);
       if (matches) {

@@ -62,6 +62,7 @@ const PostScreen = ({ navigation }: Props) => {
   console.log('RenderedStatusBarHeight', StatusBar.currentHeight);
   console.log('SafeAreaInsets', insets);
   console.log('AppBarHeight', AppBarHeight);
+  console.log('RealAppBarHeight', RealAppBarHeight);
 
   const SCROLL_RANGE = ImageHeight - AppBarHeight;
 
