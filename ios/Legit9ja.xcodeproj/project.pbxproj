@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* Legit9jaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* Legit9jaTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -20,6 +19,10 @@
 		907EC8F59E8E8C87449C0401 /* libPods-Legit9ja.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 085E27B223A88D46A207E7E9 /* libPods-Legit9ja.a */; };
 		A19CCF5C9AE8C942A769ECEB /* libPods-Legit9ja-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F3DA8E23D5100EA8400F18BA /* libPods-Legit9ja-tvOSTests.a */; };
 		C2C86EBFE5FCDED7A5E81153 /* libPods-Legit9ja-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 393294FEA0441A31717D4A58 /* libPods-Legit9ja-tvOS.a */; };
+		A980B801CE4D48FEB395E72A /* NeoSansPro-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E0FCD9CC799340899701A9AE /* NeoSansPro-Medium.ttf */; };
+		6A1EF64B5C8749B2AF512F76 /* NeoSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 075C1219976341E8A69FD80A /* NeoSansPro-Regular.ttf */; };
+		67E6CE02E9E243C89FF8CED6 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D7A6FD50F8C44878AB9492FA /* Roboto-Bold.ttf */; };
+		856BC9DAD8104F56A3C8DDCD /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 495A69E30032473FA9325C93 /* Roboto-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +70,10 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F3DA8E23D5100EA8400F18BA /* libPods-Legit9ja-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Legit9ja-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEEFADE213BB9CF34D6DFC25 /* Pods-Legit9jaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Legit9jaTests.debug.xcconfig"; path = "Target Support Files/Pods-Legit9jaTests/Pods-Legit9jaTests.debug.xcconfig"; sourceTree = "<group>"; };
+		E0FCD9CC799340899701A9AE /* NeoSansPro-Medium.ttf */ = {isa = PBXFileReference; name = "NeoSansPro-Medium.ttf"; path = "../src/assets/fonts/NeoSansPro-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		075C1219976341E8A69FD80A /* NeoSansPro-Regular.ttf */ = {isa = PBXFileReference; name = "NeoSansPro-Regular.ttf"; path = "../src/assets/fonts/NeoSansPro-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D7A6FD50F8C44878AB9492FA /* Roboto-Bold.ttf */ = {isa = PBXFileReference; name = "Roboto-Bold.ttf"; path = "../src/assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		495A69E30032473FA9325C93 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; name = "Roboto-Regular.ttf"; path = "../src/assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +159,10 @@
 		2EE813C45D86443CAF1E1E7A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E0FCD9CC799340899701A9AE /* NeoSansPro-Medium.ttf */,
+				075C1219976341E8A69FD80A /* NeoSansPro-Regular.ttf */,
+				D7A6FD50F8C44878AB9492FA /* Roboto-Bold.ttf */,
+				495A69E30032473FA9325C93 /* Roboto-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -347,6 +358,10 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				A980B801CE4D48FEB395E72A /* NeoSansPro-Medium.ttf in Resources */,
+				6A1EF64B5C8749B2AF512F76 /* NeoSansPro-Regular.ttf in Resources */,
+				67E6CE02E9E243C89FF8CED6 /* Roboto-Bold.ttf in Resources */,
+				856BC9DAD8104F56A3C8DDCD /* Roboto-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
