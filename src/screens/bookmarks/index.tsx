@@ -68,6 +68,7 @@ const BookmarksScreen = () => {
 
 BookmarksScreen.navigationOptions = {
   title: 'Bookmarks',
+  headerBackTitle: 'Back',
 };
 
 export default BookmarksScreen;
@@ -79,6 +80,14 @@ const styles = StyleSheet.create({
     margin: 4,
     borderRadius: 4,
     elevation: 1,
+    backgroundColor: '#FFF',
+    shadowRadius: 1,
+    shadowColor: '#000',
+    shadowOpacity: 0.5,
+    shadowOffset: {
+      height: 1,
+      width: 1,
+    },
   },
   itemImage: {
     width: '100%',

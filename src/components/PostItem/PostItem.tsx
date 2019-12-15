@@ -38,6 +38,13 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     elevation: 3,
     backgroundColor: '#FFF',
+    shadowRadius: 2,
+    shadowColor: '#000',
+    shadowOpacity: 0.5,
+    shadowOffset: {
+      height: 2,
+      width: 2,
+    },
   },
   postItems: {
     flex: 1,

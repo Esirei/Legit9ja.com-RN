@@ -94,6 +94,7 @@ CategoryPostsScreen.navigationOptions = ({ navigation }) => {
   const title = navigation.getParam('category', {}).name || 'Category';
   return {
     title,
+    headerBackTitle: 'Back',
   };
 };
 
