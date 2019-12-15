@@ -238,9 +238,8 @@ const PostScreen = ({ navigation }: Props) => {
   const ImageAppBar = () => (
     <Animated.View
       style={{
-        backgroundColor: 'blue',
-        translateY,
         position: 'absolute',
+        transform: [{ translateY }],
         top: 0,
         left: 0,
         right: 0,
@@ -261,7 +260,7 @@ const PostScreen = ({ navigation }: Props) => {
         <View
           style={{
             height: RealAppBarHeight,
-            marginHorizontal: RealAppBarHeight,
+            marginHorizontal: Platform.OS === 'ios' ? 88 : RealAppBarHeight,
             justifyContent: 'center',
           }}>
           <PostTitle
@@ -310,7 +309,6 @@ const PostScreen = ({ navigation }: Props) => {
       <PlaceHolder imageHeight={ImageHeight} imageWidth={width} />
     ) : (
       <>
-        <ImageAppBar />
         <Animated.ScrollView
           onScroll={onScroll({ y: scrollY.current })}
           contentContainerStyle={[styles.contentContainer, { paddingTop: ImageHeight }]}>
@@ -321,16 +319,17 @@ const PostScreen = ({ navigation }: Props) => {
           <Separator style={{ marginTop: 16, marginBottom: 8 }} />
           {renderRelatedPost()}
         </Animated.ScrollView>
+        <ImageAppBar />
         {renderCommentButton()}
       </>
     );
   };
 
   return (
-    <SafeAreaView forceInset={{ top: 'never' }} style={styles.container}>
+    <View style={styles.container}>
       <StatusBar translucent barStyle={'light-content'} backgroundColor={'rgba(0,0,0,0.1)'} />
       {render()}
-    </SafeAreaView>
+    </View>
   );
 };
 

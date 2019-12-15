@@ -13,7 +13,9 @@ const Author = ({ post }: Props) => {
   return (
     <View style={styles.container}>
       <FastImage source={{ uri: author.avatar_urls['48'] }} style={styles.image} />
-      <Text style={styles.text}>{author.name}</Text>
+      <View style={styles.textContainer}>
+        <Text style={styles.text}>{author.name}</Text>
+      </View>
     </View>
   );
 };
@@ -34,17 +36,19 @@ const styles = StyleSheet.create({
     borderColor: '#FFF',
     borderRadius: 24,
   },
-  text: {
-    fontFamily: fonts.neo_sans_pro_medium,
-    color: 'rgba(0,0,0,0.75)',
+  textContainer: {
+    marginLeft: 5,
     backgroundColor: '#FFF',
-    textAlignVertical: 'center',
-    fontSize: 13,
     padding: 3,
     paddingHorizontal: 5,
-    marginLeft: 5,
     borderColor: 'rgba(0,0,0,0.5)',
     borderWidth: 1,
     borderRadius: 20,
+  },
+  text: {
+    fontFamily: fonts.neo_sans_pro_medium,
+    color: 'rgba(0,0,0,0.75)',
+    textAlignVertical: 'center',
+    fontSize: 13,
   },
 });
