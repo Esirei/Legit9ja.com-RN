@@ -63,6 +63,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontSize: 16,
     color: 'rgba(0,0,0,0.54)',
-    fontFamily: fonts.roboto_regular,
+    fontFamily: fonts.RobotoRegular,
   },
 });

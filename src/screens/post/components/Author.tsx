@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     borderRadius: 24,
   },
   text: {
-    fontFamily: fonts.neo_sans_pro_medium,
+    fontFamily: fonts.NeoSansProMedium,
     color: 'rgba(0,0,0,0.75)',
     backgroundColor: '#FFF',
     textAlignVertical: 'center',

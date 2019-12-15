@@ -39,7 +39,7 @@ const StackNav = createStackNavigator(
   {
     defaultNavigationOptions: {
       headerTitleStyle: {
-        fontFamily: fonts.neo_sans_pro_medium,
+        fontFamily: fonts.NeoSansProMedium,
         fontSize: 16,
       },
     },

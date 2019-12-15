@@ -49,6 +49,6 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlignVertical: 'auto',
     paddingBottom: 0,
-    fontFamily: fonts.roboto_regular,
+    fontFamily: fonts.RobotoRegular,
   },
 });
