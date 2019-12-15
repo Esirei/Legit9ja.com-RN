@@ -1,8 +1,8 @@
 const fonts = {
-    neo_sans_pro_medium: 'neo_sans_pro_medium',
-    neo_sans_pro_regular: 'neo_sans_pro_regular',
-    roboto_bold: 'roboto_bold',
-    roboto_regular: 'roboto_regular'
+  NeoSansProMedium: 'Neo Sans Pro Medium',
+  NeoSansPro: 'Neo Sans Pro',
+  RobotoBold: 'Roboto Bold',
+  RobotoRegular: 'Roboto Regular',
 };
 
-export default fonts
+export default fonts;

@@ -20,6 +20,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#37474F',
     fontSize: 15,
-    fontFamily: fonts.neo_sans_pro_medium,
+    fontFamily: fonts.NeoSansProMedium,
   },
 });

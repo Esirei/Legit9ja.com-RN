@@ -201,7 +201,7 @@ const PostScreen = ({ navigation }: Props) => {
     if (relatedPosts.length > 0) {
       return (
         <View style={{ marginHorizontal: 8 }}>
-          <Text style={{ marginBottom: 8, fontFamily: fonts.neo_sans_pro_regular }}>
+          <Text style={{ marginBottom: 8, fontFamily: fonts.NeoSansPro }}>
             Related Posts
           </Text>
           {relatedPosts.map(p => (
@@ -365,7 +365,7 @@ const styles = StyleSheet.create({
   },
   viewCommentsText: {
     color: '#FFF',
-    fontFamily: fonts.roboto_bold,
+    fontFamily: fonts.RobotoBold,
     textAlign: 'center',
   },
 });

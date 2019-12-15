@@ -42,6 +42,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.25)',
     borderBottomLeftRadius: borderRadius,
     borderBottomRightRadius: borderRadius,
-    fontFamily: fonts.neo_sans_pro_regular,
+    fontFamily: fonts.NeoSansPro,
   },
 });

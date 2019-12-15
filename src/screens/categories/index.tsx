@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   categoryItemLetter: {
     color: '#FFF',
     fontSize: 20,
-    fontFamily: fonts.neo_sans_pro_medium,
+    fontFamily: fonts.NeoSansProMedium,
   },
   categoryItemDetails: {
     marginLeft: 5,
@@ -113,12 +113,12 @@ const styles = StyleSheet.create({
   categoryTitleText: {
     fontSize: 16,
     color: '#37474F',
-    fontFamily: fonts.neo_sans_pro_regular,
+    fontFamily: fonts.NeoSansPro,
   },
   categoryPostCountText: {
     fontSize: 14,
     color: '#818181',
-    fontFamily: fonts.roboto_regular,
+    fontFamily: fonts.RobotoRegular,
   },
   subCategoriesIndicator: {
     height: 18,
