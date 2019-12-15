@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
   categoryText: {
     color: '#FFF',
     fontSize: 13,
-    fontFamily: fonts.NeoSansProMedium,
+    fontFamily: fonts.NeoSansPro_Medium,
     marginBottom: Platform.OS === 'ios' ? -8 : 0, // font issue on iOS
   },
 });

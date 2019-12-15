@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   drawerItemText: {
     fontSize: 13,
     color: 'rgba(0,0,0,0.54)',
-    fontFamily: fonts.RobotoBold,
+    fontFamily: fonts.Roboto_Bold,
   },
   drawerItemsContainer: {
     paddingTop: 8,
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     margin: 16,
     marginTop: 8,
     color: 'rgba(0,0,0,0.54)',
-    fontFamily: fonts.NeoSansProMedium,
+    fontFamily: fonts.NeoSansPro_Medium,
     marginBottom: Platform.OS === 'ios' ? 8 : 0, // font issue on iOS
   },
   drawerItemsContainerSeparator: {

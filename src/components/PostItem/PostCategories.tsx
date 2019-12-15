@@ -22,6 +22,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#008000',
     fontSize: 13,
-    fontFamily: fonts.RobotoRegular,
+    fontFamily: fonts.Roboto_Regular,
   },
 });

@@ -19,12 +19,8 @@ const generate = () => {
       const key = name.replace(/\s/g, '').replace('-', '_');
       return `${key}: '${name}'`;
     })
-    .join(',\n    ');
-  const string = `const fonts = {
-    ${properties}
-};
-
-export default fonts`;
+    .join(',\n  ');
+  const string = `const fonts = {\n  ${properties}\n};\n\nexport default fonts;\n`;
 
   fs.writeFileSync(filePath, string, 'utf8');
 };

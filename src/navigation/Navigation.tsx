@@ -40,7 +40,7 @@ const StackNav = createStackNavigator(
   {
     defaultNavigationOptions: {
       headerTitleStyle: {
-        fontFamily: fonts.NeoSansProMedium,
+        fontFamily: fonts.NeoSansPro_Medium,
         marginBottom: Platform.OS === 'ios' ? -8 : 0, // font issue on iOS
         fontSize: 16,
       },

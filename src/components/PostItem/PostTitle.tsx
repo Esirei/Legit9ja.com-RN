@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   text: {
     color: '#37474F',
     fontSize: 15,
-    fontFamily: fonts.NeoSansProMedium,
+    fontFamily: fonts.NeoSansPro_Medium,
     marginBottom: Platform.OS === 'ios' ? -8 : 0, // font issue on iOS
   },
 });

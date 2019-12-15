@@ -51,7 +51,7 @@ const dirName = dir => path.parse(dir).name
   .replace(' ', '_') + folderSuffix;
 
 function generate() {
-  const string = `const images = ${imagesObject(imagesDir)};\n\nexport default images`;
+  const string = `const images = ${imagesObject(imagesDir)};\n\nexport default images;\n`;
 
   fs.writeFileSync(filePath, string, 'utf8');
 }

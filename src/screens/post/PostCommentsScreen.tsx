@@ -169,16 +169,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   commentAuthor: {
-    fontFamily: fonts.NeoSansProMedium,
+    fontFamily: fonts.NeoSansPro_Medium,
     color: 'rgba(0,0,0,0.9)',
   },
   commentDate: {
-    fontFamily: fonts.RobotoRegular,
+    fontFamily: fonts.Roboto_Regular,
     color: 'rgba(0,0,0,0.54)',
     fontSize: 11,
   },
   commentText: {
-    fontFamily: fonts.RobotoRegular,
+    fontFamily: fonts.Roboto_Regular,
     color: 'rgba(0,0,0,0.75)',
     fontSize: 13,
   },

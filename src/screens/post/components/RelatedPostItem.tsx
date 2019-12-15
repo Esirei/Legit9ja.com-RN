@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   title: {
     color: '#37474F',
     fontSize: 15,
-    fontFamily: fonts.NeoSansPro,
+    fontFamily: fonts.NeoSansPro_Regular,
   },
   postDetails: {
     flex: 1,

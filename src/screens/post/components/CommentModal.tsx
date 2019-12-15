@@ -160,12 +160,12 @@ export default memo(CommentModal);
 
 const styles = StyleSheet.create({
   commentContainer: { backgroundColor: '#FFF', borderRadius: 2 },
-  title: { color: '#FFF', backgroundColor: '#455A64', padding: 15, fontFamily: fonts.RobotoBold },
+  title: { color: '#FFF', backgroundColor: '#455A64', padding: 15, fontFamily: fonts.Roboto_Bold },
   inputsContainer: { marginVertical: 5, marginHorizontal: 10 },
   commentInput: { maxHeight: 60 },
   buttonsContainer: { marginTop: 10, marginBottom: 5, flexDirection: 'row' },
   button: { padding: 10, alignItems: 'center', flex: 1 },
-  buttonText: { color: '#008000', fontFamily: fonts.RobotoBold },
+  buttonText: { color: '#008000', fontFamily: fonts.Roboto_Bold },
   fab: {
     position: 'absolute',
     height: 56,

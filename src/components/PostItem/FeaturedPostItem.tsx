@@ -46,6 +46,6 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#FFF',
-    fontFamily: fonts.NeoSansPro,
+    fontFamily: fonts.NeoSansPro_Regular,
   },
 });
