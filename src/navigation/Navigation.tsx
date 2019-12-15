@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createDrawerNavigator } from 'react-navigation-drawer';
@@ -40,6 +41,7 @@ const StackNav = createStackNavigator(
     defaultNavigationOptions: {
       headerTitleStyle: {
         fontFamily: fonts.NeoSansProMedium,
+        marginBottom: Platform.OS === 'ios' ? -8 : 0, // font issue on iOS
         fontSize: 16,
       },
     },

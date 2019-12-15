@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { StyleSheet, Text, TextProps } from 'react-native';
+import { StyleSheet, Text, TextProps, Platform } from 'react-native';
 import { postTitle } from '@helpers/post';
 import { Post } from '@types';
 import fonts from '@assets/fonts';
@@ -21,5 +21,6 @@ const styles = StyleSheet.create({
     color: '#37474F',
     fontSize: 15,
     fontFamily: fonts.NeoSansProMedium,
+    marginBottom: Platform.OS === 'ios' ? -8 : 0, // font issue on iOS
   },
 });

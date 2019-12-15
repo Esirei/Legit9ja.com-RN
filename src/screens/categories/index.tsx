@@ -1,5 +1,5 @@
 import React, { useEffect, useState, memo } from 'react';
-import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Image, StyleSheet, Text, View, Platform } from 'react-native';
 import { Placeholder, PlaceholderLine, PlaceholderMedia, Fade } from 'rn-placeholder';
 import randMC from 'random-material-color';
 import apiClient from '@api';
@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontSize: 20,
     fontFamily: fonts.NeoSansProMedium,
+    marginBottom: Platform.OS === 'ios' ? -8 : 0, // font issue on iOS
   },
   categoryItemDetails: {
     marginLeft: 5,

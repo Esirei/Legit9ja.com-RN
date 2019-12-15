@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Image, Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Linking, ScrollView, StyleSheet, Text, View, Platform } from 'react-native';
 import Touchable from '@components/Touchable';
 import SeparatorHorizontal from '@components/SeparatorHorizontal';
 import images from '@assets/images';
@@ -152,6 +152,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     color: 'rgba(0,0,0,0.54)',
     fontFamily: fonts.NeoSansProMedium,
+    marginBottom: Platform.OS === 'ios' ? 8 : 0, // font issue on iOS
   },
   drawerItemsContainerSeparator: {
     marginTop: 8,

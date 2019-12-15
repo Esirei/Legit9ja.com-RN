@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { Dimensions, FlatList, Image, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, FlatList, Image, StyleSheet, Text, View, Platform } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import { Placeholder, PlaceholderLine, PlaceholderMedia, Fade } from 'rn-placeholder';
 import axios from 'axios';
@@ -268,5 +268,6 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontSize: 13,
     fontFamily: fonts.NeoSansProMedium,
+    marginBottom: Platform.OS === 'ios' ? -8 : 0, // font issue on iOS
   },
 });

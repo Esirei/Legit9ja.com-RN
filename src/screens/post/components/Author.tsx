@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   text: {
-    fontFamily: fonts.NeoSansProMedium,
+    fontFamily: fonts.RobotoBold,
     color: 'rgba(0,0,0,0.75)',
     textAlignVertical: 'center',
     fontSize: 13,
