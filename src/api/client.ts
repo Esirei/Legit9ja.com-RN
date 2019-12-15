@@ -7,7 +7,7 @@ export default class Client {
     this.httpClient = axios.create(config);
     // Returns the data object of responses
     this.interceptors().response.use(response => {
-      console.log('Api response', response);
+      // console.log('Api response', response);
       return response;
     });
     console.log('Http client created!');

@@ -239,6 +239,7 @@ const PostScreen = ({ navigation }: Props) => {
     <Animated.View
       style={{
         position: 'absolute',
+        zIndex: 1,
         transform: [{ translateY }],
         top: 0,
         left: 0,
@@ -309,6 +310,7 @@ const PostScreen = ({ navigation }: Props) => {
       <PlaceHolder imageHeight={ImageHeight} imageWidth={width} />
     ) : (
       <>
+        <ImageAppBar />
         <Animated.ScrollView
           onScroll={onScroll({ y: scrollY.current })}
           contentContainerStyle={[styles.contentContainer, { paddingTop: ImageHeight }]}>
@@ -319,7 +321,6 @@ const PostScreen = ({ navigation }: Props) => {
           <Separator style={{ marginTop: 16, marginBottom: 8 }} />
           {renderRelatedPost()}
         </Animated.ScrollView>
-        <ImageAppBar />
         {renderCommentButton()}
       </>
     );

@@ -17,6 +17,7 @@ const Content = ({ post }) => {
     const { url } = event;
     // iOS calls method on 1st load, continue loading if url is about:blank.
     if (url && url !== 'about:blank') {
+      console.log('openExternalUrl - custom', event);
       const matches = postSlugRegex.exec(url);
       if (matches) {
         const post_slug = matches[1];
