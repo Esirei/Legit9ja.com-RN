@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Dimensions, Image, Platform, StatusBar, StyleSheet, Text, View } from 'react-native';
-import { NavigationInjectedProps, SafeAreaView } from 'react-navigation';
+import { NavigationInjectedProps } from 'react-navigation';
 import { Header } from 'react-navigation-stack';
 import Animated from 'react-native-reanimated';
 import { useSafeArea } from 'react-native-safe-area-context';
 import apiClient from '@api';
 import Touchable from '@components/Touchable';
-import { PostImage, PostTitle, PostCategories, PostDate } from '@components/PostItem';
+import { PostCategories, PostDate, PostImage, PostTitle } from '@components/PostItem';
 import Separator from '@components/SeparatorHorizontal';
 import images from '@assets/images';
 import RelatedPostItem from './components/RelatedPostItem';
@@ -220,32 +220,30 @@ const PostScreen = ({ navigation }: Props) => {
     extrapolate: Extrapolate.CLAMP,
   });
 
-  const elevation = scrollY.current.interpolate({
+  const borderBottomWidth = scrollY.current.interpolate({
     inputRange: [0, SCROLL_RANGE, SCROLL_RANGE],
-    outputRange: [0, 0, Platform.OS === 'android' ? 4 : StyleSheet.hairlineWidth],
+    outputRange: [0, 0, StyleSheet.hairlineWidth],
     extrapolate: Extrapolate.CLAMP,
   });
 
-  const appBarStyle = Platform.select({
-    android: {
-      elevation,
-    },
-    default: {
-      borderBottomColor: '#3a3a3a',
-      borderBottomWidth: elevation,
-    },
+  const zIndex = scrollY.current.interpolate({
+    inputRange: [0, SCROLL_RANGE, SCROLL_RANGE],
+    outputRange: [0, 0, 1],
+    extrapolate: Extrapolate.CLAMP,
   });
 
+  // android elevation causes to render above react-navigation.
   const ImageAppBar = () => (
     <Animated.View
       style={{
-        position: 'absolute',
-        zIndex: 1,
+        zIndex,
+        borderBottomWidth,
+        borderBottomColor: 'rgba(0,0,0,0.2)',
         transform: [{ translateY }],
+        position: 'absolute',
         top: 0,
         left: 0,
         right: 0,
-        ...appBarStyle,
       }}>
       <PostImage post={post} style={{ width: '100%', height: ImageHeight }} />
       <Animated.View
@@ -338,6 +336,7 @@ const PostScreen = ({ navigation }: Props) => {
 PostScreen.navigationOptions = {
   headerStyle: {
     marginTop: RenderedStatusBarHeight, // ios is 0
+    zIndex: 1,
   },
   headerTransparent: true,
   headerTintColor: '#FFF',
