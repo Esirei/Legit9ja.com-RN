@@ -1,6 +1,7 @@
 import React, { useEffect, useState, memo } from 'react';
 import { FlatList, Image, StyleSheet, Text, View, Platform } from 'react-native';
 import { Placeholder, PlaceholderLine, PlaceholderMedia, Fade } from 'rn-placeholder';
+import { useSafeArea } from 'react-native-safe-area-context';
 import randMC from 'random-material-color';
 import apiClient from '@api';
 import Touchable from '@components/Touchable';
@@ -62,6 +63,8 @@ const CategoriesScreen = () => {
     loading: true,
   }));
 
+  const safeArea = useSafeArea();
+
   const getCategories = () => {
     const query = { _embed: true, hide_empty: true, per_page: 99 };
     apiClient
@@ -73,7 +76,13 @@ const CategoriesScreen = () => {
   // @ts-ignore
   const renderCategories = ({ item }) => <CategoryItem category={item} />;
 
-  const renderFlatList = () => <FlatList data={state.categories} renderItem={renderCategories} />;
+  const renderFlatList = () => (
+    <FlatList
+      data={state.categories}
+      renderItem={renderCategories}
+      contentContainerStyle={{ paddingBottom: safeArea.bottom }}
+    />
+  );
 
   useEffect(getCategories, []);
 

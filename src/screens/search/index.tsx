@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { FlatList, StyleSheet, View, Platform } from 'react-native';
+import { useSafeArea } from 'react-native-safe-area-context';
 import { NavigationStackScreenComponent } from 'react-navigation-stack';
 import axios, { CancelTokenSource } from 'axios';
 import TextInput from '@components/TextInput';
@@ -18,6 +19,8 @@ const SearchScreen: NavigationStackScreenComponent<NavigationParams> = ({ naviga
     loading: false,
     loadingMore: false,
   }));
+
+  const safeArea = useSafeArea();
 
   const tokenSource = useRef<CancelTokenSource | undefined>(undefined);
 
@@ -75,7 +78,7 @@ const SearchScreen: NavigationStackScreenComponent<NavigationParams> = ({ naviga
   useEffect(loadPosts, [search]);
 
   return (
-    <View>
+    <View style={styles.container}>
       <FlatList
         data={state.posts}
         renderItem={renderPostItem}
@@ -84,6 +87,7 @@ const SearchScreen: NavigationStackScreenComponent<NavigationParams> = ({ naviga
         onEndReached={loadMorePost}
         onEndReachedThreshold={0.2}
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: safeArea.bottom }}
         ListFooterComponent={() => (state.loadingMore ? <LoadingMore /> : null)}
       />
     </View>
@@ -112,6 +116,9 @@ SearchScreen.navigationOptions = ({ navigation }) => {
 export default SearchScreen;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   searchContainer: {
     minHeight: 30,
     marginRight: Platform.OS === 'android' ? 16 : 0,

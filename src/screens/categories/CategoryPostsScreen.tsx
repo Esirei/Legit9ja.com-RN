@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { Placeholder, PlaceholderLine, PlaceholderMedia, Fade } from 'rn-placeholder';
+import { useSafeArea } from 'react-native-safe-area-context';
 import { NavigationInjectedProps } from 'react-navigation';
 import { NavigationStackScreenComponent } from 'react-navigation-stack';
 import apiClient from '@api';
@@ -20,6 +21,8 @@ const CategoryPostsScreen: NavigationStackScreenComponent<NavigationParams> = ({
     loading: false,
     loadingMore: false,
   }));
+
+  const safeArea = useSafeArea();
 
   const getPosts = (page = 1) => {
     const query = { page, _embed: true, per_page: 10, categories: category.id };
@@ -65,6 +68,7 @@ const CategoryPostsScreen: NavigationStackScreenComponent<NavigationParams> = ({
       refreshing={state.loading}
       onEndReached={loadMorePosts}
       onEndReachedThreshold={0.2}
+      contentContainerStyle={{ paddingBottom: safeArea.bottom }}
       ListFooterComponent={() => (state.loadingMore ? <LoadingMore /> : null)}
     />
   );

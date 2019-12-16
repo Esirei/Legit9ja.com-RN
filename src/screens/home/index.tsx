@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { Dimensions, FlatList, Image, StyleSheet, Text, View, Platform } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import { Placeholder, PlaceholderLine, PlaceholderMedia, Fade } from 'rn-placeholder';
+import { useSafeArea } from 'react-native-safe-area-context';
 import axios from 'axios';
 import Touchable from '@components/Touchable';
 import PostItem, { FeaturedPostItem } from '@components/PostItem';
@@ -81,6 +82,8 @@ const HomeScreen = () => {
     loading: false,
     loadingMore: false,
   }));
+
+  const safeArea = useSafeArea();
 
   const getPosts = (page = 1) => {
     const query = { page, _embed: true, per_page };
@@ -173,6 +176,7 @@ const HomeScreen = () => {
       onEndReachedThreshold={0.2}
       ListHeaderComponent={renderHeader}
       showsVerticalScrollIndicator={false}
+      contentContainerStyle={{ paddingBottom: safeArea.bottom }}
       ListFooterComponent={() => (state.loadingMore ? <LoadingMore /> : null)}
     />
   );
