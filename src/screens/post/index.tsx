@@ -167,7 +167,7 @@ const PostScreen = ({ navigation }: Props) => {
     <View>
       {/*<PostImage post={post} style={{ width: '100%', height: undefined, aspectRatio: 1.25 }} />*/}
       <View style={{ padding: 8 }}>
-        <PostTitle post={post!} />
+        <PostTitle post={post!} style={{ marginBottom: 0 }} />
         <PostCategories post={post} />
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <PostDate post={post} />
