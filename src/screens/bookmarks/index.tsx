@@ -7,6 +7,7 @@ import { PostCategories, PostDate, PostImage, PostTitle } from '@components/Post
 import { NavigationService } from '@navigation';
 import { getBookmarkedPosts } from '@helpers/post';
 import { BookmarkedPost } from './types';
+import { useInterstitialAds } from '@components/Ads';
 
 const { width } = Dimensions.get('window');
 
@@ -26,6 +27,7 @@ const BookmarksScreen = () => {
   });
 
   const safeArea = useSafeArea();
+  useInterstitialAds();
 
   const loadBookmarks = () => {
     setState(prevState => ({ ...prevState, loading: true }));

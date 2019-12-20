@@ -20,6 +20,7 @@ import fonts from '@assets/fonts';
 import Author from '@screens/post/components/Author';
 import { data, totalItems } from '@helpers/api';
 import { NavigationService, RouteNames } from '@navigation';
+import { BannerAds } from '@components/Ads';
 
 const { width } = Dimensions.get('window');
 const ImageHeight = width / 1.25;
@@ -190,6 +191,7 @@ const PostScreen = ({ navigation }: Props) => {
           </View>
         </View>
       </View>
+      <BannerAds style={{ marginBottom: 16 }} />
     </View>
   );
 
@@ -319,6 +321,7 @@ const PostScreen = ({ navigation }: Props) => {
           {renderViewComments()}
           <Separator style={{ marginTop: 16, marginBottom: 8 }} />
           {renderRelatedPost()}
+          <BannerAds style={{ marginTop: 8 }} />
         </Animated.ScrollView>
         {renderCommentButton()}
       </>
