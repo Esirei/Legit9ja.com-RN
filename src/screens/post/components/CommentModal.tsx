@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -10,12 +10,16 @@ import {
   View,
 } from 'react-native';
 import Modal from 'react-native-modal';
+import AsyncStorage from '@react-native-community/async-storage';
 import Touchable from '@components/Touchable';
 import Input from '@components/TextInput';
 import images from '@assets/images';
 import apiClient from '@api';
 import fonts from '@assets/fonts';
 import { Post } from '@types';
+
+const COMMENT_NAME = 'comment_name';
+const COMMENT_EMAIL = 'comment_email';
 
 interface Props {
   post: Post;
@@ -36,6 +40,17 @@ const CommentModal = ({ post, onSubmit }: Props) => {
     author_email: false,
     content: false,
   }));
+
+  useEffect(() => {
+    AsyncStorage.multiGet([COMMENT_NAME, COMMENT_EMAIL]).then(value => {
+      const [[, author_name], [, author_email]] = value;
+      setData(prevState => ({
+        ...prevState,
+        author_name: author_name || '',
+        author_email: author_email || '',
+      }));
+    });
+  }, []);
 
   const onPress = () => setVisibility(true);
 
@@ -73,6 +88,12 @@ const CommentModal = ({ post, onSubmit }: Props) => {
       .then(value => {
         console.log('Comment sent!', value);
         close();
+
+        AsyncStorage.multiSet([
+          [COMMENT_NAME, data.author_name],
+          [COMMENT_EMAIL, data.author_email],
+        ]);
+
         setData({ author_name: '', author_email: '', content: '' });
         setPosting(false);
         !!onSubmit && onSubmit();
