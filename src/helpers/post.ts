@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import { Share } from 'react-native';
-import { Html5Entities } from 'html-entities';
 import { BookmarkedPost } from '@screens/bookmarks/types';
+import { htmlDecode, stringHtmlTags } from './string';
 
 const BOOKMARKED_POSTS = 'bookmarked_posts';
 export const getBookmarkedPosts = async (): Promise<Record<number, BookmarkedPost>> => {
@@ -59,16 +59,11 @@ export const postContentWithoutYT = post => {
   return postContent(post);
 };
 
-const entities = new Html5Entities();
-export const postTitle = post => entities.decode(post.title.rendered);
-export const relatedPostTitle = post => entities.decode(post.title);
+export const postTitle = post => htmlDecode(post.title.rendered);
+export const relatedPostTitle = post => htmlDecode(post.title);
 
-const plainPostContentRegex = /(<([^>]+)>)/gi;
 export const postContentPlain = post => {
-  return entities
-    .decode(postContent(post))
-    .replace(plainPostContentRegex, '')
-    .replace('\n', '');
+  return stringHtmlTags(htmlDecode(postContent(post))).replace('\n', '');
 };
 
 export const sharePost = post => {
