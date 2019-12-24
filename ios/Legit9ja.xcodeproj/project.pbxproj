@@ -23,6 +23,7 @@
 		907EC8F59E8E8C87449C0401 /* libPods-Legit9ja.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 085E27B223A88D46A207E7E9 /* libPods-Legit9ja.a */; };
 		A19CCF5C9AE8C942A769ECEB /* libPods-Legit9ja-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F3DA8E23D5100EA8400F18BA /* libPods-Legit9ja-tvOSTests.a */; };
 		A980B801CE4D48FEB395E72A /* NeoSansPro-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E0FCD9CC799340899701A9AE /* NeoSansPro-Medium.ttf */; };
+		AE61E38423B2BDF5005D54B8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AE61E38323B2BDF5005D54B8 /* GoogleService-Info.plist */; };
 		C2C86EBFE5FCDED7A5E81153 /* libPods-Legit9ja-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 393294FEA0441A31717D4A58 /* libPods-Legit9ja-tvOS.a */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +67,7 @@
 		495A69E30032473FA9325C93 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../src/assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		84BE15A7D96235D6C0DE7E00 /* Pods-Legit9ja-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Legit9ja-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-Legit9ja-tvOSTests/Pods-Legit9ja-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		AC9C88392F3ECEB898B818E4 /* Pods-Legit9ja-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Legit9ja-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Legit9ja-tvOS/Pods-Legit9ja-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		AE61E38323B2BDF5005D54B8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Legit9ja/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D049C01092A3EFB0D5C40FA8 /* Pods-Legit9ja.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Legit9ja.release.xcconfig"; path = "Target Support Files/Pods-Legit9ja/Pods-Legit9ja.release.xcconfig"; sourceTree = "<group>"; };
 		D7A6FD50F8C44878AB9492FA /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../src/assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		E0FCD9CC799340899701A9AE /* NeoSansPro-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NeoSansPro-Medium.ttf"; path = "../src/assets/fonts/NeoSansPro-Medium.ttf"; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 		13B07FAE1A68108700A75B9A /* Legit9ja */ = {
 			isa = PBXGroup;
 			children = (
+				AE61E38323B2BDF5005D54B8 /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -364,6 +367,7 @@
 				6A1EF64B5C8749B2AF512F76 /* NeoSansPro-Regular.ttf in Resources */,
 				67E6CE02E9E243C89FF8CED6 /* Roboto-Bold.ttf in Resources */,
 				856BC9DAD8104F56A3C8DDCD /* Roboto-Regular.ttf in Resources */,
+				AE61E38423B2BDF5005D54B8 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -691,7 +695,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.Legit9ja.iOS;
+				PRODUCT_BUNDLE_IDENTIFIER = com.legit9ja.iOS;
 				PRODUCT_NAME = Legit9ja;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -710,7 +714,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.Legit9ja.iOS;
+				PRODUCT_BUNDLE_IDENTIFIER = com.legit9ja.iOS;
 				PRODUCT_NAME = Legit9ja;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
