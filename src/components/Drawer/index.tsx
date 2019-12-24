@@ -5,8 +5,9 @@ import SeparatorHorizontal from '@components/SeparatorHorizontal';
 import images from '@assets/images';
 import { NavigationService, RouteNames } from '@navigation';
 import fonts from '@assets/fonts';
+import config from '@config';
 
-const { navigate, closeDrawer, currentRouteName } = NavigationService;
+const { navigate, closeDrawer, currentRouteName, navToWeb } = NavigationService;
 
 const DrawerItem = ({ name, icon, onPress, selected = false }) => {
   const style = {
@@ -32,7 +33,7 @@ const DrawerItemsContainer = ({ name = '', children }) => (
 
 const Drawer = () => {
   const onPressAppNav = route => {
-    navigate(route, undefined, closeDrawer());
+    navigate(route);
   };
 
   const renderAppNavItems = () => {
@@ -91,19 +92,31 @@ const Drawer = () => {
     return items.map(item => <DrawerItem onPress={() => onPressSocialNav(item.name)} {...item} />);
   };
 
+  const onPressOtherNav = name => {
+    switch (name) {
+      case 'Settings':
+        navigate(RouteNames.SETTINGS);
+        break;
+      case 'Terms & Condition':
+        navToWeb({ title: name, url: config.terms_url });
+        break;
+      case 'Privacy Policy':
+        navToWeb({ title: name, url: config.privacy_url });
+        break;
+      default:
+        console.error('Unknown route', name);
+    }
+  };
+
   const renderOthersNavItems = () => {
     const items = [
-      { name: 'Settings', route: RouteNames.SETTINGS, icon: images.ic_settings_128 },
-      { name: 'Terms & Condition', route: RouteNames.TERMS_CONDITIONS, icon: images.ic_terms_128 },
-      { name: 'Privacy Policy', route: RouteNames.PRIVACY_POLICY, icon: images.ic_privacy_128 },
+      // { name: 'Settings', icon: images.ic_settings_128 },
+      { name: 'Terms & Condition', icon: images.ic_terms_128 },
+      { name: 'Privacy Policy', icon: images.ic_privacy_128 },
     ];
 
-    return items.map(({ route, ...rest }) => (
-      <DrawerItem
-        onPress={() => onPressAppNav(route)}
-        selected={currentRouteName() === route}
-        {...rest}
-      />
+    return items.map(({ name, icon }) => (
+      <DrawerItem onPress={() => onPressOtherNav(name)} selected={false} name={name} icon={icon} />
     ));
   };
 

@@ -21,6 +21,8 @@
       "@assets/*": ["assets/*"],
       "@components": ["components"],
       "@components/*": ["components/*"],
+      "@config": ["config"],
+      "@config/*": ["config/*"],
       "@helpers": ["helpers"],
       "@helpers/*": ["helpers/*"],
       "@hooks": ["hooks"],

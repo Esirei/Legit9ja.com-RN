@@ -1,51 +1,50 @@
 {
   "project_info": {
-    "project_number": "1057627763359",
-    "firebase_url": "https://legit-app-56782.firebaseio.com",
-    "project_id": "legit-app-56782",
-    "storage_bucket": "legit-app-56782.appspot.com"
+    "project_number": "535694139890",
+    "firebase_url": "https://authreact-test.firebaseio.com",
+    "project_id": "authreact-test",
+    "storage_bucket": "authreact-test.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1057627763359:android:522bc18e7c783bbfc8a8aa",
+        "mobilesdk_app_id": "1:535694139890:android:5bcf30e0a82932bbb10b6b",
         "android_client_info": {
-          "package_name": "com.legit.legit"
+          "package_name": "com.legit9ja"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1057627763359-sd6nn3hbpnie0al2tak1j7gkmo9b06t1.apps.googleusercontent.com",
+          "client_id": "535694139890-uh8p2mf4tktqkmqfk9vc2o4q13k664bv.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.legit.legit",
-            "certificate_hash": "1b060fa46d1ba78940937cd9f5242ea2830dfa4b"
+            "package_name": "com.legit9ja",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {
-          "client_id": "1057627763359-vbnpmutdftk93gcejoeok4q495v7q38n.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.legit.legit",
-            "certificate_hash": "f0050f5ffea8be64eb04e2452fe858cba3cd729c"
-          }
-        },
-        {
-          "client_id": "1057627763359-9effne2v5sn9dc5h370g3dt85n8hd2u5.apps.googleusercontent.com",
+          "client_id": "535694139890-n96mcehv3laqmpt8ltl3noqm80dpiop5.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBPV17K_tP6AD4IaRLNvvp31Paw_nDhR-A"
+          "current_key": "AIzaSyCpWJtcX_Tb11Q4V-VKzwkquDIml-wWORw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1057627763359-9effne2v5sn9dc5h370g3dt85n8hd2u5.apps.googleusercontent.com",
+              "client_id": "535694139890-n96mcehv3laqmpt8ltl3noqm80dpiop5.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "535694139890-fqkvmtdi71l44sr14jspit2dbdl0v49p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.legit9ja.iOS"
+              }
             }
           ]
         }

@@ -14,6 +14,7 @@ import PostScreen from '@screens/post';
 import PostCommentsScreen from '@screens/post/PostCommentsScreen';
 import SearchScreen from '@screens/search';
 import BookmarksScreen from '@screens/bookmarks';
+import WebScreen from '@screens/web';
 import Drawer from '@components/Drawer';
 import fonts from '@assets/fonts';
 
@@ -36,6 +37,7 @@ const StackNav = createStackNavigator(
     [RouteNames.COMMENTS]: PostCommentsScreen,
     [RouteNames.SEARCH]: SearchScreen,
     [RouteNames.BOOKMARKS]: BookmarksScreen,
+    [RouteNames.WEB]: WebScreen,
   },
   {
     defaultNavigationOptions: {

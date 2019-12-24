@@ -9,6 +9,7 @@ import {
 import { DrawerActions } from 'react-navigation-drawer';
 import RouteNames from './RouteNames';
 import { PostScreenParams } from '@screens/post/types';
+import { WebScreenParams } from '@screens/web/types';
 
 let _navigator: NavigationContainer & { dispatch: NavigationDispatch };
 
@@ -39,7 +40,7 @@ function setParams(params, key) {
   );
 }
 
-function push(routeName, params, action) {
+function push(routeName, params?, action?) {
   _navigator.dispatch(
     StackActions.push({
       routeName,
@@ -84,7 +85,8 @@ const currentRouteName = (): string => {
   return getRef() ? getCurrentRouteName(getRef().state.nav!) : '';
 };
 
-const navToPost = (params: PostScreenParams) => push(RouteNames.POSTS, params, undefined);
+const navToPost = (params: PostScreenParams) => push(RouteNames.POSTS, params);
+const navToWeb = (params: WebScreenParams, action?) => push(RouteNames.WEB, params, action);
 
 export default {
   setRef,
@@ -100,4 +102,5 @@ export default {
   toggleDrawer,
   currentRouteName,
   navToPost,
+  navToWeb,
 };
