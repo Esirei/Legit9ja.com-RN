@@ -19,7 +19,6 @@ const Web: NavigationStackScreenComponent<WebScreenParams> = ({ navigation }) =>
         style={styles.webview}
         scalesPageToFit={false}
         onShouldStartLoadWithRequest={openExternal}
-        onLoadEnd={event => console.log('onLoadEnd', event)}
       />
       <BannerAds size={'FULL_BANNER'} />
     </SafeAreaView>
