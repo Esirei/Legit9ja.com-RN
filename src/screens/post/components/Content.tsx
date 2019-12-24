@@ -44,6 +44,7 @@ const Content = ({ post }) => {
         onShouldStartLoadWithRequest={openExternalUrl}
         scalesPageToFit={false}
         zoomable={false}
+        bounces={false}
       />
       <YouTube post={post} />
     </>
