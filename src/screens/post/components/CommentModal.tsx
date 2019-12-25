@@ -3,7 +3,6 @@ import {
   ActivityIndicator,
   Image,
   Keyboard,
-  KeyboardAvoidingView,
   StatusBar,
   StyleSheet,
   Text,
@@ -54,7 +53,10 @@ const CommentModal = ({ post, onSubmit }: Props) => {
 
   const onPress = () => setVisibility(true);
 
-  const close = () => setVisibility(false);
+  const close = () => {
+    Keyboard.dismiss();
+    setVisibility(false);
+  };
 
   const onChange = (name: keyof typeof data, value) => {
     setData(prevState => {
