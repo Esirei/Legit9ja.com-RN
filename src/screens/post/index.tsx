@@ -315,6 +315,7 @@ const PostScreen = ({ navigation }: Props) => {
         <ImageAppBar />
         <Animated.ScrollView
           onScroll={onScroll({ y: scrollY.current })}
+          scrollEventThrottle={16}
           contentContainerStyle={[styles.contentContainer, { paddingTop: ImageHeight }]}>
           {info()}
           <Separator />
