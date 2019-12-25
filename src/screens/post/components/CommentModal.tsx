@@ -117,57 +117,55 @@ const CommentModal = ({ post, onSubmit }: Props) => {
 
   return (
     <>
-      <KeyboardAvoidingView behavior={'position'}>
-        <Modal
-          isVisible={isVisible}
-          onBackdropPress={close}
-          onBackButtonPress={close}
-          animationIn={'fadeIn'}
-          animationOut={'fadeOut'}
-          hideModalContentWhileAnimating
-          avoidKeyboard={false}>
-          <StatusBar backgroundColor={'rgba(0,0,0,0.75)'} />
-          <View style={styles.commentContainer}>
-            <Text style={styles.title}>Write a Comment</Text>
-            <View style={styles.inputsContainer}>
-              <Input
-                image={images.ic_user_128}
-                placeholder={'Name'}
-                value={data.author_name}
-                onChangeText={text => onChange('author_name', text)}
-                editable={!posting}
-                error={errors.author_name}
-                autoFocus
-              />
-              <Input
-                image={images.ic_email_128}
-                placeholder={'Email'}
-                value={data.author_email}
-                onChangeText={text => onChange('author_email', text)}
-                editable={!posting}
-                error={errors.author_email}
-                keyboardType={'email-address'}
-              />
-              <Input
-                image={images.ic_chat_128}
-                placeholder={'Comment'}
-                value={data.content}
-                onChangeText={text => onChange('content', text)}
-                editable={!posting}
-                error={errors.content}
-                multiline
-                style={styles.commentInput}
-              />
-            </View>
-            <View style={styles.buttonsContainer}>
-              <Touchable style={styles.button} onPress={close}>
-                <Text style={styles.buttonText}>CANCEL</Text>
-              </Touchable>
-              {posting ? renderPostingIndicator() : renderSubmitButton()}
-            </View>
+      <Modal
+        isVisible={isVisible}
+        onBackdropPress={close}
+        onBackButtonPress={close}
+        animationIn={'fadeIn'}
+        animationOut={'fadeOut'}
+        hideModalContentWhileAnimating
+        avoidKeyboard>
+        <StatusBar backgroundColor={'rgba(0,0,0,0.75)'} />
+        <View style={styles.commentContainer}>
+          <Text style={styles.title}>Write a Comment</Text>
+          <View style={styles.inputsContainer}>
+            <Input
+              image={images.ic_user_128}
+              placeholder={'Name'}
+              value={data.author_name}
+              onChangeText={text => onChange('author_name', text)}
+              editable={!posting}
+              error={errors.author_name}
+              autoFocus
+            />
+            <Input
+              image={images.ic_email_128}
+              placeholder={'Email'}
+              value={data.author_email}
+              onChangeText={text => onChange('author_email', text)}
+              editable={!posting}
+              error={errors.author_email}
+              keyboardType={'email-address'}
+            />
+            <Input
+              image={images.ic_chat_128}
+              placeholder={'Comment'}
+              value={data.content}
+              onChangeText={text => onChange('content', text)}
+              editable={!posting}
+              error={errors.content}
+              multiline
+              style={styles.commentInput}
+            />
           </View>
-        </Modal>
-      </KeyboardAvoidingView>
+          <View style={styles.buttonsContainer}>
+            <Touchable style={styles.button} onPress={close}>
+              <Text style={styles.buttonText}>CANCEL</Text>
+            </Touchable>
+            {posting ? renderPostingIndicator() : renderSubmitButton()}
+          </View>
+        </View>
+      </Modal>
       <View style={styles.fab}>
         <Touchable style={styles.fabTouchable} borderlessBackground onPress={onPress}>
           <Image source={images.ic_chat_bubble_128} style={styles.fabImage} />
