@@ -10,6 +10,7 @@ import apiClient from '@api';
 import images from '@assets/images';
 import { NavigationService, RouteNames } from '@navigation';
 import LoadingMore from '@components/LoadingMore';
+import HeaderIconButton, { HeaderSearchButton } from '@components/HeaderIconButton';
 import fonts from '@assets/fonts';
 import { data, totalPages } from '@helpers/api';
 
@@ -190,14 +191,8 @@ const HeaderTitle = () => (
   <Image source={images.ic_logo} style={styles.toolbarImage} resizeMode={'center'} />
 );
 
-const HeaderIcon = ({ source, onPress, style = {} }) => (
-  <Touchable style={[styles.headerIcon, style]} onPress={onPress} borderlessBackground>
-    <Image source={source} style={styles.headerIconImage} />
-  </Touchable>
-);
-
 const HeaderLeft = () => (
-  <HeaderIcon
+  <HeaderIconButton
     style={styles.headerLeft}
     source={images.ic_hamburger}
     onPress={NavigationService.openDrawer}
@@ -207,8 +202,8 @@ const HeaderLeft = () => (
 const HeaderRight = () => {
   return (
     <View style={styles.headerRight}>
-      <HeaderIcon source={images.ic_search} onPress={() => navigate(RouteNames.SEARCH)} />
-      <HeaderIcon
+      <HeaderSearchButton />
+      <HeaderIconButton
         source={images.ic_notification}
         onPress={() => navigate(RouteNames.NOTIFICATIONS)}
       />
@@ -233,15 +228,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F0F0F0',
-  },
-  headerIcon: {
-    marginRight: 8,
-  },
-  headerIconImage: {
-    width: 24,
-    height: 24,
-    margin: 6,
-    tintColor: 'rgba(0,0,0,0.54)',
   },
   headerLeft: {
     marginLeft: 10,

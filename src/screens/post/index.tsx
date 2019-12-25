@@ -20,6 +20,7 @@ import fonts from '@assets/fonts';
 import Author from '@screens/post/components/Author';
 import { data, totalItems } from '@helpers/api';
 import { NavigationService, RouteNames } from '@navigation';
+import { HeaderSearchButton } from '@components/HeaderIconButton';
 import { BannerAds } from '@components/Ads';
 
 const { width } = Dimensions.get('window');
@@ -343,6 +344,7 @@ PostScreen.navigationOptions = {
   },
   headerTransparent: true,
   headerTintColor: '#FFF',
+  headerRight: () => <HeaderSearchButton imageStyle={styles.headerRightImage} />,
 };
 
 export default PostScreen;
@@ -355,6 +357,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#008000',
     ...StyleSheet.absoluteFillObject,
     elevation: 4,
+  },
+  headerRightImage: {
+    tintColor: '#FFF',
   },
   contentContainer: { paddingBottom: 88 },
   viewCommentsButton: {
