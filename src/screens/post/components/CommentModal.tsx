@@ -196,6 +196,13 @@ const styles = StyleSheet.create({
     right: 16,
     backgroundColor: '#008000',
     elevation: 4,
+    shadowRadius: 2,
+    shadowColor: '#000',
+    shadowOpacity: 0.25,
+    shadowOffset: {
+      height: 2,
+      width: 2,
+    },
   },
   fabTouchable: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   fabImage: { width: 24, height: 24, tintColor: '#FFF' },
