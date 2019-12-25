@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { FlatList, StyleSheet, View, Platform, StatusBar } from 'react-native';
+import { Placeholder, PlaceholderLine, PlaceholderMedia, Fade } from 'rn-placeholder';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { NavigationStackScreenComponent } from 'react-navigation-stack';
 import axios, { CancelTokenSource } from 'axios';
@@ -8,6 +9,29 @@ import PostItem from '@components/PostItem';
 import LoadingMore from '@components/LoadingMore';
 import api from '@api';
 import { data, totalPages } from '@helpers/api';
+
+const PlaceHolder = () => {
+  const renderPostPlaceHolder = () => {
+    return Array.from({ length: 10 }).map(_ => (
+      <View style={{ margin: 10 }}>
+        <View style={{ flexDirection: 'row' }}>
+          <PlaceholderMedia style={{ height: 80, width: 100 }} />
+          <View style={{ flex: 1, marginLeft: 5 }}>
+            <PlaceholderLine height={10} />
+            <PlaceholderLine />
+            <PlaceholderLine width={30} />
+            <PlaceholderLine height={10} width={40} />
+          </View>
+        </View>
+        <PlaceholderLine />
+        <PlaceholderLine />
+        <PlaceholderLine width={75} />
+      </View>
+    ));
+  };
+
+  return <Placeholder Animation={Fade}>{renderPostPlaceHolder()}</Placeholder>;
+};
 
 type NavigationParams = { searchQuery?: string };
 
@@ -73,24 +97,30 @@ const SearchScreen: NavigationStackScreenComponent<NavigationParams> = ({ naviga
     }
   };
 
+  console.log('STATE', state);
+
   const renderPostItem = ({ item }) => <PostItem post={item} />;
+
+  const renderFlatList = () => (
+    <FlatList
+      data={state.posts}
+      renderItem={renderPostItem}
+      onRefresh={loadPosts}
+      refreshing={state.loading}
+      onEndReached={loadMorePost}
+      onEndReachedThreshold={0.2}
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{ paddingBottom: safeArea.bottom }}
+      ListFooterComponent={() => (state.loadingMore ? <LoadingMore /> : null)}
+    />
+  );
 
   useEffect(loadPosts, [search]);
 
   return (
     <View style={styles.container}>
       <StatusBar translucent={false} />
-      <FlatList
-        data={state.posts}
-        renderItem={renderPostItem}
-        onRefresh={loadPosts}
-        refreshing={state.loading}
-        onEndReached={loadMorePost}
-        onEndReachedThreshold={0.2}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: safeArea.bottom }}
-        ListFooterComponent={() => (state.loadingMore ? <LoadingMore /> : null)}
-      />
+      {state.loading ? <PlaceHolder /> : renderFlatList()}
     </View>
   );
 };
