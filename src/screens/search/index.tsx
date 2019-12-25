@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { FlatList, StyleSheet, View, Platform } from 'react-native';
+import { FlatList, StyleSheet, View, Platform, StatusBar } from 'react-native';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { NavigationStackScreenComponent } from 'react-navigation-stack';
 import axios, { CancelTokenSource } from 'axios';
@@ -79,6 +79,7 @@ const SearchScreen: NavigationStackScreenComponent<NavigationParams> = ({ naviga
 
   return (
     <View style={styles.container}>
+      <StatusBar translucent={false} />
       <FlatList
         data={state.posts}
         renderItem={renderPostItem}
