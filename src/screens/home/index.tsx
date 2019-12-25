@@ -203,10 +203,10 @@ const HeaderRight = () => {
   return (
     <View style={styles.headerRight}>
       <HeaderSearchButton />
-      <HeaderIconButton
-        source={images.ic_notification}
-        onPress={() => navigate(RouteNames.NOTIFICATIONS)}
-      />
+      {/*<HeaderIconButton*/}
+      {/*  source={images.ic_notification}*/}
+      {/*  onPress={() => navigate(RouteNames.NOTIFICATIONS)}*/}
+      {/*/>*/}
     </View>
   );
 };

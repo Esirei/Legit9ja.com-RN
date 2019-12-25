@@ -97,8 +97,6 @@ const SearchScreen: NavigationStackScreenComponent<NavigationParams> = ({ naviga
     }
   };
 
-  console.log('STATE', state);
-
   const renderPostItem = ({ item }) => <PostItem post={item} />;
 
   const renderFlatList = () => (
