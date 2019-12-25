@@ -39,6 +39,8 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+  <string>Save pictures for certain activities.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>NeoSansPro-Medium.ttf</string>
