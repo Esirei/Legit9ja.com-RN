@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { NavigationService, RouteNames } from '@navigation/index';
+import { NavigationService } from '@navigation/index';
 import Touchable from '@components/Touchable';
 import PostImage from './PostImage';
 import PostDateMenu from './PostDateMenu';
@@ -10,7 +10,7 @@ import fonts from '@assets/fonts';
 import { postContentPlain } from '@helpers/post';
 
 const onPostItemPress = post => {
-  NavigationService.navigate(RouteNames.POSTS, { post });
+  NavigationService.navToPost({ post, source: 'object' });
 };
 
 const PostItem = ({ post }) => (
