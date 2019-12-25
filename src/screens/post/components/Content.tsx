@@ -35,6 +35,7 @@ const Content = ({ post }) => {
         scalesPageToFit={false}
         zoomable={false}
         bounces={false}
+        scrollEnabled={false}
       />
       <YouTube post={post} />
     </>
