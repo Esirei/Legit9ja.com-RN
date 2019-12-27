@@ -7,6 +7,7 @@ import { useSafeArea } from 'react-native-safe-area-context';
 import apiClient from '@api';
 import Touchable from '@components/Touchable';
 import { PostCategories, PostDate, PostImage, PostTitle } from '@components/PostItem';
+import HeaderIconButton from '@components/HeaderIconButton';
 import Separator from '@components/SeparatorHorizontal';
 import images from '@assets/images';
 import RelatedPostItem from './components/RelatedPostItem';
@@ -174,25 +175,19 @@ const PostScreen = ({ navigation }: Props) => {
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <PostDate post={post} />
           <View style={{ flexDirection: 'row' }}>
-            <Touchable borderlessBackground style={{ marginRight: 8 }} onPress={onPressBookmark}>
-              <Image
-                source={bookmarkImage()}
-                style={{ height: 24, width: 24, margin: 6, tintColor: '#008000' }}
-              />
-            </Touchable>
-            <Touchable
-              borderlessBackground
-              style={{ marginRight: 8 }}
-              onPress={() => sharePost(post)}>
-              <Image
-                source={images.ic_share_128}
-                style={{ height: 24, width: 24, margin: 6, tintColor: '#008000' }}
-              />
-            </Touchable>
+            <HeaderIconButton
+              source={bookmarkImage()}
+              onPress={onPressBookmark}
+              tintColor={'#008000'}
+            />
+            <HeaderIconButton
+              source={images.ic_share_128}
+              onPress={() => sharePost(post)}
+              tintColor={'#008000'}
+            />
           </View>
         </View>
       </View>
-      <BannerAds style={{ marginBottom: 16 }} />
     </View>
   );
 
@@ -319,11 +314,12 @@ const PostScreen = ({ navigation }: Props) => {
           contentContainerStyle={[styles.contentContainer, { paddingTop: ImageHeight }]}>
           {info()}
           <Separator />
+          <BannerAds style={styles.bannerAds} />
           <Content post={post} />
           {renderViewComments()}
           <Separator style={{ marginTop: 16, marginBottom: 8 }} />
           {renderRelatedPost()}
-          <BannerAds style={{ marginTop: 8 }} />
+          <BannerAds style={styles.bannerAds} />
         </Animated.ScrollView>
         {renderCommentButton()}
       </>
@@ -345,7 +341,7 @@ PostScreen.navigationOptions = {
   },
   headerTransparent: true,
   headerTintColor: '#FFF',
-  headerRight: () => <HeaderSearchButton imageStyle={styles.headerRightImage} />,
+  headerRight: () => <HeaderSearchButton tintColor={'#FFF'} />,
 };
 
 export default PostScreen;
@@ -359,10 +355,10 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     elevation: 4,
   },
-  headerRightImage: {
-    tintColor: '#FFF',
-  },
   contentContainer: { paddingBottom: 88 },
+  bannerAds: {
+    marginTop: 8,
+  },
   viewCommentsButton: {
     backgroundColor: '#008000',
     marginHorizontal: 16,

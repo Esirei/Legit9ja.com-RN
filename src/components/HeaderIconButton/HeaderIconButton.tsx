@@ -14,11 +14,12 @@ export interface Props {
   onPress?: (event: GestureResponderEvent) => void;
   style?: ViewStyle;
   imageStyle?: ImageStyle;
+  tintColor?: string;
 }
 
-const HeaderIconButton = ({ source, onPress, style, imageStyle }: Props) => (
+const HeaderIconButton = ({ source, onPress, style, imageStyle, tintColor }: Props) => (
   <Touchable style={[styles.container, style]} onPress={onPress} borderlessBackground>
-    <Image source={source} style={[styles.image, imageStyle]} />
+    <Image source={source} style={[styles.image, { tintColor }, imageStyle]} />
   </Touchable>
 );
 

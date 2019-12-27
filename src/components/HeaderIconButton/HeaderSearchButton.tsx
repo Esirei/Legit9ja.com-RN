@@ -7,6 +7,7 @@ import images from '@assets/images';
 const onPress = () => NavigationService.push(RouteNames.SEARCH);
 
 interface Props {
+  tintColor?: string;
   style?: ViewStyle;
   imageStyle?: ImageStyle;
 }
