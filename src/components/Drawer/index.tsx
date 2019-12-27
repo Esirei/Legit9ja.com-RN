@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import { Image, Linking, ScrollView, StyleSheet, Text, View, Platform } from 'react-native';
+import { useSafeArea } from 'react-native-safe-area-context';
 import Touchable from '@components/Touchable';
 import SeparatorHorizontal from '@components/SeparatorHorizontal';
 import images from '@assets/images';
@@ -32,6 +33,8 @@ const DrawerItemsContainer = ({ name = '', children }) => (
 );
 
 const Drawer = () => {
+  const safeArea = useSafeArea();
+
   const onPressAppNav = route => {
     navigate(route);
   };
@@ -121,8 +124,10 @@ const Drawer = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.drawerHeader}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={{ paddingBottom: safeArea.bottom }}>
+      <View style={[styles.drawerHeader, { paddingTop: safeArea.top }]}>
         <Image source={images.logo} style={styles.drawerHeaderImage} resizeMode={'cover'} />
       </View>
       <DrawerItemsContainer>{renderAppNavItems()}</DrawerItemsContainer>
