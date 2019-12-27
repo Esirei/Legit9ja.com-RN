@@ -188,7 +188,7 @@ const HomeScreen = () => {
 };
 
 const HeaderTitle = () => (
-  <Image source={images.ic_logo} style={styles.toolbarImage} resizeMode={'center'} />
+  <Image source={images.ic_logo} style={styles.toolbarImage} />
 );
 
 const HeaderLeft = () => (
