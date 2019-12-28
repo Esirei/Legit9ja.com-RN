@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Dimensions, FlatList, StyleSheet, View } from 'react-native';
+import { NavigationStackScreenComponent } from 'react-navigation-stack';
 import { Fade, Placeholder } from 'rn-placeholder';
 import { useSafeArea } from 'react-native-safe-area-context';
 import Touchable from '@components/Touchable';
@@ -20,7 +21,7 @@ interface State {
   loading: boolean;
 }
 
-const BookmarksScreen = () => {
+const BookmarksScreen: NavigationStackScreenComponent = ({ navigation }) => {
   const [state, setState] = useState<State>({
     posts: [],
     loading: true,
@@ -38,7 +39,10 @@ const BookmarksScreen = () => {
     });
   };
 
-  useEffect(loadBookmarks, []);
+  useEffect(() => {
+    const subscription = navigation.addListener('didFocus', loadBookmarks);
+    return subscription.remove;
+  }, [navigation]);
 
   const renderPlaceHolder = () => (
     <Placeholder Animation={Fade}>
