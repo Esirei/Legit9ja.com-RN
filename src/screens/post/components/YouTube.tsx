@@ -50,7 +50,7 @@ const YouTube = ({ post }) => {
             onChangeState={onYouTubeChangeState}
             onChangeFullscreen={onChangeFullscreen}
             style={styles.youtube}
-            origin={'http://www.youtube.com'}
+            origin={'https://www.legit9ja.com'}
           />
         </View>
       );
