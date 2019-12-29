@@ -7,6 +7,7 @@ import axios, { CancelTokenSource } from 'axios';
 import TextInput from '@components/TextInput';
 import PostItem from '@components/PostItem';
 import LoadingMore from '@components/LoadingMore';
+import NotifyCard from '@components/NotifyCard';
 import api from '@api';
 import { data, totalPages } from '@helpers/api';
 
@@ -42,6 +43,7 @@ const SearchScreen: NavigationStackScreenComponent<NavigationParams> = ({ naviga
     maxPage: 1,
     loading: false,
     loadingMore: false,
+    error: undefined,
   }));
 
   const safeArea = useSafeArea();
@@ -67,17 +69,23 @@ const SearchScreen: NavigationStackScreenComponent<NavigationParams> = ({ naviga
 
   const loadPosts = () => {
     if (search) {
-      setState(prevState => ({ ...prevState, loading: true }));
-      getPosts().then(response => {
-        console.log('Search results', response);
-        setState(prevState => ({
-          ...prevState,
-          posts: data(response),
-          loading: false,
-          page: 1,
-          maxPage: totalPages(response),
-        }));
-      });
+      setState(prevState => ({ ...prevState, loading: true, error: undefined }));
+      getPosts()
+        .then(response => {
+          console.log('Search results', response);
+          setState(prevState => ({
+            ...prevState,
+            posts: data(response),
+            loading: false,
+            page: 1,
+            maxPage: totalPages(response),
+          }));
+        })
+        .catch(error => {
+          if (!axios.isCancel(error)) {
+            setState(prevState => ({ ...prevState, error, loading: false }));
+          }
+        });
     }
   };
 
@@ -115,10 +123,22 @@ const SearchScreen: NavigationStackScreenComponent<NavigationParams> = ({ naviga
 
   useEffect(loadPosts, [search]);
 
+  const render = () => {
+    if (state.loading) {
+      return <PlaceHolder />;
+    } else if (state.error) {
+      // @ts-ignore
+      return <NotifyCard text={state.error.message} actionText={'Retry'} onPress={loadPosts} />;
+    } else if (state.maxPage === 0) {
+      return <NotifyCard text={'No post match the search criteria'} type={'warning'} />;
+    }
+    return renderFlatList();
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar translucent={false} />
-      {state.loading ? <PlaceHolder /> : renderFlatList()}
+      {render()}
     </View>
   );
 };

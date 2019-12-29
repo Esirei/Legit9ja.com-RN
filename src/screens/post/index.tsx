@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Dimensions, Image, Platform, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Platform, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { NavigationInjectedProps } from 'react-navigation';
 import { Header } from 'react-navigation-stack';
 import Animated from 'react-native-reanimated';
@@ -7,7 +7,7 @@ import { useSafeArea } from 'react-native-safe-area-context';
 import apiClient from '@api';
 import Touchable from '@components/Touchable';
 import { PostCategories, PostDate, PostImage, PostTitle } from '@components/PostItem';
-import HeaderIconButton from '@components/HeaderIconButton';
+import HeaderIconButton, { HeaderSearchButton } from '@components/HeaderIconButton';
 import Separator from '@components/SeparatorHorizontal';
 import images from '@assets/images';
 import RelatedPostItem from './components/RelatedPostItem';
@@ -21,8 +21,8 @@ import fonts from '@assets/fonts';
 import Author from '@screens/post/components/Author';
 import { data, totalItems } from '@helpers/api';
 import { NavigationService, RouteNames } from '@navigation';
-import { HeaderSearchButton } from '@components/HeaderIconButton';
 import { BannerAds } from '@components/Ads';
+import NotifyCard from '@components/NotifyCard';
 
 const { width } = Dimensions.get('window');
 const ImageHeight = width / 1.25;
@@ -48,11 +48,14 @@ const RealAppBarHeight = DefaultAppBarHeight - RealStatusBarHeight;
 interface Props extends NavigationInjectedProps<PostScreenParams> {}
 
 interface State {
-  post: Post | undefined;
+  post?: Post;
   comments: number;
   loading: boolean;
   isBookmarked: boolean;
+  error?: { message: string };
 }
+
+const NO_POST = 'Post not found';
 
 const PostScreen = ({ navigation }: Props) => {
   const insets = useSafeArea();
@@ -135,15 +138,26 @@ const PostScreen = ({ navigation }: Props) => {
       }
     };
 
-    getPost().then(post => {
-      if (post) {
-        postIsBookmarked(post).then(isBookmarked => {
-          console.log('Post ID', post.id);
-          loadComments(post.id);
-          setState(prevState => ({ ...prevState, post, isBookmarked, loading: false }));
-        });
-      }
-    });
+    setState(prevState => ({ ...prevState, loading: true, error: undefined }));
+    getPost()
+      .then(post => {
+        if (post) {
+          postIsBookmarked(post).then(isBookmarked => {
+            console.log('Post ID', post.id);
+            loadComments(post.id);
+            setState(prevState => ({ ...prevState, post, isBookmarked, loading: false }));
+          });
+        } else {
+          setState(prevState => ({
+            ...prevState,
+            loading: false,
+            error: { message: NO_POST },
+          }));
+        }
+      })
+      .catch(error => {
+        setState(prevState => ({ ...prevState, loading: false, error }));
+      });
   };
 
   const { post } = state;
@@ -303,9 +317,20 @@ const PostScreen = ({ navigation }: Props) => {
   };
 
   const render = () => {
-    return state.loading ? (
-      <PlaceHolder imageHeight={ImageHeight} imageWidth={width} />
-    ) : (
+    if (state.loading) {
+      return <PlaceHolder imageHeight={ImageHeight} imageWidth={width} />;
+    } else if (state.error) {
+      const message = state.error.message;
+      return (
+        <NotifyCard
+          text={message}
+          type={'error'}
+          actionText={message === NO_POST ? 'Go back' : 'Retry'}
+          onPress={message === NO_POST ? () => navigation.goBack() : loadPost}
+        />
+      );
+    }
+    return (
       <>
         <ImageAppBar />
         <Animated.ScrollView

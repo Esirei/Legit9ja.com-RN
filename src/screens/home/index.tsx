@@ -10,6 +10,7 @@ import apiClient from '@api';
 import images from '@assets/images';
 import { NavigationService, RouteNames } from '@navigation';
 import LoadingMore from '@components/LoadingMore';
+import NotifyCard from '@components/NotifyCard';
 import HeaderIconButton, { HeaderSearchButton } from '@components/HeaderIconButton';
 import fonts from '@assets/fonts';
 import { data, totalPages } from '@helpers/api';
@@ -82,6 +83,7 @@ const HomeScreen = () => {
     maxPage: 1,
     loading: false,
     loadingMore: false,
+    error: undefined,
   }));
 
   const safeArea = useSafeArea();
@@ -102,20 +104,26 @@ const HomeScreen = () => {
   };
 
   const loadItems = () => {
-    setState(prevState => ({ ...prevState, loading: true }));
-    axios.all([getFeaturedPosts(), getCategories(), getPosts()]).then(
-      axios.spread((featuredPosts, categories, posts) => {
-        setState(prevState => ({
-          ...prevState,
-          featuredPosts: data(featuredPosts),
-          categories: data(categories),
-          posts: data(posts),
-          loading: false,
-          page: 1,
-          maxPage: totalPages(posts),
-        }));
-      }),
-    );
+    setState(prevState => ({ ...prevState, loading: true, error: undefined }));
+    axios
+      .all([getFeaturedPosts(), getCategories(), getPosts()])
+      .then(
+        axios.spread((featuredPosts, categories, posts) => {
+          setState(prevState => ({
+            ...prevState,
+            featuredPosts: data(featuredPosts),
+            categories: data(categories),
+            posts: data(posts),
+            loading: false,
+            page: 1,
+            maxPage: totalPages(posts),
+          }));
+        }),
+      )
+      .catch(error => {
+        console.log('loadItems error', error);
+        setState(prevState => ({ ...prevState, error, loading: false }));
+      });
   };
 
   const loadMorePost = () => {
@@ -184,12 +192,20 @@ const HomeScreen = () => {
 
   useEffect(loadItems, []);
 
-  return <View style={styles.container}>{state.loading ? <PlaceHolder /> : renderFlatList()}</View>;
+  const render = () => {
+    if (state.loading) {
+      return <PlaceHolder />;
+    } else if (state.error) {
+      // @ts-ignore
+      return <NotifyCard text={state.error.message} actionText={'Retry'} onPress={loadItems} />;
+    }
+    return renderFlatList();
+  };
+
+  return <View style={styles.container}>{render()}</View>;
 };
 
-const HeaderTitle = () => (
-  <Image source={images.ic_logo} style={styles.toolbarImage} />
-);
+const HeaderTitle = () => <Image source={images.ic_logo} style={styles.toolbarImage} />;
 
 const HeaderLeft = () => (
   <HeaderIconButton

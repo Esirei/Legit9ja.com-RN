@@ -6,6 +6,7 @@ import randMC from 'random-material-color';
 import apiClient from '@api';
 import Touchable from '@components/Touchable';
 import SeparatorHorizontal from '@components/SeparatorHorizontal';
+import NotifyCard from '@components/NotifyCard';
 import images from '@assets/images';
 import { NavigationService, RouteNames } from '@navigation';
 import fonts from '@assets/fonts';
@@ -61,16 +62,19 @@ const CategoriesScreen = () => {
     categories: [],
     page: 1,
     loading: true,
+    error: undefined,
   }));
 
   const safeArea = useSafeArea();
 
   const getCategories = () => {
     const query = { _embed: true, hide_empty: true, per_page: 99 };
+    setState(prevState => ({ ...prevState, loading: true, error: undefined }));
     apiClient
       .get('categories', query)
       .then(data)
-      .then(categories => setState(prevState => ({ ...prevState, categories, loading: false })));
+      .then(categories => setState(prevState => ({ ...prevState, categories, loading: false })))
+      .catch(error => setState(prevState => ({ ...prevState, error, loading: false })));
   };
 
   // @ts-ignore
@@ -86,7 +90,17 @@ const CategoriesScreen = () => {
 
   useEffect(getCategories, []);
 
-  return <View>{state.loading ? <PlaceHolder /> : renderFlatList()}</View>;
+  const render = () => {
+    if (state.loading) {
+      return <PlaceHolder />;
+    } else if (state.error) {
+      // @ts-ignore
+      return <NotifyCard text={state.error.message} actionText={'Retry'} onPress={getCategories} />;
+    }
+    return renderFlatList();
+  };
+
+  return <View style={styles.container}>{render()}</View>;
 };
 
 CategoriesScreen.navigationOptions = {
@@ -96,6 +110,9 @@ CategoriesScreen.navigationOptions = {
 export default CategoriesScreen;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   categoryItem: {
     padding: 10,
     flexDirection: 'row',

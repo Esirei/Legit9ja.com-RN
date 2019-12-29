@@ -6,6 +6,7 @@ import FastImage from 'react-native-fast-image';
 import moment from 'moment';
 import { Fade, Placeholder, PlaceholderLine, PlaceholderMedia } from 'rn-placeholder';
 import LoadingMore from '@components/LoadingMore';
+import NotifyCard from '@components/NotifyCard';
 import SeparatorHorizontal from '@components/SeparatorHorizontal';
 import CommentModal from './components/CommentModal';
 import apiClient from '@api';
@@ -64,6 +65,7 @@ const PostCommentsScreen = ({ navigation }: Props) => {
     maxPage: 1,
     loading: false,
     loadingMore: false,
+    error: undefined,
   });
 
   const post = navigation.getParam('post');
@@ -76,16 +78,20 @@ const PostCommentsScreen = ({ navigation }: Props) => {
   };
 
   const loadComments = () => {
-    setState(prevState => ({ ...prevState, loading: true }));
-    getComments().then(response => {
-      setState(prevState => ({
-        ...prevState,
-        page: 1,
-        comments: data(response),
-        maxPage: totalPages(response),
-        loading: false,
-      }));
-    });
+    setState(prevState => ({ ...prevState, loading: true, error: undefined }));
+    getComments()
+      .then(response => {
+        setState(prevState => ({
+          ...prevState,
+          page: 1,
+          comments: data(response),
+          maxPage: totalPages(response),
+          loading: false,
+        }));
+      })
+      .catch(error => {
+        setState(prevState => ({ ...prevState, error, loading: false }));
+      });
   };
 
   const loadMoreComments = () => {
@@ -125,6 +131,16 @@ const PostCommentsScreen = ({ navigation }: Props) => {
   const render = () => {
     if (state.loading) {
       return <PlaceHolder />;
+    } else if (state.error) {
+      return (
+        <NotifyCard
+          // @ts-ignore
+          text={state.error.message}
+          onPress={loadComments}
+          actionText={'Retry'}
+          type={'error'}
+        />
+      );
     }
     return (
       <>

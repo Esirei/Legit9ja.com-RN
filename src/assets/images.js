@@ -9,6 +9,7 @@ const images = {
   'ic_email_128': require('./images/ic_email_128.png'),
   'ic_hamburger': require('./images/ic_hamburger.png'),
   'ic_home_128': require('./images/ic_home_128.png'),
+  'ic_info_128': require('./images/ic_info_128.png'),
   'ic_instagram_128': require('./images/ic_instagram_128.png'),
   'ic_logo': require('./images/ic_logo.png'),
   'ic_menu_128': require('./images/ic_menu_128.png'),

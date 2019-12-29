@@ -8,6 +8,7 @@ import apiClient from '@api';
 import { CategoryPostItem } from '@components/PostItem';
 import LoadingMore from '@components/LoadingMore';
 import { data, totalPages } from '@helpers/api';
+import NotifyCard from '@components/NotifyCard';
 
 type NavigationParams = { category?: any };
 interface Props extends NavigationInjectedProps<NavigationParams> {}
@@ -20,6 +21,7 @@ const CategoryPostsScreen: NavigationStackScreenComponent<NavigationParams> = ({
     maxPage: 1,
     loading: false,
     loadingMore: false,
+    error: undefined,
   }));
 
   const safeArea = useSafeArea();
@@ -30,15 +32,19 @@ const CategoryPostsScreen: NavigationStackScreenComponent<NavigationParams> = ({
   };
 
   const loadPosts = () => {
-    setState(prevState => ({ ...prevState, loading: true }));
-    getPosts().then(response => {
-      setState(prevState => ({
-        ...prevState,
-        posts: data(response),
-        loading: false,
-        maxPage: totalPages(response),
-      }));
-    });
+    setState(prevState => ({ ...prevState, loading: true, error: undefined }));
+    getPosts()
+      .then(response => {
+        setState(prevState => ({
+          ...prevState,
+          posts: data(response),
+          loading: false,
+          maxPage: totalPages(response),
+        }));
+      })
+      .catch(error => {
+        setState(prevState => ({ ...prevState, error, loading: false }));
+      });
   };
 
   const loadMorePosts = () => {
@@ -91,7 +97,17 @@ const CategoryPostsScreen: NavigationStackScreenComponent<NavigationParams> = ({
 
   useEffect(loadPosts, []);
 
-  return <View>{state.loading ? renderPlaceHolders() : renderPostList()}</View>;
+  const render = () => {
+    if (state.loading) {
+      return renderPlaceHolders();
+    } else if (state.error) {
+      // @ts-ignore
+      return <NotifyCard text={state.error.message} actionText={'Retry'} onPress={loadPosts} />;
+    }
+    return renderPostList();
+  };
+
+  return <View style={styles.container}>{render()}</View>;
 };
 
 CategoryPostsScreen.navigationOptions = ({ navigation }) => {
@@ -104,4 +120,8 @@ CategoryPostsScreen.navigationOptions = ({ navigation }) => {
 
 export default CategoryPostsScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

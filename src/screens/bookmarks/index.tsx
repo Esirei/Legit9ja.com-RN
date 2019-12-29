@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Dimensions, FlatList, StyleSheet, View } from 'react-native';
 import { NavigationStackScreenComponent } from 'react-navigation-stack';
-import { Fade, Placeholder } from 'rn-placeholder';
+import { Fade, Placeholder, PlaceholderMedia } from 'rn-placeholder';
 import { useSafeArea } from 'react-native-safe-area-context';
 import Touchable from '@components/Touchable';
 import { PostCategories, PostDate, PostImage, PostTitle } from '@components/PostItem';
+import NotifyCard from '@components/NotifyCard';
 import { NavigationService } from '@navigation';
 import { getBookmarkedPosts } from '@helpers/post';
 import { BookmarkedPost } from './types';
@@ -44,10 +45,18 @@ const BookmarksScreen: NavigationStackScreenComponent = ({ navigation }) => {
     return subscription.remove;
   }, [navigation]);
 
-  const renderPlaceHolder = () => (
-    <Placeholder Animation={Fade}>
-    </Placeholder>
-  );
+  const renderPlaceHolder = () => {
+    const renderBookmarks = () => {
+      const array = Array.from({ length: 10 });
+      return array.map(_ => <PlaceholderMedia style={styles.itemPlaceholder} />);
+    };
+
+    return (
+      <Placeholder Animation={Fade}>
+        <View style={styles.placeholderContainer}>{renderBookmarks()}</View>
+      </Placeholder>
+    );
+  };
 
   const renderBookmarkedItem = ({ item }) => (
     <Touchable onPress={() => onPressPost(item)} style={styles.item}>
@@ -60,16 +69,28 @@ const BookmarksScreen: NavigationStackScreenComponent = ({ navigation }) => {
     </Touchable>
   );
 
+  const emptyList = () => <NotifyCard text={'No Bookmarks!'} type={'warning'} />;
+
   const renderFlatList = () => (
     <FlatList
       data={state.posts}
       numColumns={2}
       renderItem={renderBookmarkedItem}
       contentContainerStyle={{ paddingBottom: safeArea.bottom }}
+      ListEmptyComponent={emptyList}
     />
   );
 
-  return renderFlatList();
+  const render = () => {
+    if (state.loading) {
+      return renderPlaceHolder();
+    } else if (state.posts.length === 0) {
+      return emptyList();
+    }
+    return renderFlatList();
+  };
+
+  return render();
 };
 
 BookmarksScreen.navigationOptions = {
@@ -80,6 +101,16 @@ BookmarksScreen.navigationOptions = {
 export default BookmarksScreen;
 
 const styles = StyleSheet.create({
+  placeholderContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  itemPlaceholder: {
+    width: ItemWidth,
+    aspectRatio: 1,
+    margin: 4,
+    borderRadius: 4,
+  },
   item: {
     width: ItemWidth,
     aspectRatio: 1,
