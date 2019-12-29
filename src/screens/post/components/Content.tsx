@@ -8,7 +8,7 @@ import { openExternalUrl } from '@helpers';
 
 const postSlugRegex = /legit9ja.com\/[0-9]{4}\/[0-9]{2}\/(.*)\.html/;
 const css =
-  '<style>body{width:100%;margin:0;text-align:start;} img{max-width:100%;height:auto;} iframe{width:100%;height:auto;} p{font-size:16px!important;line-height:20px!important;} video{max-width:100%;height:auto;}</style>';
+  '<style>body{width:100%;margin:0;text-align:start;} img{max-width:100%;height:auto;} iframe{width:100%;height:auto;} p{font-size:16px!important;line-height:20px!important;} video{max-width:100%;height:auto;} a{color:#008000}</style>';
 
 const onShouldStartLoadWithRequest = openExternalUrl(event => {
   const { url } = event;
