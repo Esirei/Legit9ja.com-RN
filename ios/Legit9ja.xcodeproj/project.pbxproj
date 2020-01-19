@@ -68,6 +68,7 @@
 		84BE15A7D96235D6C0DE7E00 /* Pods-Legit9ja-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Legit9ja-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-Legit9ja-tvOSTests/Pods-Legit9ja-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		AC9C88392F3ECEB898B818E4 /* Pods-Legit9ja-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Legit9ja-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Legit9ja-tvOS/Pods-Legit9ja-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		AE61E38323B2BDF5005D54B8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Legit9ja/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		AE6ADC1E23D4D6FE001F2CAA /* Legit9ja.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Legit9ja.entitlements; path = Legit9ja/Legit9ja.entitlements; sourceTree = "<group>"; };
 		D049C01092A3EFB0D5C40FA8 /* Pods-Legit9ja.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Legit9ja.release.xcconfig"; path = "Target Support Files/Pods-Legit9ja/Pods-Legit9ja.release.xcconfig"; sourceTree = "<group>"; };
 		D7A6FD50F8C44878AB9492FA /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../src/assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		E0FCD9CC799340899701A9AE /* NeoSansPro-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NeoSansPro-Medium.ttf"; path = "../src/assets/fonts/NeoSansPro-Medium.ttf"; sourceTree = "<group>"; };
@@ -135,6 +136,7 @@
 		13B07FAE1A68108700A75B9A /* Legit9ja */ = {
 			isa = PBXGroup;
 			children = (
+				AE6ADC1E23D4D6FE001F2CAA /* Legit9ja.entitlements */,
 				AE61E38323B2BDF5005D54B8 /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -318,7 +320,16 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = XP63TL9QBN;
+						DevelopmentTeam = P92XNT4PBA;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -692,9 +703,12 @@
 			baseConfigurationReference = E6AE922A46C9F9B5E29795DB /* Pods-Legit9ja.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Legit9ja/Legit9ja.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = XP63TL9QBN;
+				DEVELOPMENT_TEAM = P92XNT4PBA;
 				INFOPLIST_FILE = Legit9ja/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -702,8 +716,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.legit9ja.iOS;
+				PRODUCT_BUNDLE_IDENTIFIER = com.legit9ja.app;
 				PRODUCT_NAME = Legit9ja;
+				PROVISIONING_PROFILE_SPECIFIER = "Legit9ja App";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -713,8 +728,11 @@
 			baseConfigurationReference = D049C01092A3EFB0D5C40FA8 /* Pods-Legit9ja.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Legit9ja/Legit9ja.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = XP63TL9QBN;
+				DEVELOPMENT_TEAM = P92XNT4PBA;
 				INFOPLIST_FILE = Legit9ja/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -722,8 +740,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.legit9ja.iOS;
+				PRODUCT_BUNDLE_IDENTIFIER = com.legit9ja.app;
 				PRODUCT_NAME = Legit9ja;
+				PROVISIONING_PROFILE_SPECIFIER = "Legit9ja App";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

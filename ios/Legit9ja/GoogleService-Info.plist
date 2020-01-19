@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1057627763359-1ldqn3lninj9s6mf1m50rqr4hhn4s9t9.apps.googleusercontent.com</string>
+	<string>1057627763359-5hbgdegcitr3agqd1bgf7b26hqjrumge.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1057627763359-1ldqn3lninj9s6mf1m50rqr4hhn4s9t9</string>
+	<string>com.googleusercontent.apps.1057627763359-5hbgdegcitr3agqd1bgf7b26hqjrumge</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>1057627763359-sd6nn3hbpnie0al2tak1j7gkmo9b06t1.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.legit9ja.iOS</string>
+	<string>com.legit9ja.app</string>
 	<key>PROJECT_ID</key>
 	<string>legit-app-56782</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1057627763359:ios:6bedf6aa047cf8e3c8a8aa</string>
+	<string>1:1057627763359:ios:472c7c4365f72005c8a8aa</string>
 	<key>DATABASE_URL</key>
 	<string>https://legit-app-56782.firebaseio.com</string>
 </dict>
