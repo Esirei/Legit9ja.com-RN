@@ -10,6 +10,7 @@ import Navigation from '@navigation/Navigation';
 import { NavigationService } from '@navigation';
 import useAuthNavigation from '@hooks/useAuthNavigation';
 import ApiInterceptors from '@components/ApiInterceptors';
+import NotificationService from '@components/NotificationService';
 
 const App = () => {
   const setNavigator = ref => NavigationService.setRef(ref);
@@ -21,6 +22,8 @@ const App = () => {
         <ApiInterceptors />
         <PersistGate loading={<View />} persistor={persistor}>
           <Navigation ref={setNavigator} />
+          {/*We don't want this to initialise b4 react-navigation, therefore it's placed here*/}
+          <NotificationService />
         </PersistGate>
       </Provider>
     </SafeAreaProvider>
