@@ -25,8 +25,8 @@ const onIds = device => {
 const NotificationService = () => {
   useEffect(() => {
     console.log('NotificationService started...');
-    OneSignal.init('3ce2bdd0-6576-4130-ba02-7ce21496f4f2'); // TEST
-    // OneSignal.init('a7888fcf-ead0-4316-8559-0293da9ba7cf');
+    // OneSignal.init('3ce2bdd0-6576-4130-ba02-7ce21496f4f2'); // TEST
+    OneSignal.init('229b254c-8646-4aeb-875c-99d16675676a');
     OneSignal.inFocusDisplaying(2);
     OneSignal.addEventListener('received', onReceived);
     OneSignal.addEventListener('opened', onOpened);
