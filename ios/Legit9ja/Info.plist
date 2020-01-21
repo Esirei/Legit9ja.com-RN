@@ -44,8 +44,10 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This permission should not be called, if you see this, deny access</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>This permission should not be called, if you see this, deny access</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Save pictures for certain activities.</string>
 	<key>UIAppFonts</key>
