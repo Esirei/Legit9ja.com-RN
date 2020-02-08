@@ -14,6 +14,8 @@
     "memory:android": "adb shell dumpsys meminfo com.rntemplate",
     "generate:images/fonts-resource": "node scripts/images.js && node scripts/fonts.js",
     "set-splash": "react-native set-splash --path src/assets/images/logo.png --background '#FFF'",
+    "codePush:android": "appcenter codepush release-react -a Legit9ja/Legit9ja.androidRN -d Production --description \"\"",
+    "codePush:iOS": "appcenter codepush release-react -a Legit9ja/Legit9ja.iOS -d Production --description \"\"",
     "test": "jest",
     "lint": "eslint ."
   },
