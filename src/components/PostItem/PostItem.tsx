@@ -7,7 +7,7 @@ import PostDateMenu from './PostDateMenu';
 import PostTitle from './PostTitle';
 import PostCategories from './PostCategories';
 import fonts from '@assets/fonts';
-import { postContentPlain } from '@helpers/post';
+import { postExcerpt } from '@helpers/post';
 
 const onPostItemPress = post => {
   NavigationService.navToPost({ post, source: 'object' });
@@ -24,7 +24,7 @@ const PostItem = ({ post }) => (
       </View>
     </View>
     <Text style={styles.postDetails} ellipsizeMode={'tail'} numberOfLines={3}>
-      {postContentPlain(post)}
+      {postExcerpt(post)}
     </Text>
   </Touchable>
 );

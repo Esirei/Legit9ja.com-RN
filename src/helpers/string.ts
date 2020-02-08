@@ -5,4 +5,4 @@ const entities = new Html5Entities();
 export const htmlDecode = (string): string => entities.decode(string);
 
 const stringTagsRegex = /(<([^>]+)>)/g;
-export const stringHtmlTags = (string: string): string => string.replace(stringTagsRegex, '');
+export const stripHtmlTags = (string: string): string => string.replace(stringTagsRegex, '');

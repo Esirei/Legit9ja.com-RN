@@ -10,7 +10,7 @@ import NotifyCard from '@components/NotifyCard';
 import SeparatorHorizontal from '@components/SeparatorHorizontal';
 import CommentModal from './components/CommentModal';
 import apiClient from '@api';
-import { data, totalPages, htmlDecode, stringHtmlTags } from '@helpers';
+import { data, totalPages, htmlDecode, stripHtmlTags } from '@helpers';
 import fonts from '@assets/fonts';
 import { Post } from '@types';
 
@@ -44,7 +44,7 @@ const CommentItem = ({ comment }) => (
         <Text style={styles.commentAuthor}>{comment.author_name}</Text>
         <Text style={styles.commentDate}>{moment(comment.date).format('DD MMM, YYYY')}</Text>
         <Text style={styles.commentText}>
-          {stringHtmlTags(htmlDecode(comment.content.rendered)).replace('\n', '')}
+          {stripHtmlTags(htmlDecode(comment.content.rendered)).replace('\n', '')}
         </Text>
       </View>
     </View>

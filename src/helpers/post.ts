@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import { Share } from 'react-native';
 import { BookmarkedPost } from '@screens/bookmarks/types';
-import { htmlDecode, stringHtmlTags } from './string';
+import { htmlDecode, stripHtmlTags } from './string';
 
 const BOOKMARKED_POSTS = 'bookmarked_posts';
 export const getBookmarkedPosts = async (): Promise<Record<number, BookmarkedPost>> => {
@@ -63,7 +63,11 @@ export const postTitle = post => htmlDecode(post.title.rendered);
 export const relatedPostTitle = post => htmlDecode(post.title);
 
 export const postContentPlain = post => {
-  return stringHtmlTags(htmlDecode(postContent(post))).replace('\n', '');
+  return stripHtmlTags(htmlDecode(postContent(post))).replace('\n', '');
+};
+
+export const postExcerpt = post => {
+  return stripHtmlTags(htmlDecode(post.excerpt.rendered)) || postContentPlain(post);
 };
 
 export const sharePost = post => {
