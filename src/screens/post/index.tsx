@@ -211,7 +211,7 @@ const PostScreen = ({ navigation }: Props) => {
 
   const renderRelatedPost = () => {
     const relatedPosts = state.post!['jetpack-related-posts'];
-    if (relatedPosts.length > 0) {
+    if (relatedPosts && relatedPosts.length > 0) {
       return (
         <View style={{ marginHorizontal: 8 }}>
           <Text style={{ marginBottom: 8, fontFamily: fonts.NeoSansPro_Regular }}>
