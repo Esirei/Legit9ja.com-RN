@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import SplashScreen from 'react-native-splash-screen';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import codePush from 'react-native-code-push';
 import { store, persistor } from './store';
 import Navigation from '@navigation/Navigation';
 import { NavigationService } from '@navigation';
@@ -30,4 +31,8 @@ const App = () => {
   );
 };
 
-export default App;
+const codePushOptions = {
+  installMode: codePush.InstallMode.ON_NEXT_RESTART,
+};
+
+export default codePush(codePushOptions)(App);

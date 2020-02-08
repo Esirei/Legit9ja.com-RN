@@ -8,6 +8,7 @@ import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.microsoft.codepush.react.CodePush;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -15,6 +16,12 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
 
   private final ReactNativeHost mReactNativeHost =
       new ReactNativeHost(this) {
+        // CodePush
+        @Override
+        protected String getJSBundleFile(){
+          return CodePush.getJSBundleFile();
+        }
+
         @Override
         public boolean getUseDeveloperSupport() {
           return BuildConfig.DEBUG;
