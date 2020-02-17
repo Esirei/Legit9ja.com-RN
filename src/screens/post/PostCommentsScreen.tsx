@@ -119,6 +119,7 @@ const PostCommentsScreen = ({ navigation }: Props) => {
     <FlatList
       data={state.comments}
       renderItem={renderCommentItem}
+      keyExtractor={item => String(item.id)}
       refreshing={state.loading}
       onRefresh={loadComments}
       onEndReached={loadMoreComments}

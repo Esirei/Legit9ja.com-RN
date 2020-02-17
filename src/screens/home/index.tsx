@@ -28,12 +28,12 @@ const PlaceHolder = () => {
 
   const renderCategoryButtons = () => {
     const style = { height: 40, minWidth: 88, marginHorizontal: 4, marginVertical: 7 };
-    return Array.from({ length: 5 }).map(_ => <PlaceholderMedia style={style} />);
+    return Array.from({ length: 5 }).map((_, i) => <PlaceholderMedia key={i} style={style} />);
   };
 
   const renderPostPlaceHolder = () => {
-    return Array.from({ length: 5 }).map(_ => (
-      <View style={{ margin: 10 }}>
+    return Array.from({ length: 5 }).map((_, i) => (
+      <View key={i} style={{ margin: 10 }}>
         <View style={{ flexDirection: 'row' }}>
           <PlaceholderMedia style={{ height: 80, width: 100 }} />
           <View style={{ flex: 1, marginLeft: 5 }}>
@@ -160,6 +160,7 @@ const HomeScreen = () => {
         <MemoizedFeaturedPosts data={state.featuredPosts} />
       </View>
       <FlatList
+        keyExtractor={item => String(item.id)}
         data={state.categories}
         renderItem={renderCategoryItem}
         horizontal
@@ -177,6 +178,7 @@ const HomeScreen = () => {
 
   const renderFlatList = () => (
     <FlatList
+      keyExtractor={item => String(item.id)}
       data={state.posts}
       renderItem={renderPostItem}
       onRefresh={loadItems}

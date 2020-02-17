@@ -69,6 +69,7 @@ const CategoryPostsScreen: NavigationStackScreenComponent<NavigationParams> = ({
     <FlatList
       data={state.posts}
       renderItem={renderPostItem}
+      keyExtractor={item => String(item.id)}
       showsVerticalScrollIndicator={false}
       onRefresh={loadPosts}
       refreshing={state.loading}
@@ -80,8 +81,8 @@ const CategoryPostsScreen: NavigationStackScreenComponent<NavigationParams> = ({
   );
 
   const renderPlaceHolders = () => {
-    return Array.from({ length: 10 }).map(_ => (
-      <Placeholder Animation={Fade}>
+    return Array.from({ length: 10 }).map((_, i) => (
+      <Placeholder key={i} Animation={Fade}>
         <View style={{ margin: 10, flexDirection: 'row' }}>
           <PlaceholderMedia style={{ width: 140, height: 100 }} />
           <View style={{ flex: 1, marginLeft: 5 }}>
