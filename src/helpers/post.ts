@@ -62,6 +62,19 @@ export const postContentWithoutYT = post => {
 export const postTitle = post => htmlDecode(post.title.rendered);
 export const relatedPostTitle = post => htmlDecode(post.title);
 
+const IMAGE_KEY = 'wp:featuredmedia';
+const IMAGE_KEY_II = 'jetpack_featured_media_url';
+export const postImage = post => {
+  let uri = post[IMAGE_KEY_II];
+  if (!uri) {
+    const { _embedded } = post;
+    if (_embedded && _embedded[IMAGE_KEY] && _embedded[IMAGE_KEY].length > 0) {
+      uri = _embedded[IMAGE_KEY][0].source_url || '';
+    }
+  }
+  return uri;
+};
+
 export const postContentPlain = post => {
   return stripHtmlTags(htmlDecode(postContent(post))).replace('\n', '');
 };
