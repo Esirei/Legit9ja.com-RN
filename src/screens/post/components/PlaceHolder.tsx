@@ -23,8 +23,8 @@ const PlaceHolder = ({ imageHeight, imageWidth }) => {
     const array = Array.from({ length: 10 });
     return (
       <View style={styles.contentContainer}>
-        {array.map(_ => (
-          <PlaceholderLine />
+        {array.map((_, i) => (
+          <PlaceholderLine key={i} />
         ))}
         <PlaceholderLine width={75} />
       </View>
