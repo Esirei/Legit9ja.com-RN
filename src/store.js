@@ -28,4 +28,4 @@ export const store = createStore(persistedReducer, composeEnhancers(...enhancers
 export const persistor = persistStore(store);
 
 // TODO Properly migrate state structure on change
-persistor.purge().then(r => console.log('Persisted state purged...', r));
+// persistor.purge().then(r => console.log('Persisted state purged...', r));

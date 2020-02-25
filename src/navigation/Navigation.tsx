@@ -15,6 +15,8 @@ import PostCommentsScreen from '@screens/post/PostCommentsScreen';
 import SearchScreen from '@screens/search';
 import BookmarksScreen from '@screens/bookmarks';
 import WebScreen from '@screens/web';
+import DownloadsScreen from '@screens/downloads';
+import MusicScreen from '@screens/music';
 import Drawer from '@components/Drawer';
 import fonts from '@assets/fonts';
 
@@ -38,6 +40,8 @@ const StackNav = createStackNavigator(
     [RouteNames.SEARCH]: SearchScreen,
     [RouteNames.BOOKMARKS]: BookmarksScreen,
     [RouteNames.WEB]: WebScreen,
+    [RouteNames.DOWNLOADS]: DownloadsScreen,
+    [RouteNames.MUSIC]: MusicScreen,
   },
   {
     defaultNavigationOptions: {

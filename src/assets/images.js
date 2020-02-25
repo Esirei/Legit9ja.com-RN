@@ -1,4 +1,8 @@
 const images = {
+  'arrow-right': require('./images/arrow-right.png'),
+  'bookmark-outline': require('./images/bookmark-outline.png'),
+  'bookmark': require('./images/bookmark.png'),
+  'cloud-download': require('./images/cloud-download.png'),
   'ic_arrow_right_128': require('./images/ic_arrow_right_128.png'),
   'ic_bookmark_marked_128': require('./images/ic_bookmark_marked_128.png'),
   'ic_bookmark_unmarked_128': require('./images/ic_bookmark_unmarked_128.png'),
@@ -26,6 +30,13 @@ const images = {
   'ic_user_128': require('./images/ic_user_128.png'),
   'logo': require('./images/logo.png'),
   'logo_androidv26': require('./images/logo_androidv26.png'),
+  'music': require('./images/music.png'),
+  'pause-circle': require('./images/pause-circle.png'),
+  'play-circle': require('./images/play-circle.png'),
+  'rewind-left': require('./images/rewind-left.png'),
+  'rewind-right': require('./images/rewind-right.png'),
+  'skip-back': require('./images/skip-back.png'),
+  'skip-forward': require('./images/skip-forward.png'),
   'splash': require('./images/splash.png'),
 };
 

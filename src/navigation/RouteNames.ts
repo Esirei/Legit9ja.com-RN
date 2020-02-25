@@ -10,4 +10,6 @@ export default {
   SEARCH: 'SEARCH',
   COMMENTS: 'COMMENTS',
   WEB: 'WEB',
+  DOWNLOADS: 'DOWNLOADS',
+  MUSIC: 'MUSIC',
 };

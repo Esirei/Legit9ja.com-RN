@@ -44,6 +44,8 @@ const Drawer = () => {
       { name: 'Home', route: RouteNames.HOME, icon: images.ic_home_128 },
       { name: 'Categories', route: RouteNames.CATEGORIES, icon: images.ic_menu_128 },
       { name: 'Bookmarks', route: RouteNames.BOOKMARKS, icon: images.ic_bookmark_marked_128 },
+      { name: 'Music Library', route: RouteNames.MUSIC, icon: images.music },
+      { name: 'Downloads', route: RouteNames.DOWNLOADS, icon: images['cloud-download'] },
     ];
 
     return items.map(({ route, ...rest }, i) => (
