@@ -13,8 +13,8 @@ import { data, totalPages } from '@helpers/api';
 
 const PlaceHolder = () => {
   const renderPostPlaceHolder = () => {
-    return Array.from({ length: 10 }).map(_ => (
-      <View style={{ margin: 10 }}>
+    return Array.from({ length: 10 }).map((_, i) => (
+      <View key={i} style={{ margin: 10 }}>
         <View style={{ flexDirection: 'row' }}>
           <PlaceholderMedia style={{ height: 80, width: 100 }} />
           <View style={{ flex: 1, marginLeft: 5 }}>
@@ -111,6 +111,7 @@ const SearchScreen: NavigationStackScreenComponent<NavigationParams> = ({ naviga
     <FlatList
       data={state.posts}
       renderItem={renderPostItem}
+      keyExtractor={item => String(item.id)}
       onRefresh={loadPosts}
       refreshing={state.loading}
       onEndReached={loadMorePost}

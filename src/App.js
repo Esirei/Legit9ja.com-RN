@@ -12,6 +12,7 @@ import { NavigationService } from '@navigation';
 import useAuthNavigation from '@hooks/useAuthNavigation';
 import ApiInterceptors from '@components/ApiInterceptors';
 import NotificationService from '@components/NotificationService';
+import TrackPlayerInitializer from '@components/TrackPlayerInitializer';
 
 const App = () => {
   const setNavigator = ref => NavigationService.setRef(ref);
@@ -22,6 +23,7 @@ const App = () => {
       <Provider store={store}>
         <ApiInterceptors />
         <PersistGate loading={<View />} persistor={persistor}>
+          <TrackPlayerInitializer />
           <Navigation ref={setNavigator} />
           {/*We don't want this to initialise b4 react-navigation, therefore it's placed here*/}
           <NotificationService />

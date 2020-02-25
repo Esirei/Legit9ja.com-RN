@@ -4,3 +4,7 @@ export * from './WebView';
 export * from './api';
 export * from './string';
 export * from './post';
+export * from './media';
+export * from './file';
+export * from './time';
+export * from './download';

@@ -37,6 +37,7 @@
     "react-native-autoheight-webview": "^1.4.1",
     "react-native-code-push": "^6.0.0",
     "react-native-fast-image": "^7.0.2",
+    "react-native-fs": "^2.16.4",
     "react-native-gesture-handler": "^1.5.2",
     "react-native-material-menu": "^1.0.0",
     "react-native-modal": "^11.5.3",
@@ -45,6 +46,8 @@
     "react-native-safe-area-context": "^0.6.1",
     "react-native-snap-carousel": "^3.8.4",
     "react-native-splash-screen": "^3.2.0",
+    "react-native-swift": "^1.2.2",
+    "react-native-track-player": "^1.2.2",
     "react-native-webview": "^8.0.4",
     "react-native-youtube": "^2.0.0",
     "react-navigation": "4.0.10",
@@ -58,6 +61,8 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
+    "rn-fetch-blob": "^0.12.0",
+    "rn-media-meta": "^0.0.11",
     "rn-placeholder": "^3.0.0"
   },
   "devDependencies": {
@@ -70,6 +75,7 @@
     "@types/react-native": "0.60.16",
     "@types/react-native-htmlview": "^0.12.2",
     "@types/react-native-snap-carousel": "^3.7.4",
+    "@types/react-redux": "^7.1.4",
     "@types/react-test-renderer": "^16.9.0",
     "babel-jest": "^24.9.0",
     "babel-plugin-transform-remove-console": "^6.9.4",

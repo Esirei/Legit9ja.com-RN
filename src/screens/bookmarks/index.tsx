@@ -48,7 +48,7 @@ const BookmarksScreen: NavigationStackScreenComponent = ({ navigation }) => {
   const renderPlaceHolder = () => {
     const renderBookmarks = () => {
       const array = Array.from({ length: 10 });
-      return array.map(_ => <PlaceholderMedia style={styles.itemPlaceholder} />);
+      return array.map((_, i) => <PlaceholderMedia key={i} style={styles.itemPlaceholder} />);
     };
 
     return (

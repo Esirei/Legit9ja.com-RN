@@ -44,10 +44,13 @@ const Drawer = () => {
       { name: 'Home', route: RouteNames.HOME, icon: images.ic_home_128 },
       { name: 'Categories', route: RouteNames.CATEGORIES, icon: images.ic_menu_128 },
       { name: 'Bookmarks', route: RouteNames.BOOKMARKS, icon: images.ic_bookmark_marked_128 },
+      { name: 'Music Library', route: RouteNames.MUSIC, icon: images.music },
+      { name: 'Downloads', route: RouteNames.DOWNLOADS, icon: images['cloud-download'] },
     ];
 
-    return items.map(({ route, ...rest }) => (
+    return items.map(({ route, ...rest }, i) => (
       <DrawerItem
+        key={i}
         onPress={() => onPressAppNav(route)}
         selected={currentRouteName() === route}
         {...rest}
@@ -92,7 +95,9 @@ const Drawer = () => {
       { name: 'Instagram', icon: images.ic_instagram_128 },
     ];
 
-    return items.map(item => <DrawerItem onPress={() => onPressSocialNav(item.name)} {...item} />);
+    return items.map((item, i) => (
+      <DrawerItem key={i} onPress={() => onPressSocialNav(item.name)} {...item} />
+    ));
   };
 
   const onPressOtherNav = name => {
@@ -118,15 +123,19 @@ const Drawer = () => {
       { name: 'Privacy Policy', icon: images.ic_privacy_128 },
     ];
 
-    return items.map(({ name, icon }) => (
-      <DrawerItem onPress={() => onPressOtherNav(name)} selected={false} name={name} icon={icon} />
+    return items.map(({ name, icon }, i) => (
+      <DrawerItem
+        key={i}
+        onPress={() => onPressOtherNav(name)}
+        selected={false}
+        name={name}
+        icon={icon}
+      />
     ));
   };
 
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={{ paddingBottom: safeArea.bottom }}>
+    <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: safeArea.bottom }}>
       <View style={[styles.drawerHeader, { paddingTop: safeArea.top }]}>
         <Image source={images.logo} style={styles.drawerHeaderImage} resizeMode={'cover'} />
       </View>

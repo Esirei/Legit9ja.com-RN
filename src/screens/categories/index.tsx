@@ -21,8 +21,8 @@ const getColor = () => `rgb(${code()}, ${code()}, ${code()})`;
 
 const PlaceHolder = () => {
   const renderPlaceHolders = () => {
-    return Array.from({ length: 15 }).map(_ => (
-      <View style={{ padding: 10, flexDirection: 'row', alignItems: 'center' }}>
+    return Array.from({ length: 15 }).map((_, i) => (
+      <View key={i} style={{ padding: 10, flexDirection: 'row', alignItems: 'center' }}>
         <PlaceholderMedia style={{ width: 50, height: 50, borderRadius: 25, marginLeft: 10 }} />
         <View style={{ flex: 1, marginLeft: 15, justifyContent: 'center' }}>
           <PlaceholderLine width={35} />
@@ -84,6 +84,7 @@ const CategoriesScreen = () => {
     <FlatList
       data={state.categories}
       renderItem={renderCategories}
+      keyExtractor={item => String(item.id)}
       contentContainerStyle={{ paddingBottom: safeArea.bottom }}
     />
   );
