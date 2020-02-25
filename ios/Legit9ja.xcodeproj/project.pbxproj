@@ -24,6 +24,7 @@
 		907EC8F59E8E8C87449C0401 /* libPods-Legit9ja.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 085E27B223A88D46A207E7E9 /* libPods-Legit9ja.a */; };
 		A19CCF5C9AE8C942A769ECEB /* libPods-Legit9ja-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F3DA8E23D5100EA8400F18BA /* libPods-Legit9ja-tvOSTests.a */; };
 		A980B801CE4D48FEB395E72A /* NeoSansPro-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E0FCD9CC799340899701A9AE /* NeoSansPro-Medium.ttf */; };
+		AE2BDBA123EF7902001BB483 /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = AE2BDBA023EF7902001BB483 /* AppCenter-Config.plist */; };
 		AE61E38423B2BDF5005D54B8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AE61E38323B2BDF5005D54B8 /* GoogleService-Info.plist */; };
 		AE6ADC2723D4F09B001F2CAA /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = AE6ADC2623D4F09B001F2CAA /* NotificationService.m */; };
 		AE6ADC2B23D4F09B001F2CAA /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = AE6ADC2323D4F09B001F2CAA /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -94,6 +95,7 @@
 		5030E4491454D4B17BD97C53 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		84BE15A7D96235D6C0DE7E00 /* Pods-Legit9ja-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Legit9ja-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-Legit9ja-tvOSTests/Pods-Legit9ja-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		AC9C88392F3ECEB898B818E4 /* Pods-Legit9ja-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Legit9ja-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Legit9ja-tvOS/Pods-Legit9ja-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		AE2BDBA023EF7902001BB483 /* AppCenter-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "Legit9ja/AppCenter-Config.plist"; sourceTree = "<group>"; };
 		AE61E38323B2BDF5005D54B8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Legit9ja/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AE6ADC1E23D4D6FE001F2CAA /* Legit9ja.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Legit9ja.entitlements; path = Legit9ja/Legit9ja.entitlements; sourceTree = "<group>"; };
 		AE6ADC2323D4F09B001F2CAA /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -176,6 +178,7 @@
 		13B07FAE1A68108700A75B9A /* Legit9ja */ = {
 			isa = PBXGroup;
 			children = (
+				AE2BDBA023EF7902001BB483 /* AppCenter-Config.plist */,
 				AE6ADC1E23D4D6FE001F2CAA /* Legit9ja.entitlements */,
 				AE61E38323B2BDF5005D54B8 /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -471,6 +474,7 @@
 				A980B801CE4D48FEB395E72A /* NeoSansPro-Medium.ttf in Resources */,
 				6A1EF64B5C8749B2AF512F76 /* NeoSansPro-Regular.ttf in Resources */,
 				67E6CE02E9E243C89FF8CED6 /* Roboto-Bold.ttf in Resources */,
+				AE2BDBA123EF7902001BB483 /* AppCenter-Config.plist in Resources */,
 				856BC9DAD8104F56A3C8DDCD /* Roboto-Regular.ttf in Resources */,
 				AE61E38423B2BDF5005D54B8 /* GoogleService-Info.plist in Resources */,
 			);
