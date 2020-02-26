@@ -48,8 +48,12 @@ const Music = () => {
       <Touchable style={styles.track} onPress={() => onPress(item.id)} onLongPress={() => deleteOnPress(item)}>
         <FastImage source={{ uri: item.artwork }} style={styles.trackArtwork} />
         <View>
-          <Text style={[styles.trackTitle, activeStyle(item, currentTrackId)]}>{item.title}</Text>
-          <Text style={[styles.trackArtist, activeStyle(item, currentTrackId)]}>{item.artist}</Text>
+          <Text numberOfLines={1} style={[styles.trackTitle, activeStyle(item, currentTrackId)]}>
+            {item.title}
+          </Text>
+          <Text numberOfLines={1} style={[styles.trackArtist, activeStyle(item, currentTrackId)]}>
+            {item.artist}
+          </Text>
         </View>
       </Touchable>
       <View style={styles.trackDivider} />
