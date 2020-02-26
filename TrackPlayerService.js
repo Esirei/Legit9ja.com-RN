@@ -1,4 +1,4 @@
-import RNTrackPlayer from 'react-native-track-player';
+import RNTrackPlayer, { State } from 'react-native-track-player';
 import { Platform } from 'react-native';
 import { store } from './src/store';
 import { currentTrackID, playbackState } from '@actions/audioPlayerActions';
@@ -84,7 +84,7 @@ export default async function() {
 
       if (paused) {
         const playerState = await RNTrackPlayer.getState();
-        playingBeforeDuck = playerState === RNTrackPlayer.STATE_PLAYING;
+        playingBeforeDuck = playerState === State.Playing;
         await RNTrackPlayer.pause();
         return;
       }

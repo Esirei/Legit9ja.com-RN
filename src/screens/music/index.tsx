@@ -3,12 +3,13 @@ import { FlatList, Image, StatusBar, StyleSheet, Text, View } from 'react-native
 import FastImage from 'react-native-fast-image';
 import RNTrackPlayer from 'react-native-track-player';
 import Touchable from '@components/Touchable';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   currentTrackSelector,
   isPlayingSelector,
   tracksSelector,
 } from '@selectors/audioPlayerSelectors';
+import { deleteTrack } from '@actions/audioPlayerActions';
 import { useSafeArea } from 'react-native-safe-area-context';
 import images from '@assets/images';
 
@@ -24,6 +25,7 @@ const prev = () => RNTrackPlayer.skipToPrevious();
 const next = () => RNTrackPlayer.skipToNext();
 
 const Music = () => {
+  const dispatch = useDispatch();
   const currentTrack = useSelector(currentTrackSelector);
   const tracks = useSelector(tracksSelector);
   const isPlaying = useSelector(isPlayingSelector);
@@ -33,6 +35,8 @@ const Music = () => {
 
   const currentTrackId = currentTrack ? currentTrack.id : '';
 
+  const deleteOnPress = track => dispatch(deleteTrack(track));
+
   const onPress = id => {
     return RNTrackPlayer.skip(id).then(() => {
       return RNTrackPlayer.play();
@@ -41,7 +45,7 @@ const Music = () => {
 
   const renderTracks = ({ item }) => (
     <Fragment>
-      <Touchable style={styles.track} onPress={() => onPress(item.id)}>
+      <Touchable style={styles.track} onPress={() => onPress(item.id)} onLongPress={() => deleteOnPress(item)}>
         <FastImage source={{ uri: item.artwork }} style={styles.trackArtwork} />
         <View>
           <Text style={[styles.trackTitle, activeStyle(item, currentTrackId)]}>{item.title}</Text>

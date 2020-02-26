@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import RNTrackPlayer from 'react-native-track-player';
+import RNTrackPlayer, { Capability } from 'react-native-track-player';
 import { currentTrackSelector, tracksSelector } from '@selectors/audioPlayerSelectors';
 import images from '@assets/images';
 import { isPlaying } from '@helpers';
@@ -17,28 +17,28 @@ const TrackPlayerInitializer = () => {
       forwardIcon: images['rewind-right'],
       icon: images.music,
       capabilities: [
-        RNTrackPlayer.CAPABILITY_PLAY,
-        RNTrackPlayer.CAPABILITY_PAUSE,
-        RNTrackPlayer.CAPABILITY_STOP,
-        RNTrackPlayer.CAPABILITY_SEEK_TO,
-        RNTrackPlayer.CAPABILITY_SKIP,
-        RNTrackPlayer.CAPABILITY_SKIP_TO_NEXT,
-        RNTrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
-        RNTrackPlayer.CAPABILITY_JUMP_FORWARD,
-        RNTrackPlayer.CAPABILITY_JUMP_BACKWARD,
+        Capability.Play,
+        Capability.Pause,
+        Capability.Stop,
+        Capability.SeekTo,
+        Capability.Skip,
+        Capability.SkipToNext,
+        Capability.SkipToPrevious,
+        Capability.JumpForward,
+        Capability.JumpBackward,
       ],
       notificationCapabilities: [
-        RNTrackPlayer.CAPABILITY_PLAY,
-        RNTrackPlayer.CAPABILITY_PAUSE,
-        RNTrackPlayer.CAPABILITY_STOP,
-        RNTrackPlayer.CAPABILITY_SKIP_TO_NEXT,
-        RNTrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
+        Capability.Play,
+        Capability.Pause,
+        Capability.Stop,
+        Capability.SkipToNext,
+        Capability.SkipToPrevious,
       ],
       compactCapabilities: [
-        RNTrackPlayer.CAPABILITY_PLAY,
-        RNTrackPlayer.CAPABILITY_PAUSE,
-        RNTrackPlayer.CAPABILITY_SKIP_TO_NEXT,
-        RNTrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
+        Capability.Play,
+        Capability.Pause,
+        Capability.SkipToNext,
+        Capability.SkipToPrevious,
       ],
       jumpInterval: 15,
     });
