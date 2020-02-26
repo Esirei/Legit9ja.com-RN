@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
-import { STATE_PLAYING, STATE_BUFFERING } from 'react-native-track-player';
 import { TrackFile } from '@reducers/audioPlayerReducer';
+import { isPlaying } from '@helpers';
 import { AppState } from '@types';
 
 const getTrack = (id, tracks): TrackFile | null => tracks[id];
@@ -39,5 +39,5 @@ export const playbackStateSelector = createSelector(
 
 export const isPlayingSelector = createSelector(
   playbackStateSelector,
-  playbackState => playbackState === STATE_PLAYING || playbackState === STATE_BUFFERING,
+  isPlaying,
 );

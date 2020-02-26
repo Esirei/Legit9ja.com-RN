@@ -1,6 +1,7 @@
 import RNTrackPlayer from 'react-native-track-player';
 import { store } from './src/store';
 import { currentTrackID, playbackState } from '@actions/audioPlayerActions';
+import { stateName } from '@helpers/player';
 
 export default async function() {
   RNTrackPlayer.addEventListener('remote-play', () => {
@@ -62,7 +63,7 @@ export default async function() {
   RNTrackPlayer.addEventListener('playback-track-changed', async event => {
     const { nextTrack } = event;
     console.log('playback-track-changed', event);
-    store.dispatch(currentTrackID(nextTrack));
+    !!nextTrack && store.dispatch(currentTrackID(nextTrack));
   });
 
   RNTrackPlayer.addEventListener('playback-queue-ended', async event => {
@@ -107,20 +108,3 @@ export default async function() {
     volumeBeforeDuck = playingBeforeDuck = null;
   });
 }
-
-const stateName = state => {
-  switch (state) {
-    case RNTrackPlayer.STATE_NONE:
-      return 'None';
-    case RNTrackPlayer.STATE_READY:
-      return 'Ready';
-    case RNTrackPlayer.STATE_BUFFERING:
-      return 'Buffering';
-    case RNTrackPlayer.STATE_PLAYING:
-      return 'Playing';
-    case RNTrackPlayer.STATE_PAUSED:
-      return 'Paused';
-    case RNTrackPlayer.STATE_STOPPED:
-      return 'Stopped';
-  }
-};
