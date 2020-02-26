@@ -1,4 +1,5 @@
 import RNFetchBlob from 'rn-fetch-blob';
+import RNTrackPlayer from 'react-native-track-player';
 import { TrackFile } from '@reducers/audioPlayerReducer';
 
 const { fs } = RNFetchBlob;
@@ -10,10 +11,10 @@ export const types = {
   AUDIO_PLAYER_PLAYBACK_STATE: 'AUDIO_PLAYER_PLAYBACK_STATE',
 };
 
-export const addTrack = (track: TrackFile) => ({
-  type: types.AUDIO_PLAYER_ADD_TRACK,
-  payload: track,
-});
+export const addTrack = (track: TrackFile) => async dispatch => {
+  dispatch({ type: types.AUDIO_PLAYER_ADD_TRACK, payload: track });
+  await RNTrackPlayer.add(track);
+};
 
 const removeTrack = trackId => ({
   type: types.AUDIO_PLAYER_REMOVE_TRACK,

@@ -1,6 +1,8 @@
 import { batch } from 'react-redux';
+import { Platform } from 'react-native';
 import RNFetchBlob from 'rn-fetch-blob';
 import MediaMeta from 'rn-media-meta';
+import RNMusicMetadata from 'react-native-music-metadata';
 import { makeDownloadSelector } from '@selectors/downloadsSelector';
 import { downloadFile, getFileAndExtension } from '@helpers';
 import { addTrack } from '@actions/audioPlayerActions';
@@ -69,6 +71,22 @@ export const startMP3Download = (url: string) => (dispatch, getState) => {
         const { filename, path, size, lastModified } = stat;
         const artwork = `${path}.jpg`;
 
+        const saveMeta = meta => {
+          const { thumb, ...restMeta } = meta;
+          console.log('Meta save here...', meta);
+          const file = { added: lastModified, size, url: 'file://' + path, id: url };
+          const metadata = { artwork: thumb ? 'file://' + artwork : '', ...restMeta, ...file };
+          return fs.writeFile(artwork, thumb || '', 'base64').then(() => metadata);
+        };
+
+        if (Platform.OS === 'ios') {
+          return RNMusicMetadata.getMetadata([path]).then(metas => {
+            const meta = metas[0];
+            delete meta.uri;
+            return saveMeta({ ...meta, thumb: meta.artwork });
+          });
+        }
+
         return MediaMeta.get(path, {
           thumbCompression: undefined,
           thumbMaxWidth: undefined,
@@ -76,11 +94,7 @@ export const startMP3Download = (url: string) => (dispatch, getState) => {
         }).then(meta => {
           delete meta.height;
           delete meta.width;
-          const { thumb, ...restMeta } = meta;
-          console.log('Meta save here...', meta);
-          const file = { added: lastModified, size, url: 'file://' + path, id: url };
-          const metadata = { artwork: thumb ? 'file://' + artwork : '', ...restMeta, ...file };
-          return fs.writeFile(artwork, thumb || '', 'base64').then(() => metadata);
+          return saveMeta(meta);
         });
       });
     })

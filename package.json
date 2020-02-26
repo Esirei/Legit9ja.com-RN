@@ -41,6 +41,7 @@
     "react-native-gesture-handler": "^1.5.2",
     "react-native-material-menu": "^1.0.0",
     "react-native-modal": "^11.5.3",
+    "react-native-music-metadata": "https://github.com/venepe/react-native-music-metadata",
     "react-native-onesignal": "^3.6.3",
     "react-native-reanimated": "^1.4.0",
     "react-native-safe-area-context": "^0.6.1",
