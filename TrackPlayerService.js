@@ -1,4 +1,5 @@
-import RNTrackPlayer from 'react-native-track-player';
+import RNTrackPlayer, { State } from 'react-native-track-player';
+import { Platform } from 'react-native';
 import { store } from './src/store';
 import { currentTrackID, playbackState } from '@actions/audioPlayerActions';
 import { stateName } from '@helpers/player';
@@ -18,14 +19,6 @@ export default async function() {
 
   RNTrackPlayer.addEventListener('remote-previous', () => {
     RNTrackPlayer.skipToPrevious();
-  });
-
-  RNTrackPlayer.addEventListener('remote-skip', async ({ id }) => {
-    await RNTrackPlayer.skip(id);
-  });
-
-  RNTrackPlayer.addEventListener('remote-play-id', async ({ id }) => {
-    await RNTrackPlayer.skip(id);
   });
 
   RNTrackPlayer.addEventListener('remote-jump-forward', async ({ interval }) => {
@@ -70,41 +63,51 @@ export default async function() {
     console.log('playback-queue-ended', event);
   });
 
-  let playingBeforeDuck;
-  let volumeBeforeDuck;
-  const DUCKED_VOLUME = 0.2;
-  RNTrackPlayer.addEventListener('remote-duck', async ({ paused, permanent, ducking }) => {
-    console.log('remote-ducking', { paused, permanent, ducking });
-    if (permanent) {
-      await RNTrackPlayer.stop();
-      return;
-    }
+  if (Platform.OS === 'android') {
+    RNTrackPlayer.addEventListener('remote-skip', async ({ id }) => {
+      await RNTrackPlayer.skip(id);
+    });
 
-    if (paused) {
-      const playerState = await RNTrackPlayer.getState();
-      playingBeforeDuck = playerState === RNTrackPlayer.STATE_PLAYING;
-      await RNTrackPlayer.pause();
-      return;
-    }
+    RNTrackPlayer.addEventListener('remote-play-id', async ({ id }) => {
+      await RNTrackPlayer.skip(id);
+    });
 
-    if (ducking) {
-      const volume = await RNTrackPlayer.getVolume();
-      if (volume > DUCKED_VOLUME) {
-        volumeBeforeDuck = volume;
-        await RNTrackPlayer.setVolume(DUCKED_VOLUME);
+    let playingBeforeDuck;
+    let volumeBeforeDuck;
+    const DUCKED_VOLUME = 0.2;
+    RNTrackPlayer.addEventListener('remote-duck', async ({ paused, permanent, ducking }) => {
+      console.log('remote-ducking', { paused, permanent, ducking });
+      if (permanent) {
+        await RNTrackPlayer.stop();
+        return;
       }
-      return;
-    }
 
-    if (playingBeforeDuck) {
-      await RNTrackPlayer.play();
-    }
+      if (paused) {
+        const playerState = await RNTrackPlayer.getState();
+        playingBeforeDuck = playerState === State.Playing;
+        await RNTrackPlayer.pause();
+        return;
+      }
 
-    const playerVolume = await RNTrackPlayer.getVolume();
-    if (volumeBeforeDuck > playerVolume) {
-      await RNTrackPlayer.setVolume(volumeBeforeDuck || 1);
-    }
+      if (ducking) {
+        const volume = await RNTrackPlayer.getVolume();
+        if (volume > DUCKED_VOLUME) {
+          volumeBeforeDuck = volume;
+          await RNTrackPlayer.setVolume(DUCKED_VOLUME);
+        }
+        return;
+      }
 
-    volumeBeforeDuck = playingBeforeDuck = null;
-  });
+      if (playingBeforeDuck) {
+        await RNTrackPlayer.play();
+      }
+
+      const playerVolume = await RNTrackPlayer.getVolume();
+      if (volumeBeforeDuck > playerVolume) {
+        await RNTrackPlayer.setVolume(volumeBeforeDuck || 1);
+      }
+
+      volumeBeforeDuck = playingBeforeDuck = null;
+    });
+  }
 }

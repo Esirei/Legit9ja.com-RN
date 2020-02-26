@@ -1,20 +1,20 @@
-import RNTrackPlayer, { STATE_PLAYING, STATE_BUFFERING } from 'react-native-track-player';
+import { State } from 'react-native-track-player';
 
-export const isPlaying = state => state === STATE_PLAYING || state === STATE_BUFFERING;
+export const isPlaying = state => state === State.Playing || state === State.Buffering;
 
 export const stateName = state => {
   switch (state) {
-    case RNTrackPlayer.STATE_NONE:
+    case State.None:
       return 'None';
-    case RNTrackPlayer.STATE_READY:
+    case State.Ready:
       return 'Ready';
-    case RNTrackPlayer.STATE_BUFFERING:
+    case State.Buffering:
       return 'Buffering';
-    case RNTrackPlayer.STATE_PLAYING:
+    case State.Playing:
       return 'Playing';
-    case RNTrackPlayer.STATE_PAUSED:
+    case State.Paused:
       return 'Paused';
-    case RNTrackPlayer.STATE_STOPPED:
+    case State.Stopped:
       return 'Stopped';
   }
 };

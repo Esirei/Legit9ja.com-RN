@@ -1,4 +1,4 @@
-import RNTrackPlayer, { Track, State } from 'react-native-track-player';
+import { State, Track } from 'react-native-track-player';
 import { types } from '@actions/audioPlayerActions';
 
 export interface TrackFile extends Track {
@@ -24,7 +24,7 @@ interface PlayerState {
 const initialState: PlayerState = {
   tracks: {},
   currentTrackId: '',
-  playbackState: RNTrackPlayer.STATE_NONE,
+  playbackState: State.None,
 };
 
 const tracksReducer = (state = {}, action): TracksState => {
