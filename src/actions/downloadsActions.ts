@@ -38,6 +38,7 @@ const downloadStopped = ({ url, error }) => ({
   payload: { url, error },
 });
 
+const f = 'file://';
 export const startMP3Download = (url: string) => (dispatch, getState) => {
   const download = makeDownloadSelector(url)(getState());
   const now = Date.now();
@@ -74,8 +75,8 @@ export const startMP3Download = (url: string) => (dispatch, getState) => {
         const saveMeta = meta => {
           const { thumb, ...restMeta } = meta;
           console.log('Meta save here...', meta);
-          const file = { added: lastModified, size, url: 'file://' + path, id: url };
-          const metadata = { artwork: thumb ? 'file://' + artwork : '', ...restMeta, ...file };
+          const file = { added: lastModified, size, url: encodeURI(f + path), id: url };
+          const metadata = { artwork: thumb ? encodeURI(f + artwork) : '', ...restMeta, ...file };
           return fs.writeFile(artwork, thumb || '', 'base64').then(() => metadata);
         };
 
