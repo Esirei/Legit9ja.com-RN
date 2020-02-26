@@ -82,8 +82,10 @@ export const startMP3Download = (url: string) => (dispatch, getState) => {
         if (Platform.OS === 'ios') {
           return RNMusicMetadata.getMetadata([path]).then(metas => {
             const meta = metas[0];
+            const thumb = meta.artwork;
+            delete meta.artwork;
             delete meta.uri;
-            return saveMeta({ ...meta, thumb: meta.artwork });
+            return saveMeta({ ...meta, thumb });
           });
         }
 
