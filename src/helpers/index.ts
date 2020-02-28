@@ -9,3 +9,4 @@ export * from './file';
 export * from './time';
 export * from './download';
 export * from './player';
+export * from './header';

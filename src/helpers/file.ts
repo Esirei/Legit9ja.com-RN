@@ -18,3 +18,17 @@ export const fileSize = (size: number): string => {
 const fileExtensionRegex = /[^.]+$/; // matches file extension
 
 export const getFileExtension = (file: string): string => fileExtensionRegex.exec(file)![0];
+
+const artistTitleRegex = /(?:(.+)[-\s][-–][-\s](.+)|(.+))(?:\.\w{3,4})/; // tries to get artist and title from file
+
+export const getArtistAndTitle = (file: string): { artist: string; title: string } => {
+  console.log('getArtistAndTitle called');
+  file = file.replace(/_/g, ' ').replace(' Legit9ja com', '');
+  const meta = { artist: '', title: '' };
+  const regexArray = artistTitleRegex.exec(file)!;
+  console.log('getArtistAndTitle Regex', regexArray);
+  meta.artist = regexArray[1] || '';
+  meta.title = regexArray[2] || regexArray[3] || file;
+  console.log('getArtistAndTitle Result', meta);
+  return meta;
+};
