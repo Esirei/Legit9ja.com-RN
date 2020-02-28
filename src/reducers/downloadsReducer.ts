@@ -37,7 +37,8 @@ const downloadSpeed = (prev, current) => {
 const downloadReducer = (state = download, action): Download => {
   switch (action.type) {
     case types.DOWNLOAD_STARTED:
-      return { ...state, ...action.payload, isDownloading: true, error: undefined };
+      const started = { completed: false, isDownloading: true, error: undefined };
+      return { ...state, ...action.payload, ...started };
     case types.DOWNLOAD_PROGRESS:
       const speed = downloadSpeed(state.received, action.payload.received);
       return { ...state, ...action.payload, speed };

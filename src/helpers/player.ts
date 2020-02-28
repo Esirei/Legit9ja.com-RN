@@ -16,5 +16,7 @@ export const stateName = state => {
       return 'Paused';
     case State.Stopped:
       return 'Stopped';
+    case State.Connecting:
+      return 'Connecting';
   }
 };

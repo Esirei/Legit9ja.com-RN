@@ -4,7 +4,7 @@ import RNFetchBlob from 'rn-fetch-blob';
 import MediaMeta from 'rn-media-meta';
 import RNMusicMetadata from 'react-native-music-metadata';
 import { makeDownloadSelector } from '@selectors/downloadsSelector';
-import { downloadFile, getFileAndExtension } from '@helpers';
+import { downloadFile, getFileAndExtension, getArtistAndTitle } from '@helpers';
 import { addTrack } from '@actions/audioPlayerActions';
 
 const { fs } = RNFetchBlob;
@@ -73,10 +73,21 @@ export const startMP3Download = (url: string) => (dispatch, getState) => {
         const artwork = `${path}.jpg`;
 
         const saveMeta = meta => {
-          const { thumb, ...restMeta } = meta;
+          const { thumb, artist, title, ...restMeta } = meta;
           console.log('Meta save here...', meta);
           const file = { added: lastModified, size, url: encodeURI(f + path), id: url };
-          const metadata = { artwork: thumb ? encodeURI(f + artwork) : '', ...restMeta, ...file };
+          const metadata = {
+            ...restMeta,
+            ...file,
+            artwork: thumb ? encodeURI(f + artwork) : '',
+            artist: artist ? artist.trim() : '',
+            title: title ? title.trim() : '',
+          };
+          if (!artist || !title) {
+            const m = getArtistAndTitle(filename);
+            !artist && (metadata.artist = m.artist);
+            !title && (metadata.title = m.title);
+          }
           return fs.writeFile(artwork, thumb || '', 'base64').then(() => metadata);
         };
 
