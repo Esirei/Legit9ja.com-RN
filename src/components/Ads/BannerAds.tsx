@@ -1,5 +1,5 @@
-import React, { memo, FC } from 'react';
-import { View, ViewStyle } from 'react-native';
+import React, { FC, memo } from 'react';
+import { Platform, View, ViewStyle } from 'react-native';
 import { BannerAd, BannerAdSize, FirebaseAdMobTypes } from '@react-native-firebase/admob';
 
 interface Props {
@@ -7,10 +7,15 @@ interface Props {
   size?: keyof FirebaseAdMobTypes.BannerAdSize;
 }
 
+const unitId = Platform.select({
+  android: 'ca-app-pub-7723042600622321/3183352336',
+  ios: 'ca-app-pub-7723042600622321/7718530463',
+});
+
 const BannerAds: FC<Props> = ({ style, size }) => {
   return (
     <View style={style}>
-      <BannerAd unitId={'ca-app-pub-7723042600622321/3183352336'} size={size} />
+      <BannerAd unitId={unitId} size={size} />
     </View>
   );
 };
