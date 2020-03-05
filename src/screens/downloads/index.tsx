@@ -1,13 +1,19 @@
-import React, { Fragment } from 'react';
-import { FlatList, StatusBar, StyleSheet, Text, View } from 'react-native';
+import React, { useCallback } from 'react';
+import { FlatList, Image, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { useSafeArea } from 'react-native-safe-area-context';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Touchable from '@components/Touchable';
 import { fileSize } from '@helpers';
 import { Download } from '@reducers/downloadsReducer';
 import { downloadsSelector } from '@selectors/downloadsSelector';
-import { startMP3Download } from '@actions/downloadsActions';
+import {
+  cancelDownload,
+  clearCompletedDownloads,
+  deleteDownload,
+  startMP3Download,
+} from '@actions/downloadsActions';
 import fonts from '@assets/fonts';
+import images from '@assets/images';
 
 const downloadPercent = (download: Download): string => {
   const { completed, received, total } = download;
@@ -29,29 +35,53 @@ const DownloadsScreen = () => {
   const downloads = useSelector(downloadsSelector);
   const safeArea = useSafeArea();
   const dispatch = useDispatch();
-  const resumeDownload = url => dispatch(startMP3Download(url));
-  const renderDownloads = ({ item }) => (
-    <Touchable style={styles.download} onPress={() => resumeDownload(item.url)}>
-      <Text numberOfLines={1} style={styles.downloadNameText}>
-        {item.name || item.url}
-      </Text>
-      <View style={styles.downloadInfoContainer}>
-        <Text style={styles.downloadPercentText}>{downloadPercent(item)}</Text>
-        <Text style={styles.downloadStateText}>{downloadState(item)}</Text>
+  const resume = useCallback(url => dispatch(startMP3Download(url)), [dispatch]);
+  const cancel = useCallback(url => cancelDownload(url), []); // not a redux action
+  const clear = useCallback(() => dispatch(clearCompletedDownloads()), [dispatch]);
+  const deleteD = useCallback(url => dispatch(deleteDownload(url)), [dispatch]);
+
+  const renderDownloads = ({ item }) => {
+    const { isDownloading, url } = item;
+    return (
+      <View style={styles.download}>
+        <View style={styles.downloadInfo}>
+          <Text numberOfLines={1} style={styles.downloadNameText}>
+            {item.name || item.url}
+          </Text>
+          <View style={styles.downloadMeta}>
+            <Text style={styles.downloadPercentText}>{downloadPercent(item)}</Text>
+            <Text style={styles.downloadStateText}>{downloadState(item)}</Text>
+          </View>
+        </View>
+        <Touchable
+          style={styles.downloadControlButton}
+          borderlessBackground
+          onPress={() => (isDownloading ? cancel(url) : resume(url))}>
+          <Image
+            source={isDownloading ? images['pause-circle'] : images['play-circle']}
+            style={styles.downloadControlImage}
+          />
+        </Touchable>
       </View>
-    </Touchable>
-  );
+    );
+  };
+
+  const renderClearButton = () => {
+    if (downloads.length > 0) {
+      return (
+        <Touchable onPress={clear} style={styles.clearCompletedButton}>
+          <Text style={styles.clearCompletedText}>Clear Completed</Text>
+        </Touchable>
+      );
+    }
+  };
 
   return (
-    <Fragment>
+    <View style={[styles.container, { paddingBottom: safeArea.bottom }]}>
       <StatusBar translucent={false} />
-      <FlatList
-        data={downloads}
-        renderItem={renderDownloads}
-        keyExtractor={item => item.url}
-        contentContainerStyle={{ paddingBottom: safeArea.bottom }}
-      />
-    </Fragment>
+      <FlatList data={downloads} renderItem={renderDownloads} keyExtractor={item => item.url} />
+      {renderClearButton()}
+    </View>
   );
 };
 
@@ -62,12 +92,19 @@ DownloadsScreen.navigationOptions = {
 export default DownloadsScreen;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   download: {
     padding: 8,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: 'rgba(0,0,0,0.25)',
+    flexDirection: 'row',
   },
-  downloadInfoContainer: {
+  downloadInfo: {
+    flex: 1,
+  },
+  downloadMeta: {
     flexDirection: 'row',
     marginTop: 4,
   },
@@ -76,15 +113,37 @@ const styles = StyleSheet.create({
     fontFamily: fonts.Roboto_Bold,
   },
   downloadPercentText: {
-    flex: 2,
+    flex: 1,
     fontSize: 12,
     color: 'rgba(0,0,0,0.54)',
     fontFamily: fonts.Roboto_Regular,
   },
   downloadStateText: {
-    flex: 1,
     fontSize: 12,
     color: 'rgba(0,0,0,0.54)',
     fontFamily: fonts.Roboto_Regular,
+  },
+  clearCompletedButton: {
+    margin: 8,
+    minHeight: 40,
+    borderRadius: 4,
+    justifyContent: 'center',
+    backgroundColor: '#008000',
+  },
+  clearCompletedText: {
+    color: '#FFF',
+    fontFamily: fonts.Roboto_Bold,
+    textAlign: 'center',
+  },
+  downloadControlButton: {
+    height: 54,
+    aspectRatio: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  downloadControlImage: {
+    height: 28,
+    width: 28,
+    tintColor: 'rgba(0,0,0,0.54)',
   },
 });

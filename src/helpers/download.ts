@@ -14,6 +14,7 @@ export const getFileAndExtension = (url: string): { file: string; ext: string } 
 
 interface DownloadConfig {
   dir?: string;
+  started?: (path) => void;
   progress?: (received, total) => void;
 }
 
@@ -43,6 +44,7 @@ export const downloadFile = (url: string, config?: DownloadConfig) => {
     })
     .then(stat => {
       console.log(`File Download ${file} starting...`, stat);
+      config && config.started && config.started(filePath);
       const task = RNFetchBlob.config({
         path: tempPath,
         IOSBackgroundTask: true,

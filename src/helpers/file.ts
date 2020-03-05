@@ -1,3 +1,7 @@
+import RNFetchBlob from 'rn-fetch-blob';
+
+const { fs } = RNFetchBlob;
+
 const sizeUnits = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
 export const fileSize = (size: number): string => {
   let unit = 1;
@@ -31,4 +35,9 @@ export const getArtistAndTitle = (file: string): { artist: string; title: string
   meta.title = regexArray[2] || regexArray[3] || file;
   console.log('getArtistAndTitle Result', meta);
   return meta;
+};
+
+export const deleteFile = async path => {
+  const exist = await fs.exists(path);
+  exist && (await fs.unlink(path));
 };

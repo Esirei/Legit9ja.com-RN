@@ -4,6 +4,7 @@ import { fileSize } from '@helpers';
 export interface Download {
   url: string;
   name: string;
+  path: string;
   speed: string;
   isDownloading: boolean;
   completed: boolean;
@@ -16,9 +17,10 @@ export interface Download {
 
 export type DownloadsState = Record<string, Download>;
 
-const download: Download = {
+const downloadState: Download = {
   url: '',
   name: '',
+  path: '',
   speed: '',
   isDownloading: false,
   completed: false,
@@ -34,11 +36,23 @@ const downloadSpeed = (prev, current) => {
   return `${size}/s`;
 };
 
-const downloadReducer = (state = download, action): Download => {
+const clearCompleted = (downloads: DownloadsState): DownloadsState => {
+  return Object.values(downloads).reduce((state, download) => {
+    const { completed, url } = download;
+    if (!completed) {
+      state[url] = download;
+    }
+    return state;
+  }, {});
+};
+
+const downloadReducer = (state = downloadState, action): Download => {
   switch (action.type) {
-    case types.DOWNLOAD_STARTED:
+    case types.DOWNLOAD_START:
       const started = { completed: false, isDownloading: true, error: undefined };
       return { ...state, ...action.payload, ...started };
+    case types.DOWNLOAD_STARTED:
+      return { ...state, ...action.payload };
     case types.DOWNLOAD_PROGRESS:
       const speed = downloadSpeed(state.received, action.payload.received);
       return { ...state, ...action.payload, speed };
@@ -53,12 +67,15 @@ const downloadReducer = (state = download, action): Download => {
 
 export default (state = {}, action): DownloadsState => {
   switch (action.type) {
+    case types.DOWNLOAD_START:
     case types.DOWNLOAD_STARTED:
     case types.DOWNLOAD_PROGRESS:
     case types.DOWNLOAD_COMPLETED:
     case types.DOWNLOAD_STOPPED:
       const { url } = action.payload;
       return { ...state, [url]: downloadReducer(state[url], action) };
+    case types.DOWNLOAD_CLEAR_COMPLETED:
+      return clearCompleted(state);
     default:
       return state;
   }

@@ -4,23 +4,32 @@ import RNFetchBlob from 'rn-fetch-blob';
 import MediaMeta from 'rn-media-meta';
 import RNMusicMetadata from 'react-native-music-metadata';
 import { makeDownloadSelector } from '@selectors/downloadsSelector';
-import { downloadFile, getFileAndExtension, getArtistAndTitle } from '@helpers';
-import { addTrack } from '@actions/audioPlayerActions';
+import { downloadFile, getFileAndExtension, getArtistAndTitle, deleteFile } from '@helpers';
+import { addTrack, deleteTrack } from '@actions/audioPlayerActions';
+import { makeTrackSelector } from '@selectors/audioPlayerSelectors';
 
 const { fs } = RNFetchBlob;
 const songsDir = RNFetchBlob.fs.dirs.DocumentDir + '/songs';
 const downloadCancellers: Record<string, (cb?: (reason) => void) => void> = {};
 
 export const types = {
+  DOWNLOAD_START: 'DOWNLOAD_START',
   DOWNLOAD_STARTED: 'DOWNLOAD_STARTED',
   DOWNLOAD_PROGRESS: 'DOWNLOAD_PROGRESS',
   DOWNLOAD_COMPLETED: 'DOWNLOAD_COMPLETED',
   DOWNLOAD_STOPPED: 'DOWNLOAD_STOPPED',
+  DOWNLOAD_DELETE: 'DOWNLOAD_DELETE',
+  DOWNLOAD_CLEAR_COMPLETED: 'DOWNLOAD_CLEAR_COMPLETED',
 };
 
-const downloadStarted = ({ url, name, created }) => ({
-  type: types.DOWNLOAD_STARTED,
+const downloadStart = ({ url, name, created }) => ({
+  type: types.DOWNLOAD_START,
   payload: { url, name, created },
+});
+
+const downloadStarted = ({ url, path }) => ({
+  type: types.DOWNLOAD_STARTED,
+  payload: { url, path },
 });
 
 const downloadProgress = ({ url, received, total, updated }) => ({
@@ -38,6 +47,15 @@ const downloadStopped = ({ url, error }) => ({
   payload: { url, error },
 });
 
+const downloadDelete = ({ url }) => ({
+  type: types.DOWNLOAD_DELETE,
+  payload: { url },
+});
+
+export const clearCompletedDownloads = () => ({
+  type: types.DOWNLOAD_CLEAR_COMPLETED,
+});
+
 const f = 'file://';
 export const startMP3Download = (url: string) => (dispatch, getState) => {
   const download = makeDownloadSelector(url)(getState());
@@ -48,19 +66,18 @@ export const startMP3Download = (url: string) => (dispatch, getState) => {
   }
   const created = (download && download.created) || now;
   const name = (download && download.name) || getFileAndExtension(url).file || url;
-  dispatch(downloadStarted({ url, name, created }));
+  dispatch(downloadStart({ url, name, created }));
+
+  const started = path => {
+    dispatch(downloadStarted({ url, path }));
+  };
 
   const progress = (received, total) => {
     const updated = Date.now();
     dispatch(downloadProgress({ url, received, total, updated }));
-    const percent = (received / total) * 100;
-    if (percent > 75) {
-      // console.log(`Download of ${url} cancelled at 75%+...`);
-      // cancelDownload(url);
-    }
   };
 
-  downloadFile(url, { progress, dir: songsDir })
+  downloadFile(url, { started, progress, dir: songsDir })
     .then(fileDownload => {
       console.log(`Download of ${url} started...`);
       downloadCancellers[url] = fileDownload.cancel;
@@ -118,17 +135,38 @@ export const startMP3Download = (url: string) => (dispatch, getState) => {
         dispatch(downloadCompleted(url));
         dispatch(addTrack(meta));
       });
+      delete downloadCancellers[url];
     })
     .catch(error => {
+      console.log(`Download of ${url} error...`, error);
       dispatch(downloadStopped({ url, error }));
     });
 };
 
+// not a redux action
 export const cancelDownload = url => {
   const cancel = downloadCancellers[url];
   if (cancel) {
     cancel(reason => {
       console.log(`Download of ${url} cancelled...`, reason);
+      delete downloadCancellers[url];
     });
+  }
+};
+
+export const deleteDownload = (url: string) => async (dispatch, getState) => {
+  const download = makeDownloadSelector(url)(getState());
+  const track = makeTrackSelector(url)(getState());
+  if (track) {
+    dispatch(deleteTrack(track));
+  }
+  if (download) {
+    const { path } = download;
+    const tempPath = `${path}.download`;
+    const artwork = `${path}.jpg`;
+    await deleteFile(tempPath);
+    await deleteFile(path);
+    await deleteFile(artwork);
+    dispatch(downloadDelete({ url }));
   }
 };
