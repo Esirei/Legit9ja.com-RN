@@ -33,7 +33,8 @@ export const playbackState = state => ({
 export const deleteTrack = (track: TrackFile) => async (dispatch, getState) => {
   const currentTrackId = currentTrackIdSelector(getState());
   if (currentTrackId !== track.id) {
-    await RNTrackPlayer.remove(track);
+    // @ts-ignore
+    await RNTrackPlayer.remove(track.id);
     const path = track.url.replace('file://', '');
     const artworkPath = `${path}.jpg`;
     await deleteFile(path);
