@@ -52,6 +52,15 @@ const Music = () => {
   const [color, setColor] = useState('#008000');
   const [selectedTrack, setSelectedTrack] = useState<TrackFile | undefined>(undefined);
 
+  const onLongPressTrack = useCallback(
+    (track: TrackFile) => {
+      if (currentTrackId !== track.id) {
+        setSelectedTrack(track);
+      }
+    },
+    [currentTrackId],
+  );
+
   const deleteOnPress = useCallback(() => {
     selectedTrack && dispatch(deleteTrack(selectedTrack));
     setSelectedTrack(undefined);
@@ -68,7 +77,7 @@ const Music = () => {
         <Touchable
           style={styles.track}
           onPress={() => onPress(item.id)}
-          onLongPress={() => setSelectedTrack(item)}>
+          onLongPress={() => onLongPressTrack(item)}>
           <View style={styles.trackArtworkContainer}>
             <FastImage source={{ uri: item.artwork }} style={styles.trackArtwork} />
             {active && (
@@ -135,8 +144,12 @@ const Music = () => {
     <Fragment>
       <StatusBar translucent={false} />
       <ImageBackground source={{ uri }} style={styles.imageBackground} blurRadius={100}>
-        <Image source={{ uri }} style={styles.imageBackground2} blurRadius={5} />
-        <ImageColorPicker artwork={uri} callback={setColor} reverse />
+        <Image
+          source={{ uri }}
+          style={[styles.imageBackground2, { backgroundColor: color }]}
+          blurRadius={5}
+        />
+        <ImageColorPicker artwork={uri} callback={setColor} reverse={false} />
         <FlatList
           data={tracks}
           style={{ marginTop: HeaderHeight(true) }}

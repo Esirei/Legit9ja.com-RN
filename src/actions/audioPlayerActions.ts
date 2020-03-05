@@ -1,6 +1,7 @@
 import RNTrackPlayer from 'react-native-track-player';
 import { TrackFile } from '@reducers/audioPlayerReducer';
 import { deleteFile } from '@helpers';
+import { currentTrackIdSelector } from '@selectors/audioPlayerSelectors';
 
 export const types = {
   AUDIO_PLAYER_ADD_TRACK: 'AUDIO_PLAYER_ADD_TRACK',
@@ -29,11 +30,14 @@ export const playbackState = state => ({
   payload: state,
 });
 
-export const deleteTrack = (track: TrackFile) => async dispatch => {
-  await RNTrackPlayer.remove(track);
-  const path = track.url.replace('file://', '');
-  const artworkPath = `${path}.jpg`;
-  await deleteFile(path);
-  await deleteFile(artworkPath);
-  dispatch(removeTrack(track.id));
+export const deleteTrack = (track: TrackFile) => async (dispatch, getState) => {
+  const currentTrackId = currentTrackIdSelector(getState());
+  if (currentTrackId !== track.id) {
+    await RNTrackPlayer.remove(track);
+    const path = track.url.replace('file://', '');
+    const artworkPath = `${path}.jpg`;
+    await deleteFile(path);
+    await deleteFile(artworkPath);
+    dispatch(removeTrack(track.id));
+  }
 };
