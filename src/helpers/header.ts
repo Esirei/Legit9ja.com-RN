@@ -21,5 +21,8 @@ const HeaderAndStatusBarHeight = Header.HEIGHT + PlatformStatusBarHeight;
 const RenderedHeaderHeight = HeaderAndStatusBarHeight - RenderedStatusBarHeight;
 
 export const HeaderHeight = (hasStatusBar: boolean) => {
-  return hasStatusBar ? RenderedHeaderHeight : HeaderAndStatusBarHeight;
+  if (hasStatusBar && Platform.OS === 'android') {
+    return RenderedHeaderHeight;
+  }
+  return HeaderAndStatusBarHeight;
 };

@@ -53,7 +53,7 @@ const ImageColorPicker = ({ artwork, callback, reverse }) => {
 
   return (
     <WebView
-      style={{ width: 0, height: 0 }}
+      containerStyle={{ width: 0, height: 0, position: 'absolute' }}
       originWhitelist={['*']}
       source={{ html: canvasHtml(image, opts) }}
       onMessage={onMessage}
