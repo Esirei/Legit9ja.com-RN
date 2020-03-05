@@ -4,6 +4,7 @@ import Modal from 'react-native-modal';
 import { useSafeArea } from 'react-native-safe-area-context';
 import Touchable from '@components/Touchable';
 import { TrackFile } from '@reducers/audioPlayerReducer';
+import fonts from '@assets/fonts';
 
 interface Props {
   track?: TrackFile;
@@ -32,18 +33,16 @@ const DeleteTrackModal = ({ track, close, onDeletePressed, deleteText }: Props) 
       onBackdropPress={close}
       onDismiss={close}
       style={[styles.modal, { paddingBottom: safeArea.bottom }]}>
-      <View style={styles.deleteModalContent}>
-        <View style={styles.modalHeading}>
-          <Text>{title()}</Text>
+      <View style={styles.content}>
+        <View style={styles.heading}>
+          <Text style={styles.titleText}>{title()}</Text>
         </View>
-        <View style={styles.modalButtonsWrapper}>
-          <Touchable onPress={close} style={styles.modalButton}>
-            <Text>Cancel</Text>
+        <View style={styles.buttonsWrapper}>
+          <Touchable onPress={close} style={styles.button}>
+            <Text style={styles.buttonText}>Cancel</Text>
           </Touchable>
-          <Touchable
-            onPress={onDeletePressed}
-            style={[styles.modalButton, { backgroundColor: '#F15' }]}>
-            <Text style={{ color: '#FFF' }}>{deleteText ? deleteText : 'Delete'}</Text>
+          <Touchable onPress={onDeletePressed} style={[styles.button, styles.deleteButton]}>
+            <Text style={[styles.buttonText, styles.deleteText]}>{deleteText ? deleteText : 'Delete'}</Text>
           </Touchable>
         </View>
       </View>
@@ -57,22 +56,38 @@ const styles = StyleSheet.create({
   modal: {
     justifyContent: 'flex-end',
   },
-  modalHeading: {
+  heading: {
     padding: 16,
     minHeight: 100,
+    justifyContent: 'center',
   },
-  deleteModalContent: {
+  content: {
     backgroundColor: '#FFF',
     borderRadius: 8,
     overflow: 'hidden',
   },
-  modalButtonsWrapper: {
+  buttonsWrapper: {
     flexDirection: 'row',
     height: 48,
   },
-  modalButton: {
+  button: {
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
+  },
+  titleText: {
+    color: 'rgba(0,0,0,0.85)',
+    textAlign: 'center',
+    fontFamily: fonts.Roboto_Bold,
+  },
+  buttonText: {
+    color: 'rgba(0,0,0,0.75)',
+    fontFamily: fonts.Roboto_Bold,
+  },
+  deleteText: {
+    color: '#FFF',
+  },
+  deleteButton: {
+    backgroundColor: '#F15',
   },
 });
