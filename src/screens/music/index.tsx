@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { FlatList, Image, ImageBackground, StatusBar, StyleSheet, Text, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import RNTrackPlayer, { useProgress } from 'react-native-track-player';
@@ -11,10 +11,12 @@ import {
 } from '@selectors/audioPlayerSelectors';
 import { deleteTrack } from '@actions/audioPlayerActions';
 import { useSafeArea } from 'react-native-safe-area-context';
-import { HeaderHeight, formatDuration } from '@helpers';
+import { formatDuration, HeaderHeight } from '@helpers';
 import images from '@assets/images';
 import fonts from '@assets/fonts';
 import ImageColorPicker from '@components/ImageColorPicker';
+import DeleteTrackModal from '@screens/music/components/DeleteTrackModal';
+import { TrackFile } from '@reducers/audioPlayerReducer';
 
 const isActive = (track, currentId) => track.id === currentId;
 
@@ -33,15 +35,11 @@ const Music = () => {
   const isPlaying = useSelector(isPlayingSelector);
   const safeArea = useSafeArea();
 
-  useEffect(() => {
-
-  }, []);
+  useEffect(() => {}, []);
 
   console.log('Current Track', currentTrack);
 
   const currentTrackId = currentTrack ? currentTrack.id : '';
-
-  const deleteOnPress = track => dispatch(deleteTrack(track));
 
   const onPress = id => {
     return RNTrackPlayer.skip(id).then(() => {
@@ -50,13 +48,33 @@ const Music = () => {
   };
 
   const [color, setColor] = useState('#008000');
+  const [selectedTrack, setSelectedTrack] = useState<TrackFile | undefined>(undefined);
+
+  const deleteOnPress = useCallback(() => {
+    selectedTrack && dispatch(deleteTrack(selectedTrack));
+    setSelectedTrack(undefined);
+  }, [selectedTrack, dispatch]);
+
+  const closeModal = useCallback(() => setSelectedTrack(undefined), []);
 
   const renderTracks = ({ item }) => {
-    const style = isActive(item, currentTrackId) ? { color } : undefined;
+    const active = isActive(item, currentTrackId);
+    // const style = isActive(item, currentTrackId) ? { color } : undefined;
+    const style = undefined;
     return (
       <Fragment>
-        <Touchable style={styles.track} onPress={() => onPress(item.id)} onLongPress={() => deleteOnPress(item)}>
-          <FastImage source={{ uri: item.artwork }} style={styles.trackArtwork} />
+        <Touchable
+          style={styles.track}
+          onPress={() => onPress(item.id)}
+          onLongPress={() => setSelectedTrack(item)}>
+          <View style={styles.trackArtworkContainer}>
+            <FastImage source={{ uri: item.artwork }} style={styles.trackArtwork} />
+            {active && (
+              <View style={styles.trackArtworkActiveOverlay}>
+                <Image source={images['play-circle']} style={styles.controlImages} />
+              </View>
+            )}
+          </View>
           <View style={styles.trackInfo}>
             <Text numberOfLines={1} style={[styles.trackTitle, style]}>
               {item.title}
@@ -65,7 +83,7 @@ const Music = () => {
               {item.artist}
             </Text>
           </View>
-          {isActive(item, currentTrackId) && <ProgressDuration />}
+          {active && <ProgressDuration />}
         </Touchable>
         <View style={styles.trackDivider} />
       </Fragment>
@@ -115,23 +133,32 @@ const Music = () => {
           style={{ marginTop: HeaderHeight(true) }}
           renderItem={renderTracks}
           keyExtractor={item => item.id}
-          contentContainerStyle={{ paddingBottom: safeArea.bottom }}
         />
-        <View style={styles.miniPlayer}>
-          <View style={styles.miniPlayerTrack}>{renderCurrentTrack()}</View>
-          <Touchable style={styles.miniPlayerControl} borderlessBackground onPress={prev}>
-            <Image source={images['rewind-left']} style={styles.controlImages} />
-          </Touchable>
-          <Touchable style={styles.miniPlayerControl} borderlessBackground onPress={pressPlayPause}>
-            <Image
-              source={images[isPlaying ? 'pause-circle' : 'play-circle']}
-              style={styles.controlImages}
-            />
-          </Touchable>
-          <Touchable style={styles.miniPlayerControl} borderlessBackground onPress={next}>
-            <Image source={images['rewind-right']} style={styles.controlImages} />
-          </Touchable>
+        <View style={[styles.miniPlayerContainer, { paddingBottom: safeArea.bottom }]}>
+          <View style={styles.miniPlayer}>
+            <View style={styles.miniPlayerTrack}>{renderCurrentTrack()}</View>
+            <Touchable style={styles.miniPlayerControl} borderlessBackground onPress={prev}>
+              <Image source={images['rewind-left']} style={styles.controlImages} />
+            </Touchable>
+            <Touchable
+              style={styles.miniPlayerControl}
+              borderlessBackground
+              onPress={pressPlayPause}>
+              <Image
+                source={images[isPlaying ? 'pause-circle' : 'play-circle']}
+                style={styles.controlImages}
+              />
+            </Touchable>
+            <Touchable style={styles.miniPlayerControl} borderlessBackground onPress={next}>
+              <Image source={images['rewind-right']} style={styles.controlImages} />
+            </Touchable>
+          </View>
         </View>
+        <DeleteTrackModal
+          track={selectedTrack}
+          onDeletePressed={deleteOnPress}
+          close={closeModal}
+        />
       </ImageBackground>
     </Fragment>
   );
@@ -171,11 +198,25 @@ const styles = StyleSheet.create({
   trackInfo: {
     flex: 1,
   },
+  trackArtworkContainer: {
+    marginRight: 16,
+    borderRadius: 4,
+  },
   trackArtwork: {
     height: 48,
     width: 48,
-    marginRight: 16,
     borderRadius: 4,
+  },
+  trackArtworkActiveOverlay: {
+    backgroundColor: 'rgba(0,0,0,0.25)',
+    borderRadius: 4,
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   trackTitle: {
     fontSize: 14,
@@ -204,9 +245,11 @@ const styles = StyleSheet.create({
     height: 0.5,
     backgroundColor: 'rgba(255,255,255,0.25)',
   },
+  miniPlayerContainer: {
+    backgroundColor: 'rgba(0,0,0,0.25)',
+  },
   miniPlayer: {
     height: 54,
-    backgroundColor: 'rgba(0,0,0,0.25)',
     // backgroundColor: 'rgba(255,255,255,0.25)',
     flexDirection: 'row',
     alignItems: 'center',
@@ -221,6 +264,7 @@ const styles = StyleSheet.create({
   },
   miniPlayerArtwork: {
     marginLeft: 2.5,
+    marginRight: 8,
   },
   miniPlayerInfoTextContainer: {
     flex: 1,
