@@ -3,6 +3,7 @@ import { FlatList, Image, StatusBar, StyleSheet, Text, View } from 'react-native
 import { useSafeArea } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import Touchable from '@components/Touchable';
+import NotifyCard from '@components/NotifyCard';
 import { fileSize } from '@helpers';
 import { Download } from '@reducers/downloadsReducer';
 import { downloadsSelector } from '@selectors/downloadsSelector';
@@ -14,6 +15,7 @@ import {
 } from '@actions/downloadsActions';
 import fonts from '@assets/fonts';
 import images from '@assets/images';
+import { NavigationService, RouteNames } from '@navigation';
 
 const downloadPercent = (download: Download): string => {
   const { completed, received, total } = download;
@@ -76,10 +78,22 @@ const DownloadsScreen = () => {
     }
   };
 
+  const emptyList = () => (
+    <NotifyCard
+      text={'No downloads have been added'}
+      onPress={() => NavigationService.navigate(RouteNames.HOME)}
+    />
+  );
+
   return (
     <View style={[styles.container, { paddingBottom: safeArea.bottom }]}>
       <StatusBar translucent={false} />
-      <FlatList data={downloads} renderItem={renderDownloads} keyExtractor={item => item.url} />
+      <FlatList
+        data={downloads}
+        renderItem={renderDownloads}
+        keyExtractor={item => item.url}
+        ListEmptyComponent={emptyList}
+      />
       {renderClearButton()}
     </View>
   );

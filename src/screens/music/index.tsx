@@ -14,9 +14,11 @@ import { useSafeArea } from 'react-native-safe-area-context';
 import { formatDuration, HeaderHeight } from '@helpers';
 import images from '@assets/images';
 import fonts from '@assets/fonts';
+import NotifyCard from '@components/NotifyCard';
 import ImageColorPicker from '@components/ImageColorPicker';
 import DeleteTrackModal from '@screens/music/components/DeleteTrackModal';
 import { TrackFile } from '@reducers/audioPlayerReducer';
+import { NavigationService, RouteNames } from '@navigation';
 
 const isActive = (track, currentId) => track.id === currentId;
 
@@ -122,6 +124,13 @@ const Music = () => {
 
   const uri = currentTrack ? currentTrack.artwork : '';
 
+  const emptyList = () => (
+    <NotifyCard
+      text={'No songs have been downloaded yet'}
+      onPress={() => NavigationService.navigate(RouteNames.HOME)}
+    />
+  );
+
   return (
     <Fragment>
       <StatusBar translucent={false} />
@@ -132,6 +141,7 @@ const Music = () => {
           data={tracks}
           style={{ marginTop: HeaderHeight(true) }}
           renderItem={renderTracks}
+          ListEmptyComponent={emptyList}
           keyExtractor={item => item.id}
         />
         <View style={[styles.miniPlayerContainer, { paddingBottom: safeArea.bottom }]}>
