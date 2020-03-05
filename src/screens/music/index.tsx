@@ -159,7 +159,7 @@ const Music = () => {
 
   return (
     <Fragment>
-      <StatusBar translucent={false} />
+      <StatusBar translucent={false} barStyle={'light-content'} />
       <ImageBackground source={{ uri }} style={styles.imageBackground} blurRadius={100}>
         <Image
           source={{ uri }}
