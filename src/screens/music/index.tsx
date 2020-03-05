@@ -49,7 +49,7 @@ const Music = () => {
     });
   };
 
-  const [color, setColor] = useState('#008000');
+  const [color, setColor] = useState('rgba(0,0,0,0.25)');
   const [selectedTrack, setSelectedTrack] = useState<TrackFile | undefined>(undefined);
 
   const onLongPressTrack = useCallback(
@@ -137,8 +137,24 @@ const Music = () => {
     <NotifyCard
       text={'No songs have been downloaded yet'}
       onPress={() => NavigationService.navigate(RouteNames.HOME)}
+      type={'warning'}
     />
   );
+
+  const renderList = () => {
+    if (tracks.length === 0) {
+      return emptyList();
+    }
+    return (
+      <FlatList
+        data={tracks}
+        style={{ marginTop: HeaderHeight(true) }}
+        renderItem={renderTracks}
+        ListEmptyComponent={emptyList}
+        keyExtractor={item => item.id}
+      />
+    );
+  };
 
   return (
     <Fragment>
@@ -150,13 +166,7 @@ const Music = () => {
           blurRadius={5}
         />
         <ImageColorPicker artwork={uri} callback={setColor} reverse={false} />
-        <FlatList
-          data={tracks}
-          style={{ marginTop: HeaderHeight(true) }}
-          renderItem={renderTracks}
-          ListEmptyComponent={emptyList}
-          keyExtractor={item => item.id}
-        />
+        {renderList()}
         <View style={[styles.miniPlayerContainer, { paddingBottom: safeArea.bottom }]}>
           <View style={styles.miniPlayer}>
             <View style={styles.miniPlayerTrack}>{renderCurrentTrack()}</View>

@@ -82,18 +82,28 @@ const DownloadsScreen = () => {
     <NotifyCard
       text={'No downloads have been added'}
       onPress={() => NavigationService.navigate(RouteNames.HOME)}
+      type={'warning'}
     />
   );
 
-  return (
-    <View style={[styles.container, { paddingBottom: safeArea.bottom }]}>
-      <StatusBar translucent={false} />
+  const renderList = () => {
+    if (downloads.length === 0) {
+      return emptyList();
+    }
+    return (
       <FlatList
         data={downloads}
         renderItem={renderDownloads}
         keyExtractor={item => item.url}
         ListEmptyComponent={emptyList}
       />
+    );
+  };
+
+  return (
+    <View style={[styles.container, { paddingBottom: safeArea.bottom }]}>
+      <StatusBar translucent={false} />
+      {renderList()}
       {renderClearButton()}
     </View>
   );
