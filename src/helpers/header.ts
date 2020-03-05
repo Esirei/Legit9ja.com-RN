@@ -26,3 +26,7 @@ export const HeaderHeight = (hasStatusBar: boolean) => {
   }
   return HeaderAndStatusBarHeight;
 };
+
+export const HeaderWithNotchHeight = (safeArea: number, hasStatusBar: boolean) => {
+  return safeArea ? RenderedHeaderHeight + safeArea : HeaderHeight(hasStatusBar);
+};

@@ -11,7 +11,7 @@ import {
 } from '@selectors/audioPlayerSelectors';
 import { deleteTrack } from '@actions/audioPlayerActions';
 import { useSafeArea } from 'react-native-safe-area-context';
-import { formatDuration, HeaderHeight } from '@helpers';
+import { formatDuration, HeaderWithNotchHeight } from '@helpers';
 import images from '@assets/images';
 import fonts from '@assets/fonts';
 import NotifyCard from '@components/NotifyCard';
@@ -145,10 +145,11 @@ const Music = () => {
     if (tracks.length === 0) {
       return emptyList();
     }
+    const marginTop = HeaderWithNotchHeight(safeArea.top, true);
     return (
       <FlatList
         data={tracks}
-        style={{ marginTop: HeaderHeight(true) }}
+        style={{ marginTop }}
         renderItem={renderTracks}
         ListEmptyComponent={emptyList}
         keyExtractor={item => item.id}
