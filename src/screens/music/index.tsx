@@ -202,7 +202,7 @@ Music.navigationOptions = {
     elevation: 1,
     backgroundColor: 'rgba(0,0,0,0.25)',
   },
-  title: 'Legit9ja Music Library',
+  title: 'Music Library',
   headerTransparent: true,
   headerTintColor: '#FFF',
 };
