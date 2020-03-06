@@ -21,6 +21,7 @@ interface DownloadConfig {
 export const downloadFile = (url: string, config?: DownloadConfig) => {
   const dir = (config && config.dir) || downloadsDir;
   let file = urlFileRegex.exec(url)![0];
+  file = file.replace(/%E2%80%93/g, '-');
   file = decodeURI(file);
   const filePath = `${dir}/${file}`;
   const tempPath = `${filePath}.download`;
