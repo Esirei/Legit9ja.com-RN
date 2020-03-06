@@ -127,6 +127,7 @@ const styles = StyleSheet.create({
   },
   downloadInfo: {
     flex: 1,
+    justifyContent: 'center',
   },
   downloadMeta: {
     flexDirection: 'row',
