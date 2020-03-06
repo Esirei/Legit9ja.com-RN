@@ -4,6 +4,7 @@ import { currentTrackSelector, tracksSelector } from '@selectors/audioPlayerSele
 import images from '@assets/images';
 import { isPlaying } from '@helpers';
 import { store } from '../../store';
+import { fixTrackFiles } from '@actions/audioPlayerActions';
 
 const TrackPlayerInitializer = () => {
   const setup = async () => {
@@ -47,15 +48,17 @@ const TrackPlayerInitializer = () => {
   useEffect(() => {
     const state = store.getState();
     const currentTrack = currentTrackSelector(state);
-    const tracks = tracksSelector(state);
 
     RNTrackPlayer.getState().then(playbackState => {
       const playing = isPlaying(playbackState);
 
       if (!playing) {
-        console.log('AudioPlayer - setting up', tracks);
+        console.log('AudioPlayer - setting up');
         setup().then(async () => {
           // return;
+          await store.dispatch(fixTrackFiles());
+          const tracks = tracksSelector(store.getState());
+          console.log('AudioPlayer - adding tracks', tracks);
           tracks.forEach(track => {
             RNTrackPlayer.add(track).then(() => {
               if (currentTrack && track.id === currentTrack.id) {

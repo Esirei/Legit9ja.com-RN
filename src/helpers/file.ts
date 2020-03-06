@@ -41,3 +41,13 @@ export const deleteFile = async path => {
   const exist = await fs.exists(path);
   exist && (await fs.unlink(path));
 };
+
+export const moveFile = async (oldPath, newPath) => {
+  await fs.mv(oldPath, newPath);
+};
+
+const f = 'file://';
+export const addFilePrefix = pathToFile => `${f}${pathToFile}`;
+export const removeFilePrefix = (file: string) => file.replace(f, '');
+
+// export const songDir = relativePath =>

@@ -57,7 +57,7 @@ export const clearCompletedDownloads = () => ({
 });
 
 const f = 'file://';
-export const startMP3Download = (url: string) => (dispatch, getState) => {
+export const startMP3Download = (url: string, tries = 0) => (dispatch, getState) => {
   const download = makeDownloadSelector(url)(getState());
   const now = Date.now();
   if (download && download.isDownloading && download.updated > now - 10000) {
@@ -79,7 +79,7 @@ export const startMP3Download = (url: string) => (dispatch, getState) => {
 
   downloadFile(url, { started, progress, dir: songsDir })
     .then(fileDownload => {
-      console.log(`Download of ${url} started...`);
+      console.log(`Download of ${url} started...`, tries);
       downloadCancellers[url] = fileDownload.cancel;
       fileDownload.expire(() => {
         console.log(`Download of ${url} expired...`);
@@ -140,6 +140,9 @@ export const startMP3Download = (url: string) => (dispatch, getState) => {
     .catch(error => {
       console.log(`Download of ${url} error...`, error);
       dispatch(downloadStopped({ url, error }));
+      if (tries < 3 && error && error.message && error.message === 'Download interrupted.') {
+        dispatch(startMP3Download(url, ++tries));
+      }
     });
 };
 

@@ -1,9 +1,18 @@
+import RNFetchBlob from 'rn-fetch-blob';
 import { createSelector } from 'reselect';
 import { TrackFile } from '@reducers/audioPlayerReducer';
 import { isPlaying } from '@helpers';
 import { AppState } from '@types';
 
+const { fs } = RNFetchBlob;
+const f = 'file://';
+
 const getTrack = (id, tracks): TrackFile | null => tracks[id];
+const mapTrack = (track: TrackFile): TrackFile => ({
+  ...track,
+  artwork: `${f}${fs.dirs.DocumentDir}${track.artwork}`,
+  url: track.url,
+});
 const sortByTitle = (a: TrackFile, b: TrackFile) => a.title.localeCompare(b.title);
 
 const playerStateSelector = (state: AppState) => state.audioPlayer;
