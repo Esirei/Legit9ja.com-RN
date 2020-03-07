@@ -17,6 +17,7 @@ import fonts from '@assets/fonts';
 import NotifyCard from '@components/NotifyCard';
 import ImageColorPicker from '@components/ImageColorPicker';
 import DeleteTrackModal from '@screens/music/components/DeleteTrackModal';
+import TrackOptionsButton from '@screens/music/components/TrackOptionsButton';
 import { TrackFile } from '@reducers/audioPlayerReducer';
 import { NavigationService, RouteNames } from '@navigation';
 
@@ -52,7 +53,7 @@ const Music = () => {
   const [color, setColor] = useState('rgba(0,0,0,0.25)');
   const [selectedTrack, setSelectedTrack] = useState<TrackFile | undefined>(undefined);
 
-  const onLongPressTrack = useCallback(
+  const options = useCallback(
     (track: TrackFile) => {
       if (currentTrackId !== track.id) {
         setSelectedTrack(track);
@@ -74,10 +75,7 @@ const Music = () => {
     const style = undefined;
     return (
       <Fragment>
-        <Touchable
-          style={styles.track}
-          onPress={() => onPress(item.id)}
-          onLongPress={() => onLongPressTrack(item)}>
+        <Touchable style={styles.track} onPress={() => onPress(item.id)}>
           <View style={styles.trackArtworkContainer}>
             <FastImage source={{ uri: item.artwork }} style={styles.trackArtwork} />
             {active && (
@@ -94,7 +92,7 @@ const Music = () => {
               {item.artist}
             </Text>
           </View>
-          {active && <ProgressDuration />}
+          {active ? <ProgressDuration /> : <TrackOptionsButton onPress={() => options(item)} />}
         </Touchable>
         <View style={styles.trackDivider} />
       </Fragment>
