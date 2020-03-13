@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Dimensions, Linking, StyleSheet } from 'react-native';
+import { Dimensions, Linking, StyleSheet, View } from 'react-native';
 import AutoHeightWebView from 'react-native-autoheight-webview';
 import { useDispatch } from 'react-redux';
 import { startMP3Download } from '@actions/downloadsActions';
@@ -36,7 +36,7 @@ const Content = ({ post }) => {
   });
 
   return (
-    <>
+    <View>
       <AutoHeightWebView
         source={{ html }}
         style={styles.webview}
@@ -47,8 +47,9 @@ const Content = ({ post }) => {
         bounces={false}
         scrollEnabled={false}
       />
+      <View style={styles.preventSideLongPress} />
       <YouTube post={post} />
-    </>
+    </View>
   );
 };
 
@@ -57,4 +58,5 @@ export default memo(Content);
 const styles = StyleSheet.create({
   webview: { width: Dimensions.get('window').width - 16, marginTop: 16 },
   webviewContainer: { alignItems: 'center' },
+  preventSideLongPress: { position: 'absolute', width: 16, top: 0, bottom: 0, left: 0 }, // prevents text on the webview from being selected when drawer is dragged open.
 });

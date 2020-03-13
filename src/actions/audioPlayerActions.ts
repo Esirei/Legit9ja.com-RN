@@ -45,7 +45,7 @@ export const deleteTrack = (track: TrackFile) => async (dispatch, getState) => {
 
 const badTrackRegex = /%E2%80%93/g;
 export const fixTrackFiles = () => async (dispatch, getState) => {
-  const filePath = path => decodeURI(removeFilePrefix(path));
+  const filePath = path => decodeURI(removeFilePrefix(path)); // need to decode the path because iOS's track-player required an encoded path, also the file:// prefix
   const replace = (file: string) => file.replace(badTrackRegex, encodeURI('-'));
   const tracks = tracksSelector(getState());
   for (const track of tracks) {

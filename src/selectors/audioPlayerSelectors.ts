@@ -14,6 +14,8 @@ const mapTrack = (track: TrackFile): TrackFile => ({
   url: track.url,
 });
 const sortByTitle = (a: TrackFile, b: TrackFile) => a.title.localeCompare(b.title);
+const sortByArtist = (a: TrackFile, b: TrackFile) => a.artist.localeCompare(b.artist);
+const sortByAdded = (a: TrackFile, b: TrackFile) => `${a.added}`.localeCompare(`${b.added}`);
 
 const playerStateSelector = (state: AppState) => state.audioPlayer;
 const tracksStateSelector = (state: AppState) => playerStateSelector(state).tracks;

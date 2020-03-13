@@ -7,6 +7,7 @@ import { makeDownloadSelector } from '@selectors/downloadsSelector';
 import { downloadFile, getFileAndExtension, getArtistAndTitle, deleteFile } from '@helpers';
 import { addTrack, deleteTrack } from '@actions/audioPlayerActions';
 import { makeTrackSelector } from '@selectors/audioPlayerSelectors';
+import { addToast } from '@actions/toastsActions';
 
 const { fs } = RNFetchBlob;
 const songsDir = RNFetchBlob.fs.dirs.DocumentDir + '/songs';
@@ -66,10 +67,14 @@ export const startMP3Download = (url: string, tries = 0) => (dispatch, getState)
   }
   const created = (download && download.created) || now;
   const name = (download && download.name) || getFileAndExtension(url).file || url;
-  dispatch(downloadStart({ url, name, created }));
+  batch(() => {
+    dispatch(downloadStart({ url, name, created }));
+    !download && dispatch(addToast({ message: 'Download added...' }));
+  });
 
   const started = path => {
     dispatch(downloadStarted({ url, path }));
+    tries = 0;
   };
 
   const progress = (received, total) => {
@@ -92,11 +97,11 @@ export const startMP3Download = (url: string, tries = 0) => (dispatch, getState)
         const saveMeta = meta => {
           const { thumb, artist, title, ...restMeta } = meta;
           console.log('Meta save here...', meta);
-          const file = { added: lastModified, size, url: encodeURI(f + path), id: url };
+          const file = { added: lastModified, size, url: encodeURI(f + path), id: url }; // need to encode url because of iOS
           const metadata = {
             ...restMeta,
             ...file,
-            artwork: thumb ? encodeURI(f + artwork) : '',
+            artwork: thumb ? encodeURI(f + artwork) : '', // need to encode url because of iOS's track-player requires encoded path
             artist: artist ? artist.trim() : '',
             title: title ? title.trim() : '',
           };
@@ -134,6 +139,7 @@ export const startMP3Download = (url: string, tries = 0) => (dispatch, getState)
       batch(() => {
         dispatch(downloadCompleted(url));
         dispatch(addTrack(meta));
+        dispatch(addToast({ message: 'Download completed', subtitle: meta.title }));
       });
       delete downloadCancellers[url];
     })

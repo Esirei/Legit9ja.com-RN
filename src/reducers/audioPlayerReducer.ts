@@ -14,17 +14,24 @@ export interface TrackFile extends Track {
 }
 
 type TracksState = Record<string, TrackFile>;
+export type TracksSort = 'title' | 'artist' | 'added';
 
 interface PlayerState {
   tracks: TracksState;
   currentTrackId: string;
   playbackState: State;
+  repeat: boolean;
+  shuffle: boolean;
+  sort: TracksSort;
 }
 
 const initialState: PlayerState = {
   tracks: {},
   currentTrackId: '',
   playbackState: State.None,
+  repeat: false,
+  shuffle: false,
+  sort: 'title',
 };
 
 const tracksReducer = (state = {}, action): TracksState => {

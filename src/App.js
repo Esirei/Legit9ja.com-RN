@@ -12,6 +12,7 @@ import { NavigationService } from '@navigation';
 import useAuthNavigation from '@hooks/useAuthNavigation';
 import ApiInterceptors from '@components/ApiInterceptors';
 import NotificationService from '@components/NotificationService';
+import Toast from '@components/Toast';
 import TrackPlayerInitializer from '@components/TrackPlayerInitializer';
 
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
         <PersistGate loading={<View />} persistor={persistor}>
           <TrackPlayerInitializer />
           <Navigation ref={setNavigator} />
+          <Toast />
           {/*We don't want this to initialise b4 react-navigation, therefore it's placed here*/}
           <NotificationService />
         </PersistGate>
