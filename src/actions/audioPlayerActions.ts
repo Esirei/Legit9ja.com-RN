@@ -84,8 +84,15 @@ export const fixSongsParentDir = () => async (dispatch, getState) => {
 
   if (dir !== documentDir) {
     console.log('fixSongsParentDir started', dir, documentDir);
-    const replacer = dir ? dir : /(?<=file:\/\/).*(?=\/songs\/.*)/g;
-    const replace = (file: string) => file.replace(replacer, documentDir);
+    // apparently react-native does not support positive look behind.
+    // const replacer = dir ? dir : /(?<=file:\/\/).*(?=\/songs\/.*)/g;
+    // const replace = (file: string) => file.replace(replacer, documentDir);
+    const replace = (file: string): string => {
+      if (dir) {
+        return file.replace(dir, documentDir);
+      }
+      return file.replace(/(file:\/\/).*(\/songs\/.*)/g, `$1${documentDir}$2`);
+    };
     const tracks = tracksSelector(getState());
     const updatedTracks = {};
     for (const track of tracks) {
