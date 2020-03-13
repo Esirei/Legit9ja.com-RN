@@ -52,3 +52,5 @@ export const isPlayingSelector = createSelector(
   playbackStateSelector,
   isPlaying,
 );
+
+export const parentDir = state => playerStateSelector(state).parentDir;

@@ -4,7 +4,7 @@ import { currentTrackSelector, tracksSelector } from '@selectors/audioPlayerSele
 import images from '@assets/images';
 import { isPlaying } from '@helpers';
 import { store } from '../../store';
-import { fixTrackFiles } from '@actions/audioPlayerActions';
+import { fixTrackFiles, fixSongsParentDir } from '@actions/audioPlayerActions';
 
 const TrackPlayerInitializer = () => {
   const setup = async () => {
@@ -56,6 +56,7 @@ const TrackPlayerInitializer = () => {
         console.log('AudioPlayer - setting up');
         setup().then(async () => {
           // return;
+          await store.dispatch(fixSongsParentDir());
           await store.dispatch(fixTrackFiles());
           const tracks = tracksSelector(store.getState());
           console.log('AudioPlayer - adding tracks', tracks);

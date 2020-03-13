@@ -23,6 +23,7 @@ interface PlayerState {
   repeat: boolean;
   shuffle: boolean;
   sort: TracksSort;
+  parentDir: string;
 }
 
 const initialState: PlayerState = {
@@ -32,6 +33,7 @@ const initialState: PlayerState = {
   repeat: false,
   shuffle: false,
   sort: 'title',
+  parentDir: '',
 };
 
 const tracksReducer = (state = {}, action): TracksState => {
@@ -42,6 +44,8 @@ const tracksReducer = (state = {}, action): TracksState => {
     case types.AUDIO_PLAYER_REMOVE_TRACK:
       delete state[action.payload];
       return { ...state };
+    case types.AUDIO_PLAYER_UPDATE_TRACKS:
+      return { ...state, ...action.payload };
     default:
       return state;
   }
@@ -51,11 +55,14 @@ export default (state = initialState, action): PlayerState => {
   switch (action.type) {
     case types.AUDIO_PLAYER_ADD_TRACK:
     case types.AUDIO_PLAYER_REMOVE_TRACK:
+    case types.AUDIO_PLAYER_UPDATE_TRACKS:
       return { ...state, tracks: tracksReducer(state.tracks, action) };
     case types.AUDIO_PLAYER_CURRENT_TRACK_ID:
       return { ...state, currentTrackId: action.payload };
     case types.AUDIO_PLAYER_PLAYBACK_STATE:
       return { ...state, playbackState: action.payload };
+    case types.AUDIO_PLAYER_UPDATE_PARENT_DIR:
+      return { ...state, parentDir: action.payload };
     default:
       return state;
   }

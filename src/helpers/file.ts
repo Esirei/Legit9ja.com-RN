@@ -46,6 +46,8 @@ export const moveFile = async (oldPath, newPath) => {
   await fs.mv(oldPath, newPath);
 };
 
+export const documentDir = fs.dirs.DocumentDir;
+
 const f = 'file://';
 export const addFilePrefix = pathToFile => `${f}${pathToFile}`;
 export const removeFilePrefix = (file: string) => file.replace(f, '');
