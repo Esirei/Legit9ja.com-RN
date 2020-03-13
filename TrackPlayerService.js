@@ -25,6 +25,10 @@ export default async function() {
     RNTrackPlayer.skipToPrevious();
   });
 
+  RNTrackPlayer.addEventListener(Event.RemoteSeek, ({ position }) => {
+    RNTrackPlayer.seekTo(position);
+  });
+
   RNTrackPlayer.addEventListener(Event.RemoteJumpForward, async ({ interval }) => {
     const duration = await RNTrackPlayer.getDuration();
     const position = await RNTrackPlayer.getPosition();

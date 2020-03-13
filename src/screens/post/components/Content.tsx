@@ -43,7 +43,7 @@ const Content = ({ post }) => {
         containerStyle={styles.webviewContainer}
         onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
         scalesPageToFit={false}
-        zoomable={false}
+        viewportContent={'width=device-width, user-scalable=no'}
         bounces={false}
         scrollEnabled={false}
       />
