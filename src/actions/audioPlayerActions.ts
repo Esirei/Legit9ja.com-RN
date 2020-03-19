@@ -2,7 +2,11 @@ import { batch } from 'react-redux';
 import RNTrackPlayer from 'react-native-track-player';
 import { TrackFile } from '@reducers/audioPlayerReducer';
 import { deleteFile, moveFile, removeFilePrefix, documentDir } from '@helpers';
-import { currentTrackIdSelector, tracksSelector, parentDir } from '@selectors/audioPlayerSelectors';
+import {
+  currentTrackIdSelector,
+  tracksSelector,
+  parentDirSelector,
+} from '@selectors/audioPlayerSelectors';
 
 export const types = {
   AUDIO_PLAYER_ADD_TRACK: 'AUDIO_PLAYER_ADD_TRACK',
@@ -80,7 +84,7 @@ export const fixTrackFiles = () => async (dispatch, getState) => {
 };
 
 export const fixSongsParentDir = () => async (dispatch, getState) => {
-  const dir = parentDir(getState());
+  const dir = parentDirSelector(getState());
 
   if (dir !== documentDir) {
     console.log('fixSongsParentDir started', dir, documentDir);

@@ -53,4 +53,7 @@ export const isPlayingSelector = createSelector(
   isPlaying,
 );
 
-export const parentDir = state => playerStateSelector(state).parentDir;
+export const parentDirSelector = state => playerStateSelector(state).parentDir;
+export const repeatSelector = state => playerStateSelector(state).repeat;
+export const sortSelector = state => playerStateSelector(state).sort;
+export const shuffleSelector = state => playerStateSelector(state).shuffle;

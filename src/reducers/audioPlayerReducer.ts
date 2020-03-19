@@ -13,16 +13,27 @@ export interface TrackFile extends Track {
   size: number;
 }
 
+export enum Repeat {
+  OFF = 'off',
+  CURRENT = 'current',
+  ALL = 'all',
+}
+
+export enum Sort {
+  TITLE = 'title',
+  ARTIST = 'artist',
+  ADDED = 'added',
+}
+
 type TracksState = Record<string, TrackFile>;
-export type TracksSort = 'title' | 'artist' | 'added';
 
 interface PlayerState {
   tracks: TracksState;
   currentTrackId: string;
   playbackState: State;
-  repeat: boolean;
+  repeat: Repeat;
   shuffle: boolean;
-  sort: TracksSort;
+  sort: Sort;
   parentDir: string;
 }
 
@@ -30,9 +41,9 @@ const initialState: PlayerState = {
   tracks: {},
   currentTrackId: '',
   playbackState: State.None,
-  repeat: false,
+  repeat: Repeat.OFF,
+  sort: Sort.TITLE,
   shuffle: false,
-  sort: 'title',
   parentDir: '',
 };
 

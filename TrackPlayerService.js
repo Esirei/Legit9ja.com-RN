@@ -1,7 +1,13 @@
-import RNTrackPlayer, { State, Event } from 'react-native-track-player';
+import RNTrackPlayer, { Event, State } from 'react-native-track-player';
 import { Platform } from 'react-native';
 import { store } from './src/store';
 import { currentTrackID, playbackState } from '@actions/audioPlayerActions';
+import {
+  currentTrackIdSelector,
+  makeTrackSelector,
+  repeatSelector,
+} from '@selectors/audioPlayerSelectors';
+import { Repeat } from '@reducers/audioPlayerReducer';
 import { stateName } from '@helpers/player';
 
 export default async function() {
@@ -52,13 +58,37 @@ export default async function() {
   });
 
   RNTrackPlayer.addEventListener(Event.PlaybackTrackChanged, async event => {
-    const { nextTrack } = event;
     console.log('playback-track-changed', event);
+    const { nextTrack, track, position } = event;
+    const repeat = repeatSelector(store.getState());
+    // if (!repeat) {
+    if (repeat === Repeat.CURRENT) {
+      const currentTrack = makeTrackSelector(track)(store.getState());
+      const duration = Number(currentTrack.duration / 1000);
+      const shouldRepeat = position >= duration;
+      const e = { position, duration, shouldRepeat };
+      console.log('playback-track-changed - repeatCheck', e, currentTrack);
+      if (shouldRepeat) {
+        const currentTrackId = currentTrackIdSelector(store.getState());
+        console.log('playback-track-changed - repeatCurrent', currentTrackId);
+        await RNTrackPlayer.skip(currentTrackId);
+        return;
+      }
+    }
     !!nextTrack && store.dispatch(currentTrackID(nextTrack));
   });
 
   RNTrackPlayer.addEventListener(Event.PlaybackQueueEnded, async event => {
     console.log('playback-queue-ended', event);
+    const repeat = repeatSelector(store.getState());
+    if (repeat === Repeat.ALL) {
+      console.log('playback-queue-ended - repeatAll');
+      const queue = await RNTrackPlayer.getQueue();
+      if (queue.length > 0) {
+        const currentTrack = queue[0];
+        await RNTrackPlayer.skip(currentTrack.id);
+      }
+    }
   });
 
   if (Platform.OS === 'android') {
