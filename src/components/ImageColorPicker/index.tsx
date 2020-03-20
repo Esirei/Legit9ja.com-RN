@@ -1,6 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, memo } from 'react';
 import RNFetchBlob from 'rn-fetch-blob';
 import WebView from 'react-native-webview';
+import { StyleSheet } from 'react-native';
 
 const opts = {
   imageType: 'jpeg',
@@ -10,15 +11,15 @@ const opts = {
   colorType: 'rgba',
 };
 
-const ImageColorPicker = ({ artwork, callback, reverse }) => {
-  const [image, setImage] = useState('');
+const ImageColorPicker = ({ imagePath, callback, reverse }) => {
+  const [imageBlob, setImageBlob] = useState('');
   useEffect(() => {
-    if (artwork) {
-      let path = artwork.replace(/file:\/\//g, '');
+    if (imagePath) {
+      let path = imagePath.replace(/file:\/\//g, '');
       path = decodeURI(path);
-      RNFetchBlob.fs.readFile(path, 'base64').then(setImage);
+      RNFetchBlob.fs.readFile(path, 'base64').then(setImageBlob);
     }
-  }, [artwork]);
+  }, [imagePath]);
 
   const onMessage = useCallback(
     event => {
@@ -53,15 +54,19 @@ const ImageColorPicker = ({ artwork, callback, reverse }) => {
 
   return (
     <WebView
-      containerStyle={{ width: 0, height: 0, position: 'absolute' }}
+      containerStyle={styles.container}
       originWhitelist={['*']}
-      source={{ html: canvasHtml(image, opts) }}
+      source={{ html: canvasHtml(imageBlob, opts) }}
       onMessage={onMessage}
     />
   );
 };
 
-export default ImageColorPicker;
+export default memo(ImageColorPicker);
+
+const styles = StyleSheet.create({
+  container: { width: 0, height: 0, position: 'absolute' },
+});
 
 const canvasHtml = (imageBlob, options) => {
   const optionsString = JSON.stringify(options);

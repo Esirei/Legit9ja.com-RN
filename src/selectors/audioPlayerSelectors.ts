@@ -7,7 +7,7 @@ import { AppState } from '@types';
 const { fs } = RNFetchBlob;
 const f = 'file://';
 
-const getTrack = (id, tracks): TrackFile | null => tracks[id];
+const getTrack = (id, tracks): TrackFile | undefined => tracks[id];
 const mapTrack = (track: TrackFile): TrackFile => ({
   ...track,
   artwork: `${f}${fs.dirs.DocumentDir}${track.artwork}`,

@@ -1,11 +1,11 @@
 import { batch } from 'react-redux';
 import RNTrackPlayer from 'react-native-track-player';
-import { TrackFile } from '@reducers/audioPlayerReducer';
-import { deleteFile, moveFile, removeFilePrefix, documentDir } from '@helpers';
+import { Repeat, TrackFile, Sort } from '@reducers/audioPlayerReducer';
+import { deleteFile, documentDir, moveFile, removeFilePrefix } from '@helpers';
 import {
   currentTrackIdSelector,
-  tracksSelector,
   parentDirSelector,
+  tracksSelector,
 } from '@selectors/audioPlayerSelectors';
 
 export const types = {
@@ -13,6 +13,9 @@ export const types = {
   AUDIO_PLAYER_REMOVE_TRACK: 'AUDIO_PLAYER_REMOVE_TRACK',
   AUDIO_PLAYER_CURRENT_TRACK_ID: 'AUDIO_PLAYER_CURRENT_TRACK_ID',
   AUDIO_PLAYER_PLAYBACK_STATE: 'AUDIO_PLAYER_PLAYBACK_STATE',
+  AUDIO_PLAYER_REPEAT: 'AUDIO_PLAYER_REPEAT',
+  AUDIO_PLAYER_SORT: 'AUDIO_PLAYER_SORT',
+  AUDIO_PLAYER_SHUFFLE: 'AUDIO_PLAYER_SHUFFLE',
   AUDIO_PLAYER_UPDATE_PARENT_DIR: 'AUDIO_PLAYER_UPDATE_PARENT_DIR',
   AUDIO_PLAYER_UPDATE_TRACKS: 'AUDIO_PLAYER_UPDATE_TRACKS',
 };
@@ -35,6 +38,21 @@ export const currentTrackID = trackId => ({
 export const playbackState = state => ({
   type: types.AUDIO_PLAYER_PLAYBACK_STATE,
   payload: state,
+});
+
+export const repeat = (payload: Repeat) => ({
+  type: types.AUDIO_PLAYER_REPEAT,
+  payload,
+});
+
+export const sort = (payload: Sort) => ({
+  type: types.AUDIO_PLAYER_SORT,
+  payload,
+});
+
+export const shuffle = (payload: boolean) => ({
+  type: types.AUDIO_PLAYER_SHUFFLE,
+  payload,
 });
 
 const updateParentDir = () => ({

@@ -72,6 +72,12 @@ export default (state = initialState, action): PlayerState => {
       return { ...state, currentTrackId: action.payload };
     case types.AUDIO_PLAYER_PLAYBACK_STATE:
       return { ...state, playbackState: action.payload };
+    case types.AUDIO_PLAYER_REPEAT:
+      return { ...state, repeat: action.payload };
+    case types.AUDIO_PLAYER_SORT:
+      return { ...state, sort: action.payload };
+    case types.AUDIO_PLAYER_SHUFFLE:
+      return { ...state, shuffle: action.payload };
     case types.AUDIO_PLAYER_UPDATE_PARENT_DIR:
       return { ...state, parentDir: action.payload };
     default:
