@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { ImageStyle, ViewStyle } from 'react-native';
 import HeaderIconButton from './HeaderIconButton';
 import { NavigationService, RouteNames } from '@navigation';
@@ -10,10 +10,15 @@ interface Props {
   tintColor?: string;
   style?: ViewStyle;
   imageStyle?: ImageStyle;
+  onPress?: () => void;
 }
 
-const HeaderSearchButton = (props: Props) => (
-  <HeaderIconButton source={images.ic_search} onPress={onPress} {...props} />
+const HeaderSearchButton: FC<Props> = props => (
+  <HeaderIconButton source={images.ic_search} onPress={props.onPress} {...props} />
 );
+
+HeaderSearchButton.defaultProps = {
+  onPress,
+};
 
 export default HeaderSearchButton;

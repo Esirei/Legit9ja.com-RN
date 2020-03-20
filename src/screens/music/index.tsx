@@ -3,8 +3,10 @@ import { FlatList, Image, ImageBackground, StatusBar, StyleSheet } from 'react-n
 import RNTrackPlayer from 'react-native-track-player';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSafeArea } from 'react-native-safe-area-context';
+import { NavigationStackScreenComponent } from 'react-navigation-stack';
 import NotifyCard from '@components/NotifyCard';
 import ImageColorPicker from '@components/ImageColorPicker';
+import { HeaderSearchButton } from '@components/HeaderIconButton';
 import { currentTrackSelector, tracksSelector } from '@selectors/audioPlayerSelectors';
 import { deleteTrack } from '@actions/audioPlayerActions';
 import { TrackFile } from '@reducers/audioPlayerReducer';
@@ -14,7 +16,9 @@ import TrackItem from './components/TrackItem';
 import TrackMiniPlayer from './components/TrackMiniPlayer';
 import { NavigationService, RouteNames } from '@navigation';
 
-const Music = () => {
+type NavigationParams = { search: boolean };
+
+const Music: NavigationStackScreenComponent<NavigationParams> = ({ navigation }) => {
   const dispatch = useDispatch();
   const currentTrack = useSelector(currentTrackSelector);
   const tracks = useSelector(tracksSelector);
@@ -99,14 +103,18 @@ const Music = () => {
   );
 };
 
-Music.navigationOptions = {
-  headerStyle: {
-    elevation: 1,
-    backgroundColor: 'rgba(0,0,0,0.25)',
-  },
-  title: 'Music Library',
-  headerTransparent: true,
-  headerTintColor: '#FFF',
+Music.navigationOptions = ({ navigation }) => {
+  const onPress = () => navigation.setParams({ search: true });
+  return {
+    headerStyle: {
+      elevation: 1,
+      backgroundColor: 'rgba(0,0,0,0.25)',
+    },
+    title: 'Music Library',
+    headerTransparent: true,
+    headerTintColor: '#FFF',
+    headerRight: () => <HeaderSearchButton tintColor={'#FFF'} onPress={onPress} />,
+  };
 };
 
 export default Music;
