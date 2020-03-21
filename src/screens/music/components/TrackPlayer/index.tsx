@@ -82,7 +82,7 @@ const Test = ({ track, backgroundColor }: Props) => {
 
   const artworkTop = interpolate(valueRef.current, {
     inputRange: [0, 1],
-    outputRange: [5, MiniPlayerHeight + 48],
+    outputRange: [5, MiniPlayerHeight + 48 + safeArea.bottom], // we want top to be height of miniPlayer + height of close button
     extrapolate: Extrapolate.CLAMP,
   });
 
@@ -135,13 +135,12 @@ const Test = ({ track, backgroundColor }: Props) => {
         <AnimatedView
           style={{
             backgroundColor,
-            paddingBottom: safeArea.bottom,
             height: contentHeight,
             opacity: contentOpacity,
           }}>
           <ImageBackground
             source={{ uri: track.artwork }}
-            style={[styles.artworkBackground]}
+            style={[styles.artworkBackground, { paddingBottom: safeArea.bottom }]}
             blurRadius={Platform.OS === 'android' ? 5 : 25}>
             <View style={styles.artworkBackgroundOverlay} />
             <TouchableOpacity onPress={close} style={styles.closeButton}>
