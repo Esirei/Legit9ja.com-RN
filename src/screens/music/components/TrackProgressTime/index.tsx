@@ -16,5 +16,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: fonts.Roboto_Bold,
     color: '#FFF',
+    marginHorizontal: 4,
   },
 });

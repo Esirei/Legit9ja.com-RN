@@ -19,7 +19,9 @@ const TrackSeekSlider = () => {
   const onSlidingComplete = useCallback(async value => {
     setPosition(value);
     await RNTrackPlayer.seekTo(value);
-    isSliding.current = false;
+    setTimeout(() => {
+      isSliding.current = false;
+    }, 1000);
   }, []);
 
   return (
