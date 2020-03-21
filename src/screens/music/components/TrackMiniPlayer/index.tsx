@@ -70,7 +70,7 @@ export const MiniPlayerHeight = 56;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'rgba(0,0,0,0.25)',
-    maxHeight: MiniPlayerHeight,
+    minHeight: MiniPlayerHeight,
   },
   player: {
     height: 54,
