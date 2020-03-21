@@ -1,5 +1,6 @@
 import { Platform, StatusBar } from 'react-native';
 import { Header } from 'react-navigation-stack';
+import { useSafeArea } from 'react-native-safe-area-context';
 
 // ios doesn't automatically render a view for it's statusBar, so it's 0
 const PlatformStatusBarHeight = StatusBar.currentHeight || 0;
@@ -30,3 +31,8 @@ export const HeaderHeight = (hasStatusBar: boolean) => {
 export const HeaderWithNotchHeight = (safeArea: number, hasStatusBar: boolean) => {
   return safeArea ? RenderedHeaderHeight + safeArea : HeaderHeight(hasStatusBar);
 };
+
+// export const useSafeHeaderHeight = (considerStatusBar: boolean) => {
+//   const safeArea = useSafeArea();
+//   return HeaderWithNotchHeight(safeArea.top, considerStatusBar);
+// };

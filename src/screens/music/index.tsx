@@ -1,5 +1,5 @@
 import React, { Fragment, useCallback, useState } from 'react';
-import { FlatList, Image, ImageBackground, StatusBar, StyleSheet } from 'react-native';
+import { FlatList, Image, ImageBackground, Platform, StatusBar, StyleSheet } from 'react-native';
 import RNTrackPlayer from 'react-native-track-player';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSafeArea } from 'react-native-safe-area-context';
@@ -13,7 +13,9 @@ import { TrackFile } from '@reducers/audioPlayerReducer';
 import { HeaderWithNotchHeight } from '@helpers';
 import DeleteTrackModal from './components/DeleteTrackModal';
 import TrackItem from './components/TrackItem';
-import TrackMiniPlayer from './components/TrackMiniPlayer';
+import { MiniPlayerHeight } from './components/TrackMiniPlayer';
+import TrackSearch from './components/TrackSearch';
+import TrackPlayer from './components/TrackPlayer';
 import { NavigationService, RouteNames } from '@navigation';
 
 type NavigationParams = { search: boolean };
@@ -62,6 +64,7 @@ const Music: NavigationStackScreenComponent<NavigationParams> = ({ navigation })
       text={'No songs have been downloaded yet'}
       onPress={() => NavigationService.navigate(RouteNames.HOME)}
       type={'warning'}
+      color={'#FFF'}
     />
   );
 
@@ -70,16 +73,21 @@ const Music: NavigationStackScreenComponent<NavigationParams> = ({ navigation })
       return emptyList();
     }
     const marginTop = HeaderWithNotchHeight(safeArea.top, true);
+    const marginBottom = currentTrack ? MiniPlayerHeight + safeArea.bottom : undefined;
     return (
       <FlatList
         data={tracks}
-        style={{ marginTop }}
+        style={{ marginTop, marginBottom }}
         renderItem={renderTracks}
         ListEmptyComponent={emptyList}
         keyExtractor={item => item.id}
       />
     );
   };
+
+  const search = navigation.getParam('search', false);
+
+  const onCloseSearch = useCallback(() => navigation.setParams({ search: false }), [navigation]);
 
   return (
     <Fragment>
@@ -88,11 +96,18 @@ const Music: NavigationStackScreenComponent<NavigationParams> = ({ navigation })
         <Image
           source={{ uri }}
           style={[styles.imageBackground2, { backgroundColor: color }]}
-          blurRadius={5}
+          blurRadius={Platform.OS === 'android' ? 5 : 25}
         />
         <ImageColorPicker imagePath={uri} callback={setColor} reverse={false} />
         {renderList()}
-        <TrackMiniPlayer track={currentTrack} />
+        {currentTrack && <TrackPlayer track={currentTrack} backgroundColor={color} />}
+        <TrackSearch
+          onClose={onCloseSearch}
+          open={search}
+          onPressItem={onPress}
+          onItemOptions={options}
+          style={{ backgroundColor: color }}
+        />
         <DeleteTrackModal
           track={selectedTrack}
           onDeletePressed={deleteOnPress}
@@ -105,15 +120,17 @@ const Music: NavigationStackScreenComponent<NavigationParams> = ({ navigation })
 
 Music.navigationOptions = ({ navigation }) => {
   const onPress = () => navigation.setParams({ search: true });
+  const search = navigation.getParam('search', false);
   return {
     headerStyle: {
-      elevation: 1,
-      backgroundColor: 'rgba(0,0,0,0.25)',
+      backgroundColor: 'rgba(0,0,0,0.5)',
     },
     title: 'Music Library',
     headerTransparent: true,
     headerTintColor: '#FFF',
-    headerRight: () => <HeaderSearchButton tintColor={'#FFF'} onPress={onPress} />,
+    headerRight: search
+      ? undefined
+      : () => <HeaderSearchButton tintColor={'#FFF'} onPress={onPress} />,
   };
 };
 
