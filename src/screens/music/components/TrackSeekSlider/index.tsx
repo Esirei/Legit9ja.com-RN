@@ -26,6 +26,7 @@ const TrackSeekSlider = () => {
     <Slider
       thumbTintColor={'#FFF'}
       minimumTrackTintColor={'#FFF'}
+      maximumTrackTintColor={'rgba(255,255,255,0.75)'}
       maximumValue={duration}
       minimumValue={0}
       value={currentPosition}

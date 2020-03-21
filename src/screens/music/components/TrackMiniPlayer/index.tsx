@@ -65,11 +65,12 @@ const TrackMiniPlayer = ({ track }: Props) => {
 };
 
 export default memo(TrackMiniPlayer);
+export const MiniPlayerHeight = 56;
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'rgba(0,0,0,0.25)',
-    maxHeight: 56,
+    maxHeight: MiniPlayerHeight,
   },
   player: {
     height: 54,
