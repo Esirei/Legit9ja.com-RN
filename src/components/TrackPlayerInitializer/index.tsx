@@ -1,8 +1,12 @@
 import { useEffect } from 'react';
 import RNTrackPlayer, { Capability } from 'react-native-track-player';
-import { currentTrackSelector, tracksSelector } from '@selectors/audioPlayerSelectors';
+import {
+  currentTrackSelector,
+  shuffleSelector,
+  tracksSelector,
+} from '@selectors/audioPlayerSelectors';
 import images from '@assets/images';
-import { isPlaying } from '@helpers';
+import { isPlaying, shuffleArray } from '@helpers';
 import { store } from '../../store';
 import { fixTrackFiles, fixSongsParentDir } from '@actions/audioPlayerActions';
 
@@ -59,6 +63,10 @@ const TrackPlayerInitializer = () => {
           await store.dispatch(fixSongsParentDir());
           await store.dispatch(fixTrackFiles());
           const tracks = tracksSelector(store.getState());
+          const shuffled = shuffleSelector(state);
+          if (shuffled) {
+            shuffleArray(tracks);
+          }
           console.log('AudioPlayer - adding tracks', tracks);
           tracks.forEach(track => {
             RNTrackPlayer.add(track).then(() => {

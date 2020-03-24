@@ -1,5 +1,4 @@
 import RNFetchBlob from 'rn-fetch-blob';
-import MediaMeta from 'rn-media-meta';
 import { fileSize } from '@helpers/file';
 
 const { fs } = RNFetchBlob;

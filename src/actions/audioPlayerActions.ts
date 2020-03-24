@@ -1,10 +1,18 @@
 import { batch } from 'react-redux';
 import RNTrackPlayer from 'react-native-track-player';
 import { Repeat, TrackFile, Sort } from '@reducers/audioPlayerReducer';
-import { deleteFile, documentDir, moveFile, removeFilePrefix } from '@helpers';
+import {
+  deleteFile,
+  documentDir,
+  isPlaying,
+  moveFile,
+  removeFilePrefix,
+  shuffleArray,
+} from '@helpers';
 import {
   currentTrackIdSelector,
   parentDirSelector,
+  shuffleSelector,
   tracksSelector,
 } from '@selectors/audioPlayerSelectors';
 
@@ -78,6 +86,7 @@ export const deleteTrack = (track: TrackFile) => async (dispatch, getState) => {
   }
 };
 
+// TODO Remove action.
 const badTrackRegex = /%E2%80%93/g;
 export const fixTrackFiles = () => async (dispatch, getState) => {
   const filePath = path => decodeURI(removeFilePrefix(path)); // need to decode the path because iOS's track-player required an encoded path, also the file:// prefix
@@ -129,4 +138,28 @@ export const fixSongsParentDir = () => async (dispatch, getState) => {
     });
   }
   console.log('fixSongsParentDir completed...');
+};
+
+const shuffleTracks = () => async (dispatch, getState) => {
+  const shuffled = shuffleSelector(getState());
+  const tracks = tracksSelector(getState());
+  const playerState = await RNTrackPlayer.getState();
+  const playing = isPlaying(playerState);
+  if (!shuffled) {
+    shuffleArray(tracks);
+  }
+  const currentTrackId = await RNTrackPlayer.getCurrentTrack();
+  const position = await RNTrackPlayer.getPosition();
+  await RNTrackPlayer.reset();
+  for (const track of tracks) {
+    await RNTrackPlayer.add(track);
+    if (track.id === currentTrackId) {
+      await RNTrackPlayer.skip(track.id);
+      await RNTrackPlayer.seekTo(position);
+      if (playing) {
+        await RNTrackPlayer.play();
+      }
+    }
+  }
+  dispatch(shuffle(!shuffled));
 };

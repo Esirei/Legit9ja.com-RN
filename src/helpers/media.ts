@@ -1,44 +1,8 @@
+// TODO DELETE FILE AS IT'S NOT IN USE
 import RNFS, { DownloadBeginCallbackResult, DownloadProgressCallbackResult } from 'react-native-fs';
 import RNFetchBlob from 'rn-fetch-blob';
-import AsyncStorage from '@react-native-community/async-storage';
 import { postImage } from './post';
 import { fileSize } from './file';
-
-const TRACKS_KEY = 'TRACKS';
-
-export interface File {
-  id: string;
-  url: string;
-  title: string;
-  artist: string;
-  artwork: string;
-  duration: number;
-  date?: string;
-  size: number;
-}
-
-export const getTracks = async (): Promise<any[]> => {
-  const string = (await AsyncStorage.getItem(TRACKS_KEY)) || '[]';
-  const array = JSON.parse(string);
-  console.log('getTracks', string, array);
-  return array;
-};
-
-const updateTracks = async (tracks: any[]) => {
-  await AsyncStorage.setItem(TRACKS_KEY, JSON.stringify(tracks));
-};
-
-export const addTrack = async track => {
-  const tracks = await getTracks();
-  tracks.push(track);
-  await updateTracks(tracks);
-};
-
-export const deleteTrack = async (id: number) => {
-  const tracks = await getTracks();
-  const updatedTracks = tracks.filter(track => track.id !== id);
-  await updateTracks(updatedTracks);
-};
 
 export const songsDir = RNFS.DocumentDirectoryPath + '/songs';
 export const videosDir = RNFS.DocumentDirectoryPath + '/videos';
