@@ -62,10 +62,10 @@ const TrackPlayerInitializer = () => {
           // return;
           await store.dispatch(fixSongsParentDir());
           await store.dispatch(fixTrackFiles());
-          const tracks = tracksSelector(store.getState());
+          let tracks = tracksSelector(store.getState());
           const shuffled = shuffleSelector(state);
           if (shuffled) {
-            shuffleArray(tracks);
+            tracks = shuffleArray(tracks);
           }
           console.log('AudioPlayer - adding tracks', tracks);
           tracks.forEach(track => {

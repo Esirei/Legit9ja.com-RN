@@ -22,8 +22,10 @@ export const stateName = state => {
 };
 
 export const shuffleArray = (array: any[]) => {
-  for (let i = array.length - 1; i > 0; i--) {
+  const updated = [...array];
+  for (let i = updated.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
+    [updated[i], updated[j]] = [updated[j], updated[i]];
   }
+  return updated;
 };

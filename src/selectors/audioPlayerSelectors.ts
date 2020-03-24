@@ -1,6 +1,6 @@
 import RNFetchBlob from 'rn-fetch-blob';
 import { createSelector } from 'reselect';
-import { TrackFile } from '@reducers/audioPlayerReducer';
+import { Repeat, Sort, TrackFile } from '@reducers/audioPlayerReducer';
 import { isPlaying } from '@helpers';
 import { AppState } from '@types';
 
@@ -54,6 +54,6 @@ export const isPlayingSelector = createSelector(
 );
 
 export const parentDirSelector = state => playerStateSelector(state).parentDir;
-export const repeatSelector = state => playerStateSelector(state).repeat;
-export const sortSelector = state => playerStateSelector(state).sort;
-export const shuffleSelector = state => playerStateSelector(state).shuffle;
+export const repeatSelector = state => playerStateSelector(state).repeat || Repeat.OFF;
+export const sortSelector = state => playerStateSelector(state).sort || Sort.TITLE;
+export const shuffleSelector = state => playerStateSelector(state).shuffle || false;

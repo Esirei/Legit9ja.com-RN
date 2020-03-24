@@ -48,17 +48,17 @@ export const playbackState = state => ({
   payload: state,
 });
 
-export const repeat = (payload: Repeat) => ({
+export const repeatTracks = (payload: Repeat) => ({
   type: types.AUDIO_PLAYER_REPEAT,
   payload,
 });
 
-export const sort = (payload: Sort) => ({
+export const sortTracks = (payload: Sort) => ({
   type: types.AUDIO_PLAYER_SORT,
   payload,
 });
 
-export const shuffle = (payload: boolean) => ({
+const shuffle = (payload: boolean) => ({
   type: types.AUDIO_PLAYER_SHUFFLE,
   payload,
 });
@@ -140,13 +140,13 @@ export const fixSongsParentDir = () => async (dispatch, getState) => {
   console.log('fixSongsParentDir completed...');
 };
 
-const shuffleTracks = () => async (dispatch, getState) => {
+export const shuffleTracks = () => async (dispatch, getState) => {
   const shuffled = shuffleSelector(getState());
-  const tracks = tracksSelector(getState());
+  let tracks = tracksSelector(getState());
   const playerState = await RNTrackPlayer.getState();
   const playing = isPlaying(playerState);
   if (!shuffled) {
-    shuffleArray(tracks);
+    tracks = shuffleArray(tracks);
   }
   const currentTrackId = await RNTrackPlayer.getCurrentTrack();
   const position = await RNTrackPlayer.getPosition();
