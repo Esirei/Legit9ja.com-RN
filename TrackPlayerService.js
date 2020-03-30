@@ -10,6 +10,8 @@ import {
 import { Repeat } from '@reducers/audioPlayerReducer';
 import { stateName } from '@helpers/player';
 
+const isAndroid = Platform.OS === 'android';
+
 export default async function() {
   RNTrackPlayer.addEventListener(Event.RemotePlay, () => {
     RNTrackPlayer.play();
@@ -64,7 +66,8 @@ export default async function() {
     // if (!repeat) {
     if (repeat === Repeat.CURRENT) {
       const currentTrack = makeTrackSelector(track)(store.getState());
-      const duration = Number(currentTrack.duration / 1000);
+      // Different libraries used to get meta. android's duration is in millis while iOS's is in secs
+      const duration = Number(currentTrack.duration / (isAndroid ? 1000 : 1));
       const shouldRepeat = position >= duration;
       const e = { position, duration, shouldRepeat };
       console.log('playback-track-changed - repeatCheck', e, currentTrack);
@@ -91,7 +94,7 @@ export default async function() {
     }
   });
 
-  if (Platform.OS === 'android') {
+  if (isAndroid) {
     RNTrackPlayer.addEventListener(Event.RemoteSkip, async ({ id }) => {
       await RNTrackPlayer.skip(id);
     });
