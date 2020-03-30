@@ -1,4 +1,4 @@
-import { State } from 'react-native-track-player';
+import RNTrackPlayer, { State } from 'react-native-track-player';
 
 export const isPlaying = state => state === State.Playing || state === State.Buffering;
 
@@ -28,4 +28,24 @@ export const shuffleArray = (array: any[]) => {
     [updated[i], updated[j]] = [updated[j], updated[i]];
   }
   return updated;
+};
+
+const skipToTrack = async (position: 'first' | 'last') => {
+  const queue = await RNTrackPlayer.getQueue();
+  if (queue.length > 0) {
+    const track = queue[position === 'first' ? 0 : queue.length - 1];
+    return RNTrackPlayer.skip(track.id);
+  }
+};
+
+export const prev = () => {
+  RNTrackPlayer.skipToPrevious().catch(async e => {
+    await skipToTrack('last');
+  });
+};
+
+export const next = () => {
+  RNTrackPlayer.skipToNext().catch(async e => {
+    await skipToTrack('first');
+  });
 };

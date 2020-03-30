@@ -8,14 +8,12 @@ import ControlButton from '../ControlButton';
 import images from '@assets/images';
 import { isPlayingSelector } from '@selectors/audioPlayerSelectors';
 import { TrackFile } from '@reducers/audioPlayerReducer';
+import { prev, next } from '@helpers';
 import fonts from '@assets/fonts';
 
 interface Props {
   track?: TrackFile;
 }
-
-const prev = () => RNTrackPlayer.skipToPrevious();
-const next = () => RNTrackPlayer.skipToNext();
 
 const TrackMiniPlayer = ({ track }: Props) => {
   const safeArea = useSafeArea();

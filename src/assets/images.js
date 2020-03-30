@@ -1,5 +1,6 @@
 const images = {
   'arrow-right': require('./images/arrow-right.png'),
+  'arrowhead-down': require('./images/arrowhead-down.png'),
   'bookmark-outline': require('./images/bookmark-outline.png'),
   'bookmark': require('./images/bookmark.png'),
   'cloud-download': require('./images/cloud-download.png'),
@@ -33,8 +34,10 @@ const images = {
   'music': require('./images/music.png'),
   'pause-circle': require('./images/pause-circle.png'),
   'play-circle': require('./images/play-circle.png'),
+  'repeat': require('./images/repeat.png'),
   'rewind-left': require('./images/rewind-left.png'),
   'rewind-right': require('./images/rewind-right.png'),
+  'shuffle': require('./images/shuffle.png'),
   'skip-back': require('./images/skip-back.png'),
   'skip-forward': require('./images/skip-forward.png'),
   'splash': require('./images/splash.png'),

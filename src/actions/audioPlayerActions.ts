@@ -151,14 +151,12 @@ export const shuffleTracks = () => async (dispatch, getState) => {
   const currentTrackId = await RNTrackPlayer.getCurrentTrack();
   const position = await RNTrackPlayer.getPosition();
   await RNTrackPlayer.reset();
-  for (const track of tracks) {
-    await RNTrackPlayer.add(track);
-    if (track.id === currentTrackId) {
-      await RNTrackPlayer.skip(track.id);
-      await RNTrackPlayer.seekTo(position);
-      if (playing) {
-        await RNTrackPlayer.play();
-      }
+  await RNTrackPlayer.add(tracks);
+  if (currentTrackId) {
+    await RNTrackPlayer.skip(currentTrackId);
+    await RNTrackPlayer.seekTo(position);
+    if (playing) {
+      await RNTrackPlayer.play();
     }
   }
   dispatch(shuffle(!shuffled));
