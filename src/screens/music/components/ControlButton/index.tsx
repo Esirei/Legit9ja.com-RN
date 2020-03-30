@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Text,
   ViewStyle,
+  View,
 } from 'react-native';
 import { NativeViewGestureHandler, TouchableOpacity } from 'react-native-gesture-handler';
 import fonts from '@assets/fonts';
@@ -29,9 +30,11 @@ const ControlButton: FC<Props> = ({ onPress, image, style, size, imageStyle, tex
         style={[styles.buttonImage, { width: size, height: size }, imageStyle]}
       />
       {text && (
-        <Text allowFontScaling={false} style={styles.text}>
-          {text}
-        </Text>
+        <View style={styles.textContainer}>
+          <Text allowFontScaling={false} style={styles.text}>
+            {text}
+          </Text>
+        </View>
       )}
     </TouchableOpacity>
   </NativeViewGestureHandler>
@@ -52,11 +55,12 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     tintColor: '#FFF',
   },
-  text: {
+  textContainer: {
     ...StyleSheet.absoluteFillObject,
-    top: '37%',
-    // textAlignVertical: 'center',
-    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
     fontSize: 10,
     color: '#FFF',
     fontWeight: 'bold',
