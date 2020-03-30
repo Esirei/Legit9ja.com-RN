@@ -8,7 +8,7 @@ import {
   StyleSheet,
   ViewStyle,
 } from 'react-native';
-import Touchable from '@components/Touchable';
+import { NativeViewGestureHandler, TouchableOpacity } from 'react-native-gesture-handler';
 
 interface Props {
   onPress: (event: GestureResponderEvent) => void;
@@ -18,9 +18,11 @@ interface Props {
 }
 
 const ControlButton = ({ onPress, image, style, imageStyle }: Props) => (
-  <Touchable style={[styles.button, style]} onPress={onPress} borderlessBackground>
-    <Image source={image} style={[styles.buttonImage, imageStyle]} />
-  </Touchable>
+  <NativeViewGestureHandler disallowInterruption>
+    <TouchableOpacity activeOpacity={0.75} style={[styles.button, style]} onPress={onPress}>
+      <Image source={image} style={[styles.buttonImage, imageStyle]} />
+    </TouchableOpacity>
+  </NativeViewGestureHandler>
 );
 
 export default memo(ControlButton);
