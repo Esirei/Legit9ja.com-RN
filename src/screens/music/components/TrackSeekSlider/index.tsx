@@ -10,23 +10,28 @@ import {
 const TrackSeekSlider = () => {
   const { position, duration } = useProgress(100);
   const [currentPosition, setPosition] = useState(0);
-  const isSliding = useRef(false);
+  const isSlidingRef = useRef(false);
+  const isSliding = isSlidingRef.current;
 
   useEffect(() => {
-    if (!isSliding.current) {
+    if (!isSliding) {
       setPosition(position);
     }
-  }, [position]);
+  }, [isSliding, position]);
 
-  const onTouchStart = useCallback(() => (isSliding.current = true), []);
-  const onValueChange = useCallback(value => console.log('onValueChange', value), []);
+  const onTouchStart = useCallback(() => (isSlidingRef.current = true), []);
+
+  const onValueChange = useCallback(value => {
+    console.log('onValueChange', value);
+    isSlidingRef.current = true;
+  }, []);
 
   const onSlidingComplete = useCallback(async value => {
     console.log('onSlidingComplete');
     setPosition(value);
     await RNTrackPlayer.seekTo(value);
     setTimeout(() => {
-      isSliding.current = false;
+      isSlidingRef.current = false;
     }, 1000);
   }, []);
 

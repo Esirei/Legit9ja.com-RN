@@ -194,15 +194,18 @@ const PlayerModal: FC<Props> = ({ contentHeight, callbackNode, artwork, miniPlay
   });
 
   return (
-    <PanGestureHandler onGestureEvent={onGestureEvent} onHandlerStateChange={onGestureEvent}>
+    <PanGestureHandler
+      onGestureEvent={onGestureEvent}
+      onHandlerStateChange={onGestureEvent}
+      waitFor={tapRefs}>
       <AnimatedView style={[styles.container, { transform: [{ translateY }] }]}>
-        <TapGestureHandler onHandlerStateChange={openHandler}>
+        <TapGestureHandler onHandlerStateChange={openHandler} ref={tapRefs[0]}>
           {/*<View style={{ height: 56, backgroundColor: 'red' }} />*/}
           <AnimatedView style={{ opacity: miniPlayerOpacity }}>{miniPlayer()}</AnimatedView>
         </TapGestureHandler>
         <AnimatedView style={{ height: contentHeight }}>
           {player(close)}
-          <TapGestureHandler onHandlerStateChange={closeHandler}>
+          <TapGestureHandler onHandlerStateChange={closeHandler} ref={tapRefs[1]}>
             <View style={styles.closeArea} />
           </TapGestureHandler>
         </AnimatedView>

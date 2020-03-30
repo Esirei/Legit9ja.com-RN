@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
   },
   text: {
     ...StyleSheet.absoluteFillObject,
-    textAlignVertical: 'center',
+    top: '37%',
+    // textAlignVertical: 'center',
     textAlign: 'center',
     fontSize: 10,
     color: '#FFF',
