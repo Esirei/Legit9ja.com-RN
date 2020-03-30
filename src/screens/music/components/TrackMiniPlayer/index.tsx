@@ -8,7 +8,6 @@ import ControlButton from '../ControlButton';
 import images from '@assets/images';
 import { isPlayingSelector } from '@selectors/audioPlayerSelectors';
 import { TrackFile } from '@reducers/audioPlayerReducer';
-import FastImage from 'react-native-fast-image';
 import fonts from '@assets/fonts';
 
 interface Props {
@@ -26,7 +25,7 @@ const TrackMiniPlayer = ({ track }: Props) => {
     if (track) {
       return (
         <View style={styles.track}>
-          <FastImage source={{ uri: track.artwork }} style={styles.trackArtwork} />
+          <View style={styles.trackArtwork} />
           <View style={styles.trackInfoContainer}>
             <Text numberOfLines={1} style={styles.trackTitle}>
               {track.title}
