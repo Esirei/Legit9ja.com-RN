@@ -68,7 +68,7 @@ export default async function() {
       const currentTrack = makeTrackSelector(track)(store.getState());
       // Different libraries used to get meta. android's duration is in millis while iOS's is in secs
       const duration = Number(currentTrack.duration / (isAndroid ? 1000 : 1));
-      const shouldRepeat = position >= duration;
+      const shouldRepeat = position >= duration - 2; // Just some buffer in case duration is higher than final position.
       const e = { position, duration, shouldRepeat };
       console.log('playback-track-changed - repeatCheck', e, currentTrack);
       if (shouldRepeat) {
