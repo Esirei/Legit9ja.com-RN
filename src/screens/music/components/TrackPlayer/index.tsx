@@ -108,7 +108,7 @@ const TrackPlayer = ({ track, backgroundColor }: Props) => {
       case Repeat.ALL:
         r = Repeat.CURRENT;
         if (Platform.OS === 'ios') {
-          // r = Repeat.OFF; // Currently iOS doesn't return the correct position which I'm using to calculate if track completed.
+          r = Repeat.OFF; // Currently iOS doesn't return the correct position which I'm using to calculate if track completed.
         }
         break;
       case Repeat.CURRENT:
