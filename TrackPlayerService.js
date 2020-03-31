@@ -98,6 +98,7 @@ export default async function() {
       if (queue.length > 0) {
         const currentTrack = queue[0];
         await RNTrackPlayer.skip(currentTrack.id);
+        await RNTrackPlayer.play();
       }
     }
   });
