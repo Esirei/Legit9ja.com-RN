@@ -49,7 +49,7 @@
     "react-native-snap-carousel": "^3.8.4",
     "react-native-splash-screen": "^3.2.0",
     "react-native-swift": "^1.2.2",
-    "react-native-track-player": "^2.0.0-rc13",
+    "react-native-track-player": "https://github.com/Esirei/react-native-track-player#v2",
     "react-native-webview": "^8.0.4",
     "react-native-youtube": "^2.0.0",
     "react-navigation": "4.0.10",

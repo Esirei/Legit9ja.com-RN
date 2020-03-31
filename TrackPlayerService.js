@@ -62,7 +62,7 @@ export default async function() {
   RNTrackPlayer.addEventListener(Event.PlaybackTrackChanged, async event => {
     console.log('playback-track-changed', event);
     let { nextTrack, position } = event;
-    nextTrack = await RNTrackPlayer.getCurrentTrack(); // iOS seems to have an issue returning correct nextTrack, track and position in event.
+    // nextTrack = await RNTrackPlayer.getCurrentTrack(); // iOS seems to have an issue returning correct nextTrack, track and position in event.
     const repeat = repeatSelector(store.getState());
     // if (!repeat) {
     if (repeat === Repeat.CURRENT) {
