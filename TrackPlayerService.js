@@ -84,10 +84,19 @@ export default async function() {
 
   RNTrackPlayer.addEventListener(Event.PlaybackQueueEnded, async event => {
     console.log('playback-queue-ended', event);
+
+    // Start of iOS hack. iOS has issue where playback-track-changed event is not called on last track start.
+    const nextTrack = await RNTrackPlayer.getCurrentTrack(); // iOS seems to have an issue returning correct nextTrack, track and position in event.
+    store.dispatch(currentTrackID(nextTrack));
+    const queue = await RNTrackPlayer.getQueue();
+    const lastTrack = queue.length > 0 ? queue[queue.length - 1] : undefined;
+    const shouldRepeat = lastTrack && lastTrack.id === nextTrack;
+    // End of iOS hack.
+
     const repeat = repeatSelector(store.getState());
-    if (repeat === Repeat.ALL) {
+    if (repeat === Repeat.ALL && shouldRepeat) {
       console.log('playback-queue-ended - repeatAll');
-      const queue = await RNTrackPlayer.getQueue();
+      // const queue = await RNTrackPlayer.getQueue();
       if (queue.length > 0) {
         const currentTrack = queue[0];
         await RNTrackPlayer.skip(currentTrack.id);
