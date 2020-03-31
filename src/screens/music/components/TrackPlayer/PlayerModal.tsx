@@ -56,7 +56,7 @@ const spring = (
 
 interface Props {
   miniPlayer: () => ReactNode;
-  player: (close: (e) => void) => ReactNode;
+  player: () => ReactNode;
   artwork: () => ReactNode;
   callbackNode: Animated.Value<number>;
   contentHeight: number;
@@ -149,15 +149,9 @@ const PlayerModal: FC<Props> = ({ contentHeight, callbackNode, artwork, miniPlay
     ],
   );
 
-  const callback = interpolate(translateY, {
+  const miniPlayerOpacity = interpolate(translateY, {
     inputRange: [0, contentHeight],
-    outputRange: [1, 0],
-    extrapolate: Extrapolate.CLAMP,
-  });
-
-  const miniPlayerOpacity = interpolate(callback, {
-    inputRange: [0, 1],
-    outputRange: [1, 0],
+    outputRange: [0, 1],
     extrapolate: Extrapolate.CLAMP,
   });
 
@@ -200,11 +194,10 @@ const PlayerModal: FC<Props> = ({ contentHeight, callbackNode, artwork, miniPlay
       waitFor={tapRefs}>
       <AnimatedView style={[styles.container, { transform: [{ translateY }] }]}>
         <TapGestureHandler onHandlerStateChange={openHandler} ref={tapRefs[0]}>
-          {/*<View style={{ height: 56, backgroundColor: 'red' }} />*/}
           <AnimatedView style={{ opacity: miniPlayerOpacity }}>{miniPlayer()}</AnimatedView>
         </TapGestureHandler>
         <AnimatedView style={{ height: contentHeight }}>
-          {player(close)}
+          {player()}
           <TapGestureHandler onHandlerStateChange={closeHandler} ref={tapRefs[1]}>
             <View style={styles.closeArea} />
           </TapGestureHandler>

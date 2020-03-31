@@ -6,28 +6,27 @@ import {
   Platform,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
   ViewStyle,
 } from 'react-native';
-import Animated, { Easing } from 'react-native-reanimated';
-import TrackMiniPlayer, { MiniPlayerHeight } from '../TrackMiniPlayer';
-import { Repeat, TrackFile } from '@reducers/audioPlayerReducer';
-import { HeaderWithNotchHeight, prev, next } from '@helpers';
-import { useSafeArea } from 'react-native-safe-area-context';
-import TrackSeekSlider from '@screens/music/components/TrackSeekSlider';
-import TrackProgressDuration from '@screens/music/components/TrackProgressDuration';
-import images from '@assets/images';
-import ControlButton from '@screens/music/components/ControlButton';
+import Animated from 'react-native-reanimated';
 import RNTrackPlayer from 'react-native-track-player';
 import { useDispatch, useSelector } from 'react-redux';
+import { useSafeArea } from 'react-native-safe-area-context';
+import { HeaderWithNotchHeight, next, prev } from '@helpers';
+import images from '@assets/images';
+import fonts from '@assets/fonts';
+import { Repeat, TrackFile } from '@reducers/audioPlayerReducer';
+import { repeatTracks, shuffleTracks } from '@actions/audioPlayerActions';
 import {
   isPlayingSelector,
   repeatSelector,
   shuffleSelector,
 } from '@selectors/audioPlayerSelectors';
-import fonts from '@assets/fonts';
-import { repeatTracks, shuffleTracks } from '@actions/audioPlayerActions';
+import TrackMiniPlayer, { MiniPlayerHeight } from '../TrackMiniPlayer';
+import TrackSeekSlider from '../TrackSeekSlider';
+import TrackProgressDuration from '../TrackProgressDuration';
+import ControlButton from '../ControlButton';
 import PlayerModal from './PlayerModal';
 
 const AnimatedView = Animated.View;
@@ -35,7 +34,7 @@ const AnimatedImage = Animated.createAnimatedComponent(Image);
 
 const { height, width } = Dimensions.get('window');
 
-const { interpolate, Extrapolate, timing, add } = Animated;
+const { interpolate, Extrapolate, concat, add } = Animated;
 
 interface Props {
   track: TrackFile;
@@ -51,24 +50,6 @@ const TrackPlayer = ({ track, backgroundColor }: Props) => {
 
   // we want the content to be directly below the header
   const contentHeight = height - HeaderWithNotchHeight(safeArea.top, false);
-
-  const miniPlayerOpacity = interpolate(valueRef.current, {
-    inputRange: [0, 1],
-    outputRange: [1, 0],
-    extrapolate: Extrapolate.CLAMP,
-  });
-
-  const contentOpacity = interpolate(valueRef.current, {
-    inputRange: [0, 1],
-    outputRange: [0, 1],
-    extrapolate: Extrapolate.CLAMP,
-  });
-
-  const translateY = interpolate(valueRef.current, {
-    inputRange: [0, 1],
-    outputRange: [contentHeight, 0],
-    extrapolate: Extrapolate.CLAMP,
-  });
 
   const artworkSize = interpolate(valueRef.current, {
     inputRange: [0, 1],
@@ -101,24 +82,6 @@ const TrackPlayer = ({ track, backgroundColor }: Props) => {
   });
 
   const marginTop = add(artworkSize, 16);
-
-  const open = useCallback(() => {
-    console.log('onPress open 😎');
-    timing(valueRef.current, {
-      duration: 250,
-      toValue: 1,
-      easing: Easing.inOut(Easing.ease),
-    }).start();
-  }, []);
-
-  const close = useCallback(() => {
-    console.log('onPress close 😎');
-    timing(valueRef.current, {
-      duration: 250,
-      toValue: 0,
-      easing: Easing.out(Easing.ease),
-    }).start();
-  }, []);
 
   const isPlaying = useSelector(isPlayingSelector);
 
@@ -162,21 +125,18 @@ const TrackPlayer = ({ track, backgroundColor }: Props) => {
 
   const renderMiniPlayer = () => <TrackMiniPlayer track={track} />;
 
-  const renderPlayer = (closeModal: (e) => void) => (
+  const renderPlayer = () => (
     <ImageBackground
       source={{ uri: track.artwork }}
-      style={[styles.artworkBackground, { paddingBottom: safeArea.bottom }]}
+      style={[styles.artworkBackground, { paddingBottom: safeArea.bottom, backgroundColor }]}
       blurRadius={Platform.OS === 'android' ? 5 : 25}>
       <View style={styles.artworkBackgroundOverlay} />
-      <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
+      <View style={styles.closeButton}>
         <AnimatedImage
           source={images['arrowhead-down']}
-          style={[
-            styles.closeImage,
-            { transform: [{ rotateX: Animated.concat(closeRotate, 'deg') }] },
-          ]}
+          style={[styles.closeImage, { transform: [{ rotateX: concat(closeRotate, 'deg') }] }]}
         />
-      </TouchableOpacity>
+      </View>
       <AnimatedView style={[styles.info, { marginTop }]}>
         <Text numberOfLines={1} style={styles.trackTitle}>
           {track.title}
@@ -226,7 +186,7 @@ const TrackPlayer = ({ track, backgroundColor }: Props) => {
     </AnimatedView>
   );
 
-  const renderPlayerModal = () => (
+  return (
     <PlayerModal
       miniPlayer={renderMiniPlayer}
       player={renderPlayer}
@@ -234,26 +194,6 @@ const TrackPlayer = ({ track, backgroundColor }: Props) => {
       callbackNode={valueRef.current}
       contentHeight={contentHeight}
     />
-  );
-
-  return renderPlayerModal();
-  return (
-    <AnimatedView style={[styles.container, { transform: [{ translateY }] }]}>
-      <AnimatedView style={{ opacity: miniPlayerOpacity }}>
-        <TouchableOpacity onPress={open} activeOpacity={0.9}>
-          {renderMiniPlayer()}
-        </TouchableOpacity>
-      </AnimatedView>
-      <AnimatedView
-        style={{
-          backgroundColor,
-          height: contentHeight,
-          opacity: contentOpacity,
-        }}>
-        {renderPlayer(close)}
-      </AnimatedView>
-      {renderTrackImage()}
-    </AnimatedView>
   );
 };
 
