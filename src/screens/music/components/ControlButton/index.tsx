@@ -63,7 +63,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 10,
     color: '#FFF',
-    fontWeight: 'bold',
     fontFamily: fonts.Roboto_Bold,
   },
 });

@@ -31,6 +31,7 @@ const images = {
   'ic_user_128': require('./images/ic_user_128.png'),
   'logo': require('./images/logo.png'),
   'logo_androidv26': require('./images/logo_androidv26.png'),
+  'music-white': require('./images/music-white.png'),
   'music': require('./images/music.png'),
   'pause-circle': require('./images/pause-circle.png'),
   'play-circle': require('./images/play-circle.png'),

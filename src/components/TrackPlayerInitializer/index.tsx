@@ -14,13 +14,7 @@ const TrackPlayerInitializer = () => {
   const setup = async () => {
     await RNTrackPlayer.setupPlayer();
     await RNTrackPlayer.updateOptions({
-      playIcon: images['play-circle'],
-      pauseIcon: images['pause-circle'],
-      previousIcon: images['skip-back'],
-      nextIcon: images['skip-forward'],
-      rewindIcon: images['rewind-left'],
-      forwardIcon: images['rewind-right'],
-      icon: images.music,
+      icon: images['music-white'],
       capabilities: [
         Capability.Play,
         Capability.Pause,
