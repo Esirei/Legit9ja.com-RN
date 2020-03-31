@@ -4,7 +4,7 @@ import { store } from './src/store';
 import { currentTrackID, playbackState } from '@actions/audioPlayerActions';
 import {
   currentTrackIdSelector,
-  makeTrackSelector,
+  currentTrackSelector,
   repeatSelector,
 } from '@selectors/audioPlayerSelectors';
 import { Repeat } from '@reducers/audioPlayerReducer';
@@ -61,11 +61,11 @@ export default async function() {
 
   RNTrackPlayer.addEventListener(Event.PlaybackTrackChanged, async event => {
     console.log('playback-track-changed', event);
-    const { nextTrack, track, position } = event;
+    const { nextTrack, position } = event;
     const repeat = repeatSelector(store.getState());
     // if (!repeat) {
     if (repeat === Repeat.CURRENT) {
-      const currentTrack = makeTrackSelector(track)(store.getState());
+      const currentTrack = currentTrackSelector(store.getState());
       // Different libraries used to get meta. android's duration is in millis while iOS's is in secs
       const duration = Number(currentTrack.duration / (isAndroid ? 1000 : 1));
       const shouldRepeat = position >= duration - 2; // Just some buffer in case duration is higher than final position.
