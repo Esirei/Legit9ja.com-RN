@@ -9,6 +9,7 @@ import images from '@assets/images';
 import { isPlaying, shuffleArray } from '@helpers';
 import { store } from '../../store';
 import { fixSongsParentDir } from '@actions/audioPlayerActions';
+import SplashScreen from 'react-native-splash-screen';
 
 const TrackPlayerInitializer = () => {
   const setup = async () => {
@@ -74,6 +75,7 @@ const TrackPlayerInitializer = () => {
         console.log('AudioPlayer - not setting up');
       }
     });
+    SplashScreen.hide();
   }, []);
 
   return null;
