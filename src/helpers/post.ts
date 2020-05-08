@@ -84,6 +84,7 @@ export const postExcerpt = post => {
 };
 
 export const sharePost = post => {
-  const url = post.link;
+  const { guid, link } = post;
+  const url = guid && guid.rendered ? guid.rendered : link;
   Share.share({ title: postTitle(post), url, message: url }, { dialogTitle: 'Sharing Post...' });
 };
