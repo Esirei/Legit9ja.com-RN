@@ -1,7 +1,7 @@
 import { batch } from 'react-redux';
 import RNTrackPlayer from 'react-native-track-player';
-import { deburr } from 'lodash';
-import { Repeat, TrackFile, Sort } from '@reducers/audioPlayerReducer';
+// import { deburr } from 'lodash';
+import { Repeat, Sort, TrackFile } from '@reducers/audioPlayerReducer';
 import {
   deleteFile,
   documentDir,
@@ -124,6 +124,7 @@ export const fixTrackFiles = () => async (dispatch, getState) => {
   console.log('fixTrackFiles completed... ', updatedTracks);
 };
 
+// Fixes document directory path changes on iOS updates.
 export const fixSongsParentDir = () => async (dispatch, getState) => {
   const dir = parentDirSelector(getState());
 

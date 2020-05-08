@@ -8,7 +8,7 @@ import {
 import images from '@assets/images';
 import { isPlaying, shuffleArray } from '@helpers';
 import { store } from '../../store';
-import { fixTrackFiles, fixSongsParentDir } from '@actions/audioPlayerActions';
+import { fixSongsParentDir } from '@actions/audioPlayerActions';
 
 const TrackPlayerInitializer = () => {
   const setup = async () => {
@@ -55,7 +55,7 @@ const TrackPlayerInitializer = () => {
         setup().then(async () => {
           // return;
           await store.dispatch(fixSongsParentDir());
-          await store.dispatch(fixTrackFiles());
+          // await store.dispatch(fixTrackFiles());
           let tracks = tracksSelector(store.getState());
           const shuffled = shuffleSelector(state);
           if (shuffled) {
