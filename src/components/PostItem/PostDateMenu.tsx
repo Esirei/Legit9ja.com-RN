@@ -16,7 +16,7 @@ const PostMenu = ({ post }) => {
   };
 
   const button = () => (
-    <Touchable onPress={showMenu} borderlessBackground>
+    <Touchable onPress={showMenu} borderlessBackground style={styles.menuButton}>
       <Image source={images.ic_menu_64} style={styles.postMenu} />
     </Touchable>
   );
@@ -63,6 +63,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  menuButton: {
+    width: 40,
+    height: 24,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
   },
   postMenu: {
     height: 15,

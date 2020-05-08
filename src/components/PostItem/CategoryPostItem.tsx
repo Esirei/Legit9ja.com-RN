@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     marginLeft: 7,
     marginRight: 2,
     flex: 1,
+    justifyContent: 'space-between',
   },
   postTitle: {
     marginBottom: 12,

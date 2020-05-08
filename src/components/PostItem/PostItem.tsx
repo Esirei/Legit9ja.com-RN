@@ -20,7 +20,7 @@ const PostItem = ({ post }) => (
       <View style={styles.postDateTitleCategoryContainer}>
         <PostDateMenu post={post} />
         <PostTitle post={post} style={styles.postTitle} />
-        <PostCategories post={post} />
+        <PostCategories post={post} style={styles.postCategories} />
       </View>
     </View>
     <Text style={styles.postDetails} ellipsizeMode={'tail'} numberOfLines={3}>
@@ -33,6 +33,7 @@ export default memo(PostItem);
 
 const styles = StyleSheet.create({
   postItem: {
+    padding: 5,
     marginVertical: 4,
     marginHorizontal: 5,
     borderRadius: 4,
@@ -49,26 +50,25 @@ const styles = StyleSheet.create({
   postItems: {
     flex: 1,
     flexDirection: 'row',
-    margin: 5,
-    marginTop: 10,
   },
   postImage: {
     width: 100,
-    height: 80,
+    height: '100%',
   },
   postDateTitleCategoryContainer: {
     marginHorizontal: 7,
     flex: 1,
   },
   postTitle: {
-    marginTop: 5,
     marginBottom: 7,
   },
+  postCategories: {
+    marginBottom: 5,
+  },
   postDetails: {
-    marginHorizontal: 10,
-    marginTop: 5,
-    marginBottom: 10,
     fontSize: 16,
+    marginBottom: 5,
+    marginHorizontal: 5,
     color: 'rgba(0,0,0,0.54)',
     fontFamily: fonts.Roboto_Regular,
   },
