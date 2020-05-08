@@ -1,4 +1,5 @@
 import RNFetchBlob from 'rn-fetch-blob';
+import deburr from 'lodash/deburr';
 import { fileSize } from '@helpers/file';
 
 const { fs } = RNFetchBlob;
@@ -22,6 +23,7 @@ export const downloadFile = (url: string, config?: DownloadConfig) => {
   let file = urlFileRegex.exec(url)![0];
   file = file.replace(/%E2%80%93/g, '-');
   file = decodeURI(file);
+  file = deburr(file.normalize('NFD'));
   const filePath = `${dir}/${file}`;
   const tempPath = `${filePath}.download`;
   console.log('File Download: ', file);

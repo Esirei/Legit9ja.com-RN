@@ -1,5 +1,6 @@
 import { batch } from 'react-redux';
 import RNTrackPlayer from 'react-native-track-player';
+import { deburr } from 'lodash';
 import { Repeat, TrackFile, Sort } from '@reducers/audioPlayerReducer';
 import {
   deleteFile,
@@ -93,7 +94,7 @@ export const fixTrackFiles = () => async (dispatch, getState) => {
   const replace = (file: string) => file.replace(badTrackRegex, encodeURI('-'));
   const tracks = tracksSelector(getState());
   const updatedTracks = {};
-  for (const track of tracks) {
+  for (let track of tracks) {
     if (track.url.includes('%E2%80%93')) {
       let url = replace(track.url);
       await moveFile(filePath(track.url), filePath(url));
@@ -105,6 +106,19 @@ export const fixTrackFiles = () => async (dispatch, getState) => {
       console.log('fixTrackFile', track, { ...track, url, artwork });
       updatedTracks[track.id] = { ...track, url, artwork };
     }
+    // track = updatedTracks[track.id] || track;
+    // // check for filenames having dialect/latin characters
+    // if (!/^.*\/[a-zA-Z0-9-_.()\[\]]+.mp3$/.test(track.url)) {
+    //   const x = decodeURI(track.url.replace(/.*\//, ''));
+    //   const deburredX = deburr(x.normalize('NFD'));
+    //   console.log('fixTrackFiles - special', x);
+    //   console.log('fixTrackFiles - specialII', deburredX);
+    // const url = deburr(track.url);
+    // await moveFile(filePath(track.url), filePath(url));
+    // const artwork = deburr(track.artwork);
+    // await moveFile(filePath(track.artwork), filePath(artwork));
+    // updatedTracks[track.id] = { ...track, url, artwork };
+    // }
   }
   dispatch(updateTracks(updatedTracks));
   console.log('fixTrackFiles completed... ', updatedTracks);
