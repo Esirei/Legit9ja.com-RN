@@ -48,7 +48,8 @@ const styles = StyleSheet.create({
   postDetails: {
     flex: 1,
     marginLeft: 8,
-    justifyContent: 'space-around',
+    paddingVertical: 6,
+    justifyContent: 'space-between',
   },
   separator: {
     marginHorizontal: 4,

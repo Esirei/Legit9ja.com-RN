@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   postTitle: {
+    marginTop: 4,
     marginBottom: 12,
   },
 });

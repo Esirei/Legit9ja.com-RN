@@ -138,5 +138,6 @@ const styles = StyleSheet.create({
   },
   itemTitle: {
     fontSize: 14,
+    marginBottom: 0,
   },
 });
