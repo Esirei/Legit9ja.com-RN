@@ -152,8 +152,7 @@ export const startMP3Download = (url: string, tries = 0) => (dispatch, getState)
     });
 };
 
-// not a redux action
-export const pauseDownload = url => {
+export const pauseDownload = (url: string) => dispatch => {
   const cancel = downloadCancellers[url];
   if (cancel) {
     cancel(reason => {
@@ -161,6 +160,7 @@ export const pauseDownload = url => {
       delete downloadCancellers[url];
     });
   }
+  dispatch(downloadStopped({ url, error: null }));
 };
 
 export const deleteDownload = (url: string) => async (dispatch, getState) => {
@@ -170,7 +170,7 @@ export const deleteDownload = (url: string) => async (dispatch, getState) => {
     dispatch(deleteTrack(track));
   }
   if (download) {
-    download.isDownloading && pauseDownload(download.url);
+    download.isDownloading && dispatch(pauseDownload(download.url));
     const { path } = download;
     const tempPath = `${path}.download`;
     const artwork = `${path}.jpg`;

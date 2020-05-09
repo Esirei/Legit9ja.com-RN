@@ -40,7 +40,7 @@ const DownloadsScreen = () => {
   const safeArea = useSafeArea();
   const dispatch = useDispatch();
   const resume = useCallback(url => dispatch(startMP3Download(url)), [dispatch]);
-  const pause = useCallback(url => pauseDownload(url), []); // not a redux action
+  const pause = useCallback(url => dispatch(pauseDownload(url)), [dispatch]);
   const clear = useCallback(() => dispatch(clearCompletedDownloads()), [dispatch]);
   const deleteD = useCallback(url => dispatch(deleteDownload(url)), [dispatch]);
 
