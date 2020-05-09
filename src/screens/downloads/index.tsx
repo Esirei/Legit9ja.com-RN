@@ -1,16 +1,18 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { FlatList, Image, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import Touchable from '@components/Touchable';
 import NotifyCard from '@components/NotifyCard';
+import DeleteModal from '@components/DeleteModal';
+import DownloadOptionsMenu from './components/DownloadOptionsMenu';
 import { fileSize } from '@helpers';
 import { Download } from '@reducers/downloadsReducer';
 import { downloadsSelector } from '@selectors/downloadsSelector';
 import {
-  cancelDownload,
   clearCompletedDownloads,
   deleteDownload,
+  pauseDownload,
   startMP3Download,
 } from '@actions/downloadsActions';
 import fonts from '@assets/fonts';
@@ -38,12 +40,38 @@ const DownloadsScreen = () => {
   const safeArea = useSafeArea();
   const dispatch = useDispatch();
   const resume = useCallback(url => dispatch(startMP3Download(url)), [dispatch]);
-  const cancel = useCallback(url => cancelDownload(url), []); // not a redux action
+  const pause = useCallback(url => pauseDownload(url), []); // not a redux action
   const clear = useCallback(() => dispatch(clearCompletedDownloads()), [dispatch]);
   const deleteD = useCallback(url => dispatch(deleteDownload(url)), [dispatch]);
 
+  // Selected download to delete url
+  const [deletingDownload, setDeletingDownload] = useState<Download | undefined>(undefined);
+
+  const onDelete = useCallback(() => {
+    deletingDownload && deleteD(deletingDownload.url);
+    setDeletingDownload(undefined);
+  }, [deleteD, deletingDownload]);
+
+  const closeDeleteModal = useCallback(() => {
+    setDeletingDownload(undefined);
+  }, []);
+
+  const _renderDownloadControl = download => {
+    const { isDownloading, url } = download;
+    return (
+      <Touchable
+        style={styles.downloadControlButton}
+        borderlessBackground
+        onPress={() => (isDownloading ? pause(url) : resume(url))}>
+        <Image
+          source={isDownloading ? images['pause-circle'] : images['play-circle']}
+          style={styles.downloadControlImage}
+        />
+      </Touchable>
+    );
+  };
+
   const renderDownloads = ({ item }) => {
-    const { isDownloading, url } = item;
     return (
       <View style={styles.download}>
         <View style={styles.downloadInfo}>
@@ -55,15 +83,13 @@ const DownloadsScreen = () => {
             <Text style={styles.downloadStateText}>{downloadState(item)}</Text>
           </View>
         </View>
-        <Touchable
-          style={styles.downloadControlButton}
-          borderlessBackground
-          onPress={() => (isDownloading ? cancel(url) : resume(url))}>
-          <Image
-            source={isDownloading ? images['pause-circle'] : images['play-circle']}
-            style={styles.downloadControlImage}
-          />
-        </Touchable>
+        {/*{_renderDownloadControl(item)}*/}
+        <DownloadOptionsMenu
+          download={item}
+          onPause={pause}
+          onResume={resume}
+          onDelete={setDeletingDownload}
+        />
       </View>
     );
   };
@@ -105,6 +131,12 @@ const DownloadsScreen = () => {
       <StatusBar translucent={false} />
       {renderList()}
       {renderClearButton()}
+      <DeleteModal
+        isOpen={!!deletingDownload}
+        close={closeDeleteModal}
+        onDeletePressed={onDelete}
+        title={deletingDownload ? `Delete ${deletingDownload.name}` : ''}
+      />
     </View>
   );
 };
@@ -124,10 +156,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: 'rgba(0,0,0,0.25)',
     flexDirection: 'row',
+    alignItems: 'center',
   },
   downloadInfo: {
     flex: 1,
     justifyContent: 'center',
+    marginRight: 8,
   },
   downloadMeta: {
     flexDirection: 'row',

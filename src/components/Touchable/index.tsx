@@ -9,9 +9,13 @@ import {
 } from 'react-native';
 import React from 'react';
 
+export interface OnPress {
+  (event: GestureResponderEvent): void;
+}
+
 export interface Props extends TouchableNativeFeedbackProps, TouchableOpacityProps {
   children: React.ReactNode;
-  onPress?: (event: GestureResponderEvent) => void;
+  onPress?: OnPress;
   borderlessBackground?: boolean;
   underlayColor?: string;
 }

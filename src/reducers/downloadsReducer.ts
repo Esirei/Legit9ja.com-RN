@@ -74,6 +74,9 @@ export default (state = {}, action): DownloadsState => {
     case types.DOWNLOAD_STOPPED:
       const { url } = action.payload;
       return { ...state, [url]: downloadReducer(state[url], action) };
+    case types.DOWNLOAD_DELETE:
+      delete state[action.payload.url];
+      return { ...state };
     case types.DOWNLOAD_CLEAR_COMPLETED:
       return clearCompleted(state);
     default:

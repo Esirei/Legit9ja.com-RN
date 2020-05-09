@@ -1,36 +1,8 @@
 import React, { memo } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
-import Touchable from '@components/Touchable';
-import images from '@assets/images';
+import OptionsButton from '@components/OptionsButton';
 
 const TrackOptionsButton = ({ onPress }) => (
-  <View style={styles.container}>
-    <Touchable onPress={onPress} style={styles.button} borderlessBackground>
-      <Image source={images.ic_menu_64} style={styles.image} />
-    </Touchable>
-  </View>
+  <OptionsButton onPress={onPress} backgroundColor={'rgba(0,0,0,0.1)'} tintColor={'#FFF'} />
 );
 
 export default memo(TrackOptionsButton);
-
-const styles = StyleSheet.create({
-  container: {
-    height: 36,
-    width: 36,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    height: 30,
-    width: 30,
-    borderRadius: 15,
-    backgroundColor: 'rgba(0,0,0,0.1)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  image: {
-    height: 16,
-    width: 16,
-    tintColor: '#FFF',
-  },
-});
