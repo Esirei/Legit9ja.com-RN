@@ -21,13 +21,14 @@ const DownloadOptionsMenu = ({ download, onPause, onResume, onDelete }: Props) =
   const button = useMemo(() => <OptionsButton onPress={showMenu} />, []);
 
   const onPress = item => {
-    !!menu.current && menu.current.hide();
     switch (item) {
       case '1':
+        !!menu.current && menu.current.hide();
         isDownloading ? onPause(url) : onResume(url);
         break;
       case '2':
-        onDelete(download);
+        // Not sure why, but without this, delete modal does not show on iOS.
+        !!menu.current && menu.current.hide(() => onDelete(download));
         break;
       default:
         break;

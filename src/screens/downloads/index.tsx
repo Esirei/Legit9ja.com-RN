@@ -127,17 +127,19 @@ const DownloadsScreen = () => {
   };
 
   return (
-    <View style={[styles.container, { paddingBottom: safeArea.bottom }]}>
-      <StatusBar translucent={false} />
-      {renderList()}
-      {renderClearButton()}
+    <>
+      <View style={[styles.container, { paddingBottom: safeArea.bottom }]}>
+        <StatusBar translucent={false} />
+        {renderList()}
+        {renderClearButton()}
+      </View>
       <DeleteModal
         isOpen={!!deletingDownload}
         close={closeDeleteModal}
         onDeletePressed={onDelete}
         title={deletingDownload ? `Delete ${deletingDownload.name}` : ''}
       />
-    </View>
+    </>
   );
 };
 
