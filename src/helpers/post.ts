@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { Share } from 'react-native';
 import { BookmarkedPost } from '@screens/bookmarks/types';
 import { htmlDecode, stripHtmlTags } from './string';
+import { Post } from '@types';
 
 const BOOKMARKED_POSTS = 'bookmarked_posts';
 export const getBookmarkedPosts = async (): Promise<Record<number, BookmarkedPost>> => {
@@ -83,8 +84,12 @@ export const postExcerpt = post => {
   return stripHtmlTags(htmlDecode(post.excerpt.rendered)) || postContentPlain(post);
 };
 
-export const sharePost = post => {
+export const postUrl = (post: Post): string => {
   const { guid, link } = post;
-  const url = guid && guid.rendered ? guid.rendered : link;
+  return guid && guid.rendered ? guid.rendered : link;
+};
+
+export const sharePost = post => {
+  const url = postUrl(post);
   Share.share({ title: postTitle(post), url, message: url }, { dialogTitle: 'Sharing Post...' });
 };
