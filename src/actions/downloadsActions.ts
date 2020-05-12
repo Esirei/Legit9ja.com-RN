@@ -23,9 +23,9 @@ export const types = {
   DOWNLOAD_CLEAR_COMPLETED: 'DOWNLOAD_CLEAR_COMPLETED',
 };
 
-const downloadStart = ({ url, name, created }) => ({
+const downloadStart = ({ url, name, created, postID }) => ({
   type: types.DOWNLOAD_START,
-  payload: { url, name, created },
+  payload: { url, name, created, postID },
 });
 
 const downloadStarted = ({ url, path }) => ({
@@ -58,7 +58,7 @@ export const clearCompletedDownloads = () => ({
 });
 
 const f = 'file://';
-export const startMP3Download = (url: string, tries = 0) => (dispatch, getState) => {
+export const startMP3Download = (url: string, postId = 0, tries = 0) => (dispatch, getState) => {
   const download = makeDownloadSelector(url)(getState());
   const now = Date.now();
   if (download && download.isDownloading && download.updated > now - 10000) {
@@ -67,8 +67,9 @@ export const startMP3Download = (url: string, tries = 0) => (dispatch, getState)
   }
   const created = (download && download.created) || now;
   const name = (download && download.name) || getFileAndExtension(url).file || url;
+  const postID = (download && download.postID) || postId;
   batch(() => {
-    dispatch(downloadStart({ url, name, created }));
+    dispatch(downloadStart({ url, name, created, postID }));
     !download && dispatch(addToast({ message: 'Download added...' }));
   });
 
@@ -97,7 +98,7 @@ export const startMP3Download = (url: string, tries = 0) => (dispatch, getState)
         const saveMeta = meta => {
           const { thumb, artist, title, ...restMeta } = meta;
           console.log('Meta save here...', meta);
-          const file = { added: lastModified, size, url: encodeURI(f + path), id: url }; // need to encode url because of iOS
+          const file = { added: lastModified, size, url: encodeURI(f + path), id: url, postID }; // need to encode url because of iOS
           const metadata = {
             ...restMeta,
             ...file,
@@ -147,7 +148,7 @@ export const startMP3Download = (url: string, tries = 0) => (dispatch, getState)
       console.log(`Download of ${url} error...`, error);
       dispatch(downloadStopped({ url, error }));
       if (tries < 3 && error && error.message && error.message === 'Download interrupted.') {
-        dispatch(startMP3Download(url, ++tries));
+        dispatch(startMP3Download(url, postID, ++tries));
       }
     });
 };

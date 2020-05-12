@@ -27,7 +27,7 @@ const Content = ({ post }) => {
       if (url.endsWith('.mp3')) {
         console.log('MP3 Download!', url);
 
-        dispatch(startMP3Download(url));
+        dispatch(startMP3Download(url, post.id));
         return;
       } else {
         Linking.openURL(url);

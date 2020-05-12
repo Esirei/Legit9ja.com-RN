@@ -8,6 +8,7 @@ export interface TrackFile extends Track {
   artist: string;
   artwork: string;
   duration: number;
+  postID?: number;
   date?: string;
   added: number;
   size: number;

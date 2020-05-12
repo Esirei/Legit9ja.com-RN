@@ -6,6 +6,7 @@ export interface Download {
   name: string;
   path: string;
   speed: string;
+  postID?: number;
   isDownloading: boolean;
   completed: boolean;
   received: number;
