@@ -28,7 +28,7 @@
     "appcenter-crashes": "^2.6.1",
     "axios": "^0.19.2",
     "html-entities": "^1.2.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "normalizr": "^3.4.1",
     "prop-types": "^15.7.2",
