@@ -45,7 +45,7 @@
     "react-native-modalize": "^1.3.7-rc.10",
     "react-native-music-metadata": "https://github.com/venepe/react-native-music-metadata",
     "react-native-onesignal": "^3.6.3",
-    "react-native-reanimated": "^1.4.0",
+    "react-native-reanimated": "^2.10.0",
     "react-native-safe-area-context": "^0.6.1",
     "react-native-snap-carousel": "^3.8.4",
     "react-native-splash-screen": "^3.2.0",
