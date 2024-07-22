@@ -52,12 +52,13 @@ export const youtubeId = post => {
 };
 
 const youtubeIframeRegex = /<iframe.*(?:youtu(?:\.be\/|be\.com\/(?:watch\?(?:feature=youtu.be&)?v=|v\/|embed\/|user\/(?:[\w#]+\/)+)))([a-zA-Z0-9_-]{11}).*<\/iframe>/;
+const youtubeLinkRegex = /(?:(?:http(?:s)?:\/\/)?(?:www\.)?)(?:youtu(?:\.be\/|be\.com\/(?:watch\?(?:feature=youtu\.be&)?v=|v\/|embed\/|user\/(?:[\w#]+\/)+)))(?:[a-zA-Z0-9_-]{11}).*?(?=')/g;
 export const postContentWithoutYT = post => {
   const noOfVideos = noOfYoutubeVideos(post);
   if (noOfVideos === 1) {
     return postContent(post).replace(youtubeIframeRegex, '');
   }
-  return postContent(post);
+  return postContent(post).replace(youtubeLinkRegex, '$&&origin=https://www.youtube.com'); // add origin query to the matched contents
 };
 
 export const postTitle = post => htmlDecode(post.title.rendered);
