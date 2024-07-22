@@ -87,6 +87,7 @@
     "eslint": "^6.5.1",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.56.0",
+    "react-native-dotenv": "^3.4.11",
     "react-native-rename": "https://github.com/Esirei/react-native-rename",
     "react-test-renderer": "16.9.0",
     "ts-jest": "24.1.0",

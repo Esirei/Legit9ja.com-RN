@@ -2,8 +2,7 @@ import React, { useRef, useState, memo } from 'react';
 import { View, StyleSheet, Platform } from 'react-native';
 import Youtube from 'react-native-youtube';
 import { youtubeId } from '@helpers/post';
-
-const youtubeAPiKey = 'AIzaSyAu1oJCoKvtGwFgldG_RjjvvMEC-Zx2yS8';
+import { YOUTUBE_API_KEY } from '@env';
 
 const YouTube = ({ post }) => {
   const videoId = youtubeId(post);
@@ -45,7 +44,7 @@ const YouTube = ({ post }) => {
             play={false}
             ref={youtubeRef}
             videoId={videoId}
-            apiKey={youtubeAPiKey}
+            apiKey={YOUTUBE_API_KEY}
             fullscreen={state.fullscreen}
             onChangeState={onYouTubeChangeState}
             onChangeFullscreen={onChangeFullscreen}
