@@ -94,3 +94,8 @@ export const sharePost = post => {
   const url = postUrl(post);
   Share.share({ title: postTitle(post), url, message: url }, { dialogTitle: 'Sharing Post...' });
 };
+
+export const sharePostById = (postID: number) => {
+  const url = `https://legit9ja.com/?p=${postID}`;
+  Share.share({ url }, { dialogTitle: 'Share Post...' });
+};
