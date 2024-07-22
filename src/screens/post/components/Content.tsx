@@ -46,6 +46,7 @@ const Content = ({ post }) => {
         viewportContent={'width=device-width, user-scalable=no'}
         bounces={false}
         scrollEnabled={false}
+        originWhitelist={['https://legit9ja.com', 'https://youtube.com']}
       />
       <View style={styles.preventSideLongPress} />
       <YouTube post={post} />
